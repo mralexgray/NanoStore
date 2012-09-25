@@ -21,7 +21,7 @@
 {
     if ((self = [super init])) {
         
-        mRemoveStoreWhenFinished = YES;
+        mRemoveStoreWhenFinished = NO;
         
         mStorePath = [[@"~/Desktop/NSFNanoStoreTest.data" stringByExpandingTildeInPath]retain];
         
