@@ -7,27 +7,27 @@
 		<key>NanoStore.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>45</integer>
+			<integer>43</integer>
 		</dict>
 		<key>UnitTestMac.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>48</integer>
+			<integer>46</integer>
 		</dict>
 		<key>UnitTestiOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>49</integer>
+			<integer>47</integer>
 		</dict>
 		<key>Universal.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>47</integer>
+			<integer>45</integer>
 		</dict>
 		<key>libnanostore2.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>46</integer>
+			<integer>44</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
