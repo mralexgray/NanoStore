@@ -39,7 +39,6 @@
     [super dealloc];
 }
 
-#pragma mark -
 
 - (void)test
 {
@@ -69,7 +68,6 @@
         NSLog(@"Expected to find the stored objects.");
 }
 
-#pragma mark -
 
 - (NSDictionary *)defaultTestData
 {

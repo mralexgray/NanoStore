@@ -30,7 +30,6 @@
     [super tearDown];
 }
 
-#pragma mark -
 
 - (void)testResultNumberValueReturned
 {

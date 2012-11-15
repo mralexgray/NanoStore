@@ -30,7 +30,6 @@
     [super tearDown];
 }
 
-#pragma mark -
 
 - (void)testCreateStore
 {
@@ -175,7 +174,6 @@
     [nanoStore closeWithError:nil];
 }
 
-#pragma mark -
 
 - (void)testStoreObjects
 {
@@ -475,7 +473,6 @@
     STAssertTrue (([objects count] == 2), @"Expected to find two objects.");
 }
 
-#pragma mark -
 
 - (void)testStoreObjectsWithBadKeyBadAttributeBadValueAndReturnObjectsWithSomeAttributes
 {
@@ -635,7 +632,6 @@
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-#pragma mark -
 
 - (void)testAllObjectClasses
 {
@@ -840,7 +836,6 @@
     STAssertTrue ([indexes count] > 0, @"Expected the indexes to be rebuilt.");
 }
 
-#pragma mark -
 
 - (void)testNanoStoreEngineDatabase
 {

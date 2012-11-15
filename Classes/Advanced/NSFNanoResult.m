@@ -139,7 +139,6 @@
     return description;
 }
 
-#pragma mark -
 
 - (NSArray *)columns
 {
@@ -182,7 +181,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 
 /** \cond */
 + (NSFNanoResult *)_resultWithDictionary:(NSDictionary *)theResults

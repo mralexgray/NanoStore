@@ -46,7 +46,6 @@
     [super tearDown];
 }
 
-#pragma mark -
 
 - (void)testSearchStoreNil
 {
@@ -189,7 +188,6 @@
     STAssertTrue (success == YES, @"Expected default Search object to be properly reset.");
 }
 
-#pragma mark -
 
 - (void)testSearchByAttributeExists
 {
@@ -398,7 +396,6 @@
     STAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-#pragma mark -
 
 - (void)testSearchObjectsAddedBeforeCalendarDate
 {
@@ -612,7 +609,6 @@
     STAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
-#pragma mark -
 
 - (void)testSearchExecuteNilSQL
 {
@@ -894,7 +890,6 @@
     STAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
 }
 
-#pragma mark -
 
 - (void)testSearchObjectKnownInThisProcess
 {
@@ -982,7 +977,6 @@
     [nanoStore closeWithError:nil];
 }
 
-#pragma mark -
 
 - (void)testAggregateFunctions
 {
@@ -1031,7 +1025,6 @@
     STAssertTrue ([[search aggregateOperation:NSFTotal onAttribute:@"SomeNumber"]floatValue] != 0, @"Expected NSFTotal to return a valid number.");
 }
 
-#pragma mark -
 
 - (void)testExplainSQLNil
 {

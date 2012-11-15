@@ -183,7 +183,6 @@
     return ([addedObjects count] > 0);
 }
 
-#pragma mark -
 
 - (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:(out NSError **)outError
 {
@@ -367,9 +366,7 @@
     return [self removeObjectsWithKeysInArray:someKeys error:outError];
 }
 
-#pragma mark -
 #pragma mark Searching
-#pragma mark -
 
 - (NSArray *)bags
 {
@@ -477,9 +474,7 @@
     return [[results firstValue]longLongValue];
 }
 
-#pragma mark -
 #pragma mark Database Optimizations and Maintenance
-#pragma mark -
 
 - (BOOL)beginTransactionAndReturnError:(out NSError **)outError
 {
@@ -523,7 +518,6 @@
     return NO;
 }
 
-#pragma mark -
 
 // ----------------------------------------------
 // Store/save unsaved objects
@@ -661,7 +655,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 
 /** \cond */
 

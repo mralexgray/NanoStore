@@ -29,7 +29,6 @@
     [super tearDown];
 }
 
-#pragma mark -
 
 - (void)testMaxROWUID
 {

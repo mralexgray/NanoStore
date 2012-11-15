@@ -117,7 +117,6 @@ NSString * const NSFCalendarDate                                = @"NSFCalendarD
 NSString * const NSFObjectClass                                 = @"NSFObjectClass";
 NSString * const NSFPlist                                       = @"NSFPlist";
 
-#pragma mark -
 
 NSString * const NSF_Private_NSFKeys_NSFKey             = @"NSFKeys.NSFKey";
 NSString * const NSF_Private_NSFKeys_NSFPlist           = @"NSFKeys.NSFPlist";

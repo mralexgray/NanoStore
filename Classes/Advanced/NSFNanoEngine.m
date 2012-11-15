@@ -42,7 +42,6 @@ static NSArray  *__NSFP_SQLCommandsReturningData = nil;
 static NSArray  *__NSFPSharedROWIDKeywords = nil;
 static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
-#pragma mark -
 
 @implementation NSFNanoEngine
 {
@@ -62,7 +61,6 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 @synthesize path;
 @synthesize cacheMethod;
 
-#pragma mark -
 
 #pragma mark// ==================================
 #pragma mark// Initialization/Cleanup Methods

@@ -62,7 +62,6 @@
 
 /** \endcond */
 
-#pragma mark -
 
 - (NSString*)description
 {

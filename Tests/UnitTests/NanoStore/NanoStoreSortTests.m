@@ -25,7 +25,6 @@
     [super tearDown];
 }
 
-#pragma mark -
 
 - (void)testSortWithNilAttributes
 {

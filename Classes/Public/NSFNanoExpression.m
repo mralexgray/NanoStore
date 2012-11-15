@@ -65,7 +65,6 @@
 
 /** \endcond */
 
-#pragma mark -
 
 - (void)addPredicate:(NSFNanoPredicate *)aPredicate withOperator:(NSFOperator)someOperator
 {

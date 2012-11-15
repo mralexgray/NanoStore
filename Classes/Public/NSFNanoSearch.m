@@ -73,7 +73,6 @@
 
 /** \endcond */
 
-#pragma mark -
 
 - (NSString *)sql
 {
@@ -103,7 +102,6 @@
     return description;
 }
 
-#pragma mark -
 
 - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
@@ -185,7 +183,6 @@
      returnedObjectType = NSFReturnObjects;
 }
 
-#pragma mark -
 
 - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError
 {
@@ -258,9 +255,7 @@
     return [NSNumber numberWithFloat:[[result firstValue]floatValue]];
 }
 
-#pragma mark -
 #pragma mark Private Methods
-#pragma mark -
 
 /** \cond */
 

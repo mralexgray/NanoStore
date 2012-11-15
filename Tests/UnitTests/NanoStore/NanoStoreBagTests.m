@@ -31,7 +31,6 @@
     [super tearDown];
 }
 
-#pragma mark -
 
 - (void)testBagClassMethod
 {
@@ -305,7 +304,6 @@
     STAssertTrue (0 == bag.count, @"Expected the bag to have zero elements.");
 }
 
-#pragma mark -
 
 - (void)testBagAddNilObject
 {
@@ -403,7 +401,6 @@
     }
 }
 
-#pragma mark -
 
 - (void)testBagRemoveNilObject
 {
@@ -483,7 +480,6 @@
     STAssertTrue ((YES == hasUnsavedChanges) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Removing conforming objects from a bag should have succeded.");
 }
 
-#pragma mark -
 
 - (void)testBagSaveEmptyBag
 {
@@ -827,7 +823,6 @@
     [nanoStore closeWithError:nil];
 }
 
-#pragma mark -
 
 - (void)testBagDeflate
 {

@@ -70,7 +70,6 @@ extern NSString * const NSFObjectClass;
 extern NSString * const NSFPlist;
 extern NSString * const NSFAttribute;
 
-#pragma mark -
 
 extern NSString * const NSF_Private_NSFKeys_NSFKey;
 extern NSString * const NSF_Private_NSFKeys_NSFPlist;
@@ -85,7 +84,6 @@ extern NSString * const NSF_Private_ToDeleteTableKey;
 extern NSInteger const NSF_Private_InvalidParameterDataCodeKey;
 extern NSInteger const NSF_Private_MacOSXErrorCodeKey;
 
-#pragma mark -
 
 extern NSString * const NSFP_TableIdentifier;
 extern NSString * const NSFP_ColumnIdentifier;
