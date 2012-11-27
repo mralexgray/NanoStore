@@ -399,8 +399,7 @@
     return [self reloadBagWithError:outError];
 }
 
-#pragma mark -
-#pragma mark Private Methods
+#pragma mark - Private Methods
 #pragma mark -
 
 /** \cond */

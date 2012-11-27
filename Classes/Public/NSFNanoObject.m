@@ -196,8 +196,7 @@
     return info;
 }
 
-#pragma mark -
-#pragma mark Private Methods
+#pragma mark - Private Methods
 #pragma mark -
 
 - (void)_setOriginalClassString:(NSString *)theClassString
