@@ -21,8 +21,7 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 #import <Foundation/Foundation.h>
 #import "NSFNanoGlobals.h"
@@ -50,8 +49,7 @@
  
  Note: there isn't a dedicated data type homologous to CFBoolean in Cocoa. Therefore,
  NSNumber will be used for that purpose.
- 
- */
+ 	*/
 
 extern NSString * NSFStringFromMatchType (NSFMatchType aMatchType);
 

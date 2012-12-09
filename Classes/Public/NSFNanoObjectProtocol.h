@@ -21,19 +21,16 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 /*! @file NSFNanoObjectProtocol.h
- @brief A protocol declaring the interface that objects interfacing with NanoStore must implement.
- */
+ @brief A protocol declaring the interface that objects interfacing with NanoStore must implement.	*/
 
 /** @protocol NSFNanoObjectProtocol
  * A protocol declaring the interface that objects interfacing with NanoStore must implement.
  *
  * @note
- * Check NSFNanoBag or NSFNanoObject to see a concrete example of how NSFNanoObjectProtocol is implemented.
- */
+ * Check NSFNanoBag or NSFNanoObject to see a concrete example of how NSFNanoObjectProtocol is implemented.	*/
 
 @class NSFNanoStore;
 
@@ -57,14 +54,12 @@
  
     return self;
  }
- @endcode
- */
+ @endcode	*/
 
 - (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore;
 
 /** * Returns a dictionary that contains the information stored in the object.
- * @see \link nanoObjectKey - (NSString *)nanoObjectKey \endlink
- */
+ * @see \link nanoObjectKey - (NSString *)nanoObjectKey \endlink	*/
 
 - (NSDictionary *)nanoObjectDictionaryRepresentation;
 
@@ -72,8 +67,7 @@
  * @note
  * The class NSFNanoEngine contains a convenience method for this purpose: \ref NSFNanoEngine::stringWithUUID "+(NSString*)stringWithUUID"
  *
- * @see \link nanoObjectDictionaryRepresentation - (NSDictionary *)nanoObjectDictionaryRepresentation \endlink
- */
+ * @see \link nanoObjectDictionaryRepresentation - (NSDictionary *)nanoObjectDictionaryRepresentation \endlink	*/
 
 - (NSString *)nanoObjectKey;
 
@@ -111,8 +105,7 @@
  * If we had returned <i>self</i> as the root object, the sort descriptor would have to be written like so:
  @code
  NSFNanoSortDescriptor *sortedCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"info.City" ascending:YES];
- @endcode
- */
+ @endcode	*/
 
 - (id)rootObject;
 

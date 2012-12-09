@@ -21,8 +21,7 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 #import <Foundation/Foundation.h>
 
@@ -31,8 +30,7 @@
 @class NSFNanoPredicate;
 
 /*! @file NSFNanoExpression.h
- @brief A unit that describes a series of predicates and its operators.
- */
+ @brief A unit that describes a series of predicates and its operators.	*/
 
 /** @class NSFNanoExpression
  * A unit that describes a series of predicates and its operators.
@@ -56,8 +54,7 @@
  
  // Close the document store
  [nanoStore closeWithError:nil];
- @endcode
- */
+ @endcode	*/
 
 @interface NSFNanoExpression : NSObject
 
@@ -66,8 +63,7 @@
 /** * Array of NSNumber wrapping \link NSFGlobals::NSFOperator NSFOperator \endlink */
 @property (nonatomic, readonly) NSArray      *operators;
 
-/** @name Creating and Initializing Expressions
- */
+/** @name Creating and Initializing Expressions	*/
 
 //@{
 
@@ -76,8 +72,7 @@
  * @return An expression upon success, nil otherwise.
  * @warning The parameter thePredicate must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the predicate is nil.
- * @see \link initWithPredicate: - (id)initWithPredicate:(NSFNanoPredicate *)aPredicate \endlink
- */
+ * @see \link initWithPredicate: - (id)initWithPredicate:(NSFNanoPredicate *)aPredicate \endlink	*/
 
 + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate;
 
@@ -86,15 +81,13 @@
  * @return An expression upon success, nil otherwise.
  * @warning The parameter thePredicate must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the predicate is nil.
- * @see \link expressionWithPredicate: + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate \endlink
- */
+ * @see \link expressionWithPredicate: + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate \endlink	*/
 
 - (id)initWithPredicate:(NSFNanoPredicate *)thePredicate;
 
 //@}
 
-/** @name Adding a Predicate
- */
+/** @name Adding a Predicate	*/
 
 //@{
 
@@ -102,21 +95,18 @@
  * @param thePredicate is added to the expression.
  * @param theOperator specifies the operation (AND/OR) to be applied.
  * @warning The parameter thePredicate must not be nil.
- * @throws NSFUnexpectedParameterException is thrown if the predicate is nil.
- */
+ * @throws NSFUnexpectedParameterException is thrown if the predicate is nil.	*/
 
 - (void)addPredicate:(NSFNanoPredicate *)thePredicate withOperator:(NSFOperator)theOperator;
 
 //@}
 
-/** @name Miscellaneous
- */
+/** @name Miscellaneous	*/
 
 //@{
 
 /** * Returns a string representation of the expression.
- * @note Check properties predicates and operators to find out the current state of the expression.
- */
+ * @note Check properties predicates and operators to find out the current state of the expression.	*/
 
 - (NSString *)description;
 

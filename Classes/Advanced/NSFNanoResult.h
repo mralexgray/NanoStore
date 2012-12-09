@@ -21,12 +21,10 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 /*! @file NSFNanoResult.h
- @brief A unit that describes the result of a search.
- */
+ @brief A unit that describes the result of a search.	*/
 
 /** @class NSFNanoResult
  * A unit that describes the result of a search.
@@ -60,8 +58,7 @@
  
  // Close the document store
  [nanoStore closeWithError:nil];
- @endcode
- */
+ @endcode	*/
 
 #import <Foundation/Foundation.h>
 
@@ -74,14 +71,12 @@
 /** * A reference to the error encountered while processing the request, otherwise nil if the request was successful. */
 @property (nonatomic, strong, readonly) NSError *error;
 
-/** @name Accessors
- */
+/** @name Accessors	*/
 
 //@{
 
 /** * Returns a new array containing the columns.
- * @returns An array with the columns retrieved from the result set.
- */
+ * @returns An array with the columns retrieved from the result set.	*/
 
 - (NSArray *)columns;
 
@@ -89,46 +84,39 @@
  * @param theIndex is the index of the value in the result set.
  * @param theColumn is the name of the column in the result set.
  * @returns An array with the values associated with a given column.
- * @throws NSRangeException is thrown if the index is out of bounds.
- */
+ * @throws NSRangeException is thrown if the index is out of bounds.	*/
 
 - (NSString *)valueAtIndex:(NSUInteger)theIndex forColumn:(NSString *)theColumn;
 
 /** * Returns a new array containing the values for a given column.
  * @param theColumn is the name of the column in the result set.
- * @returns An array with the values associated with a given column.
- */
+ * @returns An array with the values associated with a given column.	*/
 
 - (NSArray *)valuesForColumn:(NSString *)theColumn;
 
 /** * Returns the first value.
- * @returns The value of the first element from the result set.
- */
+ * @returns The value of the first element from the result set.	*/
 
 - (NSString *)firstValue;
 
 //@}
 
-/** @name Exporting the Results to a File
- */
+/** @name Exporting the Results to a File	*/
 
 //@{
 
 /** * Saves the result to a file.
- * @param thePath is the location where the result will be saved to a file.
- */
+ * @param thePath is the location where the result will be saved to a file.	*/
 
 - (void)writeToFile:(NSString *)thePath;
 
 //@}
 
-/** @name Miscellaneous
- */
+/** @name Miscellaneous	*/
 
 //@{
 
-/** * Returns a string representation of the result.
- */
+/** * Returns a string representation of the result.	*/
 
 - (NSString *)description;
 

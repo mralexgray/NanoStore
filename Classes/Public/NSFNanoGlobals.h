@@ -21,14 +21,12 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 #import <Foundation/Foundation.h>
 
 /*! @file NSFNanoGlobals.h
- @brief Public available constants to be used in NanoStore.
- */
+ @brief Public available constants to be used in NanoStore.	*/
 
 /** * If turned on, NanoStore will log debugging information to Console. */
 extern void NSFSetIsDebugOn (BOOL flag);
@@ -47,8 +45,7 @@ extern BOOL NSFIsDebugOn (void);
  * 
  * If FastMode is deactivated, NanoStore will pause at critical moments to make sure that data has actually been written to the disk surface
  * before continuing. This ensures that if the operating system crashes or if there is a power failure, the database will be uncorrupted after rebooting.
- * Deactivating FastMode is very safe, but it is also slower.
- */
+ * Deactivating FastMode is very safe, but it is also slower.	*/
 typedef enum {
     /** * The default mode is slower but safer. */
     NSFEngineProcessingDefaultMode = 1,
@@ -57,8 +54,7 @@ typedef enum {
 } NSFEngineProcessingMode;
 
 /** * Datatypes used by NanoStore.
- @note Additional information can be found on the SQLite website: http://www.sqlite.org/datatype3.html
- */
+ @note Additional information can be found on the SQLite website: http://www.sqlite.org/datatype3.html	*/
 typedef enum {
     /** * Used when NanoStore doesn't know the datatype it has read back from the document store. Its string value equivalent is <b>UNKNOWN</b>.*/
     NSFNanoTypeUnknown = -1,
@@ -98,8 +94,7 @@ typedef enum {
  * @note Instead of sum(), total() is invoked instead because sum() will throw an "integer overflow" exception
  * if all inputs are integers or NULL and an integer overflow occurs at any point during the computation. On
  * the other hand, total() never throws an integer overflow.
- @see \link NSFNanoSearch::aggregateOperation:onAttribute: -(NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute \endlink
- */
+ @see \link NSFNanoSearch::aggregateOperation:onAttribute: -(NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute \endlink	*/
 
 typedef enum {
     /** * It invokes the avg() function. */
@@ -116,8 +111,7 @@ typedef enum {
 
 /** * Comparison options.
  * These values represent the options available to some of the classes’ search and comparison methods.
- @see NSFNanoPredicate, NSFNanoSearch
- */
+ @see NSFNanoPredicate, NSFNanoSearch	*/
 typedef enum {
     /** * Equal to (case sensitive) */
     NSFEqualTo = 0,
@@ -145,8 +139,7 @@ typedef enum {
 
 /** * Column types for the Attributes table.
  * These values represent the columns available used for searching.
- @see NSFNanoPredicate
- */
+ @see NSFNanoPredicate	*/
 typedef enum {
     /** * The key column. */
     NSFKeyColumn = 1,
@@ -158,8 +151,7 @@ typedef enum {
 
 /** * Comparison criteria operators.
  * These values represent the operations available for concatenating predicates in an expression.
- @see NSFNanoExpression, NSFNanoPredicate
- */
+ @see NSFNanoExpression, NSFNanoPredicate	*/
 typedef enum {
     /** * And */
     NSFAnd = 1,
@@ -169,8 +161,7 @@ typedef enum {
 
 /** * Date comparison options.
  * These values represent the options available when searching and comparing dates.
- @see NSFNanoSearch, NSFNanoPredicate
- */
+ @see NSFNanoSearch, NSFNanoPredicate	*/
 typedef enum {
     /** * Before the specified date */
     NSFBeforeDate = 1,
@@ -182,8 +173,7 @@ typedef enum {
 
 /** * Obtaining search results options.
  * These values represent the options used by the search mechanism to return results.
- @see NSFNanoSearch
- */
+ @see NSFNanoSearch	*/
 typedef enum {
     /** * Returns the objects. */
     NSFReturnObjects = 1,
@@ -193,8 +183,7 @@ typedef enum {
 
 /** * Caching mechanism options.
  * These values represent the options used by the search mechanism to cache results.
- @see NSFNanoEngine
- */
+ @see NSFNanoEngine	*/
 typedef enum {
     /** * Load data at as soon as it's available. Uses more memory, but data is available quicker. */
     CacheAllData = 1,
@@ -206,8 +195,7 @@ typedef enum {
 
 /** * Text encoding options.
  * The following constants are provided by SQLite as possible string encodings.
- @see NSFNanoEngine
- */
+ @see NSFNanoEngine	*/
 typedef enum {
     /** * An 8-bit representation of Unicode characters. */
     NSFEncodingUTF8 = 1,
@@ -221,8 +209,7 @@ typedef enum {
  * These values represent the options used to manipulate the synchronous flag. In NSFNanoEngine it's obtained via
  * \link NSFNanoEngine::setSynchronousMode: - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode \endlink
 
- @see NSFNanoStore, NSFNanoEngine
- */
+ @see NSFNanoStore, NSFNanoEngine	*/
 typedef enum {
     /** * SQLite continues without pausing as soon as it has handed data off to the operating system.
      If the application running SQLite crashes, the data will be safe, but the database might become corrupted if
@@ -242,8 +229,7 @@ typedef enum {
 
 /** * Temporary files location options.
  * These values represent the options used by SQLite to create the temporary files it creates.
- @see NSFNanoEngine
- */
+ @see NSFNanoEngine	*/
 typedef enum {
     /** * When temp_store is DEFAULT (0), the compile-time C preprocessor macro SQLITE_TEMP_STORE is used to determine
      where temporary tables and indices are stored. */
@@ -261,8 +247,7 @@ typedef enum {
  @note Note that the journal_mode for an in-memory database is either MEMORY or OFF and can not be changed to a different value. An attempt to change
  the journal_mode of an in-memory database to any setting other than MEMORY or OFF is ignored. Note also that the journal_mode cannot be changed
  while a transaction is active.
- @see NSFNanoEngine
- */
+ @see NSFNanoEngine	*/
 typedef enum {
     /** * The DELETE journaling mode is the normal behavior. In the DELETE mode, the rollback journal is deleted at the conclusion
      of each transaction. Indeed, the delete operation is the action that causes the transaction to commit. (See the document titled
@@ -295,20 +280,17 @@ typedef enum {
  * This value represents the descriptor used by NanoStore to identify memory-backed document stores. In NSFNanoStore is available via
  * \link NSFNanoStore::filePath - (NSString *)filePath \endlink (assuming the document store was
  * created as a memory-backed document store). In NSFNanoEngine, it's available via its <i>path</i> property.
- @see NSFNanoStore, NSFNanoEngine
- */
+ @see NSFNanoStore, NSFNanoEngine	*/
 extern NSString * const NSFMemoryDatabase;
 
 /** * Temporary store descriptor.
  * This value represents the descriptor used by NanoStore to identify temporary document stores. In NSFNanoStore is available via
  * \link NSFNanoStore::filePath - (NSString *)filePath \endlink (assuming the document store was
  * created as a temporary document store). In NSFNanoEngine, it's available via its \link NSFNanoEngine::path - (NSString *)path \endlink property.
- @see NSFNanoStore, NSFNanoEngine
- */
+ @see NSFNanoStore, NSFNanoEngine	*/
 extern NSString * const NSFTemporaryDatabase;
 
-/** * NanoStore's error code. This value is used by NanoStore when reporting errors.
- */
+/** * NanoStore's error code. This value is used by NanoStore when reporting errors.	*/
 extern NSInteger const NSFNanoStoreErrorKey;
 
 /** * Exception used when an unexpected parameter has been detected. */
@@ -318,6 +300,5 @@ extern NSString * const NSFNonConformingNanoObjectProtocolException;
 /** * Exception used when a NSFNanoObjectProtocol object is not behaving properly (i.e its <i>key</i> property does not return a correct value). */
 extern NSString * const NSFNanoObjectBehaviorException;
 /** * Exception used when a problem occurs while manipulating the document store
- * (adding, updating, deleting, opening a transaction, commit, etc.).
- */
+ * (adding, updating, deleting, opening a transaction, commit, etc.).	*/
 extern NSString * const NSFNanoStoreUnableToManipulateStoreException;

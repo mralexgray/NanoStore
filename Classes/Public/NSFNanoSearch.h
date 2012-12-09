@@ -21,12 +21,10 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 /*! @file NSFNanoSearch.h
- @brief A unit that provides an API to retrieve data from the document store.
- */
+ @brief A unit that provides an API to retrieve data from the document store.	*/
 
 /** @class NSFNanoSearch
  * A unit that provides an API to retrieve data from the document store.
@@ -143,8 +141,7 @@
  
  // Close the document store
  [nanoStore closeWithError:nil];
- @endcode
- */
+ @endcode	*/
 
 #import <Foundation/Foundation.h>
 
@@ -177,31 +174,27 @@
 /** * The filterClass allows to filter the results based on a specific object class. */
 @property (nonatomic, strong, readwrite) NSString *filterClass;
 
-/** @name Creating and Initializing a Search
- */
+/** @name Creating and Initializing a Search	*/
 
 //@{
 
 /** * Creates and returns a search element for a given document store.
  * @param theNanoStore the document store where the search will be performed. Must not be nil.
  * @return An search element upon success, nil otherwise.
- * @see \link initWithStore: - (id)initWithStore:(NSFNanoStore *)theNanoStore \endlink
- */
+ * @see \link initWithStore: - (id)initWithStore:(NSFNanoStore *)theNanoStore \endlink	*/
 
 + (NSFNanoSearch *)searchWithStore:(NSFNanoStore *)theNanoStore;
 
 /** * Initializes a newly allocated search element for a given document store.
  * @param theNanoStore the document store where the search will be performed. Must not be nil.
  * @return An search element upon success, nil otherwise.
- * @see \link searchWithStore: + (NSFNanoSearch *)searchWithStore:(NSFNanoStore *)theNanoStore \endlink
- */
+ * @see \link searchWithStore: + (NSFNanoSearch *)searchWithStore:(NSFNanoStore *)theNanoStore \endlink	*/
 
 - (id)initWithStore:(NSFNanoStore *)theNanoStore;
 
 //@}
 
-/** @name Searching
- */
+/** @name Searching	*/
 
 //@{
 
@@ -210,8 +203,7 @@
  * @param outError is used if an error occurs. May be NULL.
  * @return An array is returned if: 1) the sort has been specified or 2) the return type is \link Globals::NSFReturnKeys NSFReturnKeys \endlink. Otherwise, a dictionary is returned.
  * @note The sort descriptor will be ignored when returning requesting NSFReturnKeys.
- * @see \link searchObjectsAdded:date:returnType:error: - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
- */
+ * @see \link searchObjectsAdded:date:returnType:error: - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink	*/
 
 - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError;
 
@@ -222,8 +214,7 @@
  * @param outError is used if an error occurs. May be NULL.
  * @return If theReturnType is \link Globals::NSFReturnObjects NSFReturnObjects \endlink, a dictionary is returned. Otherwise, an array is returned.
  * @note The sort descriptor will be ignored when returning requesting NSFReturnKeys.
- * @see \link searchObjectsWithReturnType:error: - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
- */
+ * @see \link searchObjectsWithReturnType:error: - (id)searchObjectsWithReturnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink	*/
 
 - (id)searchObjectsAdded:(NSFDateMatchType)theDateMatch date:(NSDate *)theDate returnType:(NSFReturnType)theReturnType error:(out NSError **)outError;
 
@@ -243,8 +234,7 @@
  * NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
  * NSNumber *result = [search aggregateOperation:NSFAverage onAttribute:@"SomeNumber"];
  @endcode
- @note The sort descriptor will be ignored when executing aggregate operations.
- */
+ @note The sort descriptor will be ignored when executing aggregate operations.	*/
 
 - (NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute;
 
@@ -281,8 +271,7 @@
  * NSDictionary *results = [search executeSQL:@"SELECT foo, bar FROM NSFKeys" returnType:NSFReturnObjects error:nil];
  * @endcode
  * @note The sort descriptor will be ignored when executing custom SQL statements.
- * @see \link executeSQL: - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement \endlink
- */
+ * @see \link executeSQL: - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement \endlink	*/
 
 - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError;
 
@@ -315,8 +304,7 @@
  * NSFNanoResult *result = [search executeSQL:@"SELECT COUNT(*) FROM NSFKEYS"];
  * @endcode
  * @see \link executeSQL:returnType:error: - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
- * @note The sort descriptor will be ignored when executing custom SQL statements.
- */
+ * @note The sort descriptor will be ignored when executing custom SQL statements.	*/
 
 - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement;
 
@@ -348,15 +336,13 @@
  * NSFNanoResult *results = [search explainSQL:@"SELECT * FROM NSFValues"];
  * @endcode
  * @see \link executeSQL: - (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement \endlink
- * @see \link executeSQL:returnType:error: - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink
- */
+ * @see \link executeSQL:returnType:error: - (id)executeSQL:(NSString *)theSQLStatement returnType:(NSFReturnType)theReturnType error:(out NSError **)outError \endlink	*/
 
 - (NSFNanoResult *)explainSQL:(NSString *)theSQLStatement;
 
 //@}
 
-/** @name Resetting Values
- */
+/** @name Resetting Values	*/
 
 //@{
 
@@ -373,8 +359,7 @@
  *      - sort                = nil;
  *
  * @note
- * When invoked, it sets the values of search to its initial state. Resetting and performing a search will select all records.
- */
+ * When invoked, it sets the values of search to its initial state. Resetting and performing a search will select all records.	*/
 
 - (void)reset;
 

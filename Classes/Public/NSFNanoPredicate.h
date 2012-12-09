@@ -21,12 +21,10 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 /*! @file NSFNanoPredicate.h
- @brief A predicate is an element of an expression used to perform complex queries.
- */
+ @brief A predicate is an element of an expression used to perform complex queries.	*/
 
 /** @class NSFNanoPredicate
  * A predicate is an element of an expression used to perform complex queries.
@@ -63,8 +61,7 @@
  *
  * @see \link NSFNanoExpression::expressionWithPredicate: + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)thePredicate \endlink
  * @see \link NSFNanoExpression::initWithPredicate: - (id)initWithPredicate:(NSFNanoPredicate *)thePredicate \endlink
- * @see \link NSFNanoExpression::addPredicate:withOperator: - (void)addPredicate:(NSFNanoPredicate *)thePredicate withOperator:(NSFOperator)theOperator \endlink
- */
+ * @see \link NSFNanoExpression::addPredicate:withOperator: - (void)addPredicate:(NSFNanoPredicate *)thePredicate withOperator:(NSFOperator)theOperator \endlink	*/
 
 #import <Foundation/Foundation.h>
 
@@ -79,8 +76,7 @@
 /** * The value to be used for comparison.  */
 @property (nonatomic, copy, readonly) NSString *value;
 
-/** @name Creating and Initializing a Predicate
- */
+/** @name Creating and Initializing a Predicate	*/
 
 //@{
 
@@ -89,8 +85,7 @@
  * @param theMatch is the match operator.
  * @param theValue is the value.
  * @return A predicate which can be used in an NSFNanoExpression.
- * @see \link initWithColumn:matching:value: - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
- */
+ * @see \link initWithColumn:matching:value: - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink	*/
 
 + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue;
 
@@ -99,22 +94,19 @@
  * @param theMatch is the match operator.
  * @param theValue is the value.
  * @return A predicate which can be used in an NSFNanoExpression.
- * @see \link predicateWithColumn:matching:value: + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink
- */
+ * @see \link predicateWithColumn:matching:value: + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue \endlink	*/
 
 - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString *)theValue;
 
 //@}
 
-/** @name Miscellaneous
- */
+/** @name Miscellaneous	*/
 
 //@{
 
 /** * Returns a string representation of the predicate.
  * @note Check properties column, match and value to find out the current state of the predicate.
- * @see \link description - (NSString *)description \endlink
- */
+ * @see \link description - (NSString *)description \endlink	*/
 
 - (NSString *)description;
 

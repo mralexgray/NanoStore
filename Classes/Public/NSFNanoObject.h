@@ -21,12 +21,10 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 /*! @file NSFNanoObject.h
- @brief A generic class that implements all the basic behavior required of a NanoStore object.
- */
+ @brief A generic class that implements all the basic behavior required of a NanoStore object.	*/
 
 /** @class NSFNanoObject
  The basic unit of data in NanoStore is called NanoObject. A NanoObject is any object which conforms to the NSFNanoObjectProtocol protocol.
@@ -174,8 +172,7 @@
  
  // ... or you could pass the key instead
  [nanoStore removeObjectsWithKeysInArray:[NSArray arrayWithObjects:[object nanoObjectKey], nil] error:nil];
- @endcode
- */
+ @endcode	*/
 
 #import "NanoStore.h"
 
@@ -188,14 +185,12 @@
 /** * The class name used to store the NanoObject.  */
 @property (nonatomic, copy, readonly) NSString *originalClassString;
 
-/** @name Creating and Initializing a NanoObject
- */
+/** @name Creating and Initializing a NanoObject	*/
 
 //@{
 
 /** * Creates and returns an empty NanoObject.
- * @return An empty NanoObject upon success, nil otherwise.
- */
+ * @return An empty NanoObject upon success, nil otherwise.	*/
 
 + (NSFNanoObject*)nanoObject;
 
@@ -203,8 +198,7 @@
  * @param theDictionary the information associated with the object. Must not be nil.
  * @return An initialized object upon success, nil otherwise.
  * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
- * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink
- */
+ * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink	*/
 
 + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary;
 
@@ -213,8 +207,7 @@
  * @param theKey the object key associated with the object. If nil, a new key will be assigned.
  * @return An initialized object upon success, nil otherwise.
  * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
- * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink
- */
+ * @see \link initFromDictionaryRepresentation: - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary \endlink	*/
 
 + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary key:(NSString *)theKey;
 
@@ -222,8 +215,7 @@
  * @param theDictionary the information associated with the object. Must not be nil.
  * @return An initialized object upon success, nil otherwise.
  * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
- * @see \link nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary \endlink
- */
+ * @see \link nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary \endlink	*/
 
 - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary;
 
@@ -231,15 +223,13 @@
  * @param theDictionary the information associated with the object. Must not be nil.
  * @param theKey the object key associated with the object. If nil, a new key will be assigned.
  * @return An initialized object upon success, nil otherwise.
- * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.
- */
+ * @attention The dictionary must be serializable. For more information, please read the Property List Programming Guide.	*/
 
 - (id)initFromDictionaryRepresentation:(NSDictionary *)theDictionary key:(NSString *)theKey;
 
 //@}
 
-/** @name Setting and Removing Contents
- */
+/** @name Setting and Removing Contents	*/
 
 //@{
 
@@ -253,31 +243,27 @@
  * @param anObject the value for key. Must not be nil.
  * @param aKey the key for value. Must not be nil.
  * @note Raises an NSInvalidArgumentException if <i>aKey</i> or <i>anObject</i> is nil. If you need to represent a nil value in the dictionary, use NSNull.
- * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink
- */
+ * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink	*/
 
 - (void)setObject:(id)anObject forKey:(NSString *)aKey;
 
 /** * Returns the value associated with a given key.
  * @param aKey the key for value. Must not be nil.
  * @note Raises an NSInvalidArgumentException if <i>aKey</i> or <i>anObject</i> is nil. If you need to represent a nil value in the dictionary, use NSNull.
- * @see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString *)aKey \endlink
- */
+ * @see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString *)aKey \endlink	*/
 
 - (id)objectForKey:(NSString *)aKey;
 
 /** * Removes a given key and its associated value from the NanoObject.
  * @param aKey the key to remove. Must not be nil.
  * @note Does nothing if <i>aKey</i> does not exist.
- * @see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString *)aKey \endlink
- */
+ * @see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString *)aKey \endlink	*/
 
 - (void)removeObjectForKey:(NSString *)aKey;
 
 /** * Empties the NanoObject of its entries.
  * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink
- * @see \link removeObjectsForKeys: - (void)removeObjectsForKeys:(NSArray *)keyArray \endlink
- */
+ * @see \link removeObjectsForKeys: - (void)removeObjectsForKeys:(NSArray *)keyArray \endlink	*/
 
 - (void)removeAllObjects;
 
@@ -285,36 +271,31 @@
  * @param keyArray An array of objects specifying the keys to remove.
  * @note If a key in <i>keyArray</i> does not exist, the entry is ignored.
  * @see \link removeAllObjects - (void)removeAllObjects \endlink
- * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink
- */
+ * @see \link removeObjectForKey: - (void)removeObjectForKey:(NSString *)aKey \endlink	*/
 
 - (void)removeObjectsForKeys:(NSArray *)keyArray;
 
 //@}
 
-/** @name Miscellaneous
- */
+/** @name Miscellaneous	*/
 
 //@{
 
 /** * Compares the receiving NanoObject to another NanoObject.
  * @param otherNanoObject is a NanoObject.
- * @return YES if the contents of otherNanoObject are equal to the contents of the receiving NanoObject, otherwise NO.
- */
+ * @return YES if the contents of otherNanoObject are equal to the contents of the receiving NanoObject, otherwise NO.	*/
 
 - (BOOL)isEqualToNanoObject:(NSFNanoObject *)otherNanoObject;
 
 /** * Returns a dictionary that contains the information stored in the object.
  * @note Check properties info and key to find out the current state of the object.
- * @see \link description - (NSString *)description \endlink
- */
+ * @see \link description - (NSString *)description \endlink	*/
 
 - (NSDictionary *)dictionaryRepresentation;
 
 /** * Returns a string representation of the bag.
  * @note Check properties info and key to find out the current state of the object.
- * @see \link dictionaryRepresentation - (NSString *)dictionaryRepresentation \endlink
- */
+ * @see \link dictionaryRepresentation - (NSString *)dictionaryRepresentation \endlink	*/
 
 - (NSString *)description;
 

@@ -21,12 +21,10 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 /*! @file NSFNanoBag.h
- @brief A bag is a loose collection of objects stored in a document store.
- */
+ @brief A bag is a loose collection of objects stored in a document store.	*/
 
 /** @class NSFNanoBag
  * A bag is a loose collection of objects stored in a document store.
@@ -83,14 +81,12 @@
 /** * To determine whether the bag has uncommited changes.  */
 @property (nonatomic, assign, readonly) BOOL hasUnsavedChanges;
 
-/** @name Creating and Initializing Bags
- */
+/** @name Creating and Initializing Bags	*/
 
 //@{
 
 /** * Creates and returns an empty bag.
- * @return An empty bag upon success, nil otherwise.
- */
+ * @return An empty bag upon success, nil otherwise.	*/
 
 + (NSFNanoBag *)bag;
 
@@ -99,15 +95,13 @@
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
  * @throws NSFUnexpectedParameterException is thrown if theObjects is nil.
  * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown. Use + bag; instead.
- * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
- */
+ * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink	*/
 
 + (NSFNanoBag *)bagWithObjects:(NSArray *)theObjects;
 
 /** * Creates and returns an empty bag with the specified name
  * @param theName the name of the bag. Can be nil.
- * @return An empty bag upon success, nil otherwise.
- */
+ * @return An empty bag upon success, nil otherwise.	*/
 
 + bagWithName:(NSString *)theName;
 
@@ -117,8 +111,7 @@
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
  * @throws NSFUnexpectedParameterException is thrown if theObjects is nil.
  * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown.
- * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink
- */
+ * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink	*/
 
 + bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
 
@@ -128,15 +121,13 @@
  * @return A bag only containing the objects with conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink upon success, nil otherwise.
  * @throws NSFUnexpectedParameterException is thrown if theObjects is nil.
  * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown.
- * @see \link bagWithObjects: + (NSFNanoBag*)bagWithObjects:(NSArray *)theObjects \endlink
- */
+ * @see \link bagWithObjects: + (NSFNanoBag*)bagWithObjects:(NSArray *)theObjects \endlink	*/
 
 - (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects;
 
 //@}
 
-/** @name Adding and Removing Objects
- */
+/** @name Adding and Removing Objects	*/
 
 //@{
 
@@ -146,8 +137,7 @@
  * @return YES upon success, NO otherwise.
  * @warning This value cannot be nil and it must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
  * @throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
- * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
- */
+ * @see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError \endlink	*/
 
 - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError;
 
@@ -157,8 +147,7 @@
  * @return YES upon success, NO otherwise.
  * @warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
  * @throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
- * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
- */
+ * @see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink	*/
 
 - (BOOL)addObjectsFromArray:(NSArray *)theObjects error:(out NSError **)outError;
 
@@ -168,8 +157,7 @@
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
  * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
- * @see \link removeAllObjects - (void)removeAllObjects \endlink
- */
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink	*/
 
 - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject;
 
@@ -177,8 +165,7 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
- * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
- */
+ * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink	*/
 
 - (void)removeAllObjects;
 
@@ -188,8 +175,7 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
  * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
- * @see \link removeAllObjects - (void)removeAllObjects \endlink
- */
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink	*/
 
 - (void)removeObjectsInArray:(NSArray *)theObjects;
 
@@ -199,8 +185,7 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys \endlink
- * @see \link removeAllObjects - (void)removeAllObjects \endlink
- */
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink	*/
 
 - (void)removeObjectWithKey:(NSString *)theObjectKey;
 
@@ -210,15 +195,13 @@
  * @see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
  * @see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray *)theObjects \endlink
  * @see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString *)theObjectKey \endlink
- * @see \link removeAllObjects - (void)removeAllObjects \endlink
- */
+ * @see \link removeAllObjects - (void)removeAllObjects \endlink	*/
 
 - (void)removeObjectsWithKeysInArray:(NSArray *)theKeys;
 
 //@}
 
-/** @name Saving, Reloading and Undoing
- */
+/** @name Saving, Reloading and Undoing	*/
 
 //@{
 
@@ -227,8 +210,7 @@
  * @return YES upon success, NO otherwise.
  * @note Check property hasUnsavedChanges to find out whether the bag has unsaved contents.
  * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(out NSError **)outError \endlink
- * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink
- */
+ * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink	*/
 
 - (BOOL)saveAndReturnError:(out NSError **)outError;
 
@@ -237,8 +219,7 @@
  * @return YES upon success, NO otherwise.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  * @see \link saveAndReturnError: - (BOOL)saveAndReturnError:(out NSError **)outError \endlink
- * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink
- */
+ * @see \link undoChangesWithError: - (BOOL)undoChangesWithError:(out NSError **)outError \endlink	*/
 
 - (BOOL)reloadBagWithError:(out NSError **)outError;
 
@@ -247,63 +228,54 @@
  * @return YES upon success, NO otherwise.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
  * @see \link saveAndReturnError: - (BOOL)saveAndReturnError:(out NSError **)outError \endlink
- * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(out NSError **)outError \endlink
- */
+ * @see \link reloadBagWithError: - (BOOL)reloadBagWithError:(out NSError **)outError \endlink	*/
 
 - (BOOL)undoChangesWithError:(out NSError **)outError;
 
 //@}
 
-/** @name Inflating and Deflating
- */
+/** @name Inflating and Deflating	*/
 
 //@{
 
 /** * Inflates the bag by reconstructing the objects flattened with - (void)deflateBag;
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link deflateBag - (void)deflateBag \endlink
- */
+ * @see \link deflateBag - (void)deflateBag \endlink	*/
 
 - (void)inflateBag;
 
 /** * Releases memory by "flattening" the objects from the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link inflateBag - (void)inflateBag \endlink
- */
+ * @see \link inflateBag - (void)inflateBag \endlink	*/
 
 - (void)deflateBag;
 
 //@}
 
-/** @name Miscellaneous
- */
+/** @name Miscellaneous	*/
 
 //@{
 
 /** * Returns the number of objects currently in the bag.
- * @return The number of objects currently in the bag.
- */
+ * @return The number of objects currently in the bag.	*/
 
 - (NSUInteger)count;
 
 /** * Compares the receiving bag to another bag.
  * @param otherNanoBag is a bag.
- * @return YES if the contents of otherNanoBag are equal to the contents of the receiving bag, otherwise NO.
- */
+ * @return YES if the contents of otherNanoBag are equal to the contents of the receiving bag, otherwise NO.	*/
 
 - (BOOL)isEqualToNanoBag:(NSFNanoBag *)otherNanoBag;
 
 /** * Returns a dictionary that contains the information stored in the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link description - (NSString *)description \endlink
- */
+ * @see \link description - (NSString *)description \endlink	*/
 
 - (NSDictionary *)dictionaryRepresentation;
 
 /** * Returns a string representation of the bag.
  * @note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
- * @see \link dictionaryRepresentation - (NSDictionary *)dictionaryRepresentation \endlink
- */
+ * @see \link dictionaryRepresentation - (NSDictionary *)dictionaryRepresentation \endlink	*/
 
 - (NSString *)description;
 

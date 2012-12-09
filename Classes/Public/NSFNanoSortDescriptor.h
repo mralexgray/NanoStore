@@ -21,16 +21,14 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
- */
+     SUCH DAMAGE.	*/
 
 #import <Foundation/Foundation.h>
 
 #import "NSFNanoGlobals.h"
 
 /*! @file NSFNanoSortDescriptor.h
- @brief A unit that describes a sort to be used in conjunction with a search operation.
- */
+ @brief A unit that describes a sort to be used in conjunction with a search operation.	*/
 
 /** @class NSFNanoSortDescriptor
  * A unit that describes a sort to be used in conjunction with a search operation.
@@ -69,8 +67,7 @@
  
  // Close the document store
  [nanoStore closeWithError:nil];
- @endcode
- */
+ @endcode	*/
 
 @interface NSFNanoSortDescriptor : NSObject
 
@@ -79,8 +76,7 @@
 /** * The property to indicate whether the comparison should be performed in ascending mode */
 @property (nonatomic, readonly) BOOL isAscending;
 
-/** @name Creating and Initializing Expressions
- */
+/** @name Creating and Initializing Expressions	*/
 
 //@{
 
@@ -90,8 +86,7 @@
  * @return A sort descriptor initialized with the specified key and ordering.
  * @warning The parameter theKey must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the key is nil.
- * @see \link initWithKey:ascending: - (id)initWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
- */
+ * @see \link initWithKey:ascending: - (id)initWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink	*/
 
 + (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
 
@@ -101,21 +96,18 @@
  * @return A sort descriptor initialized with the specified key and ordering.
  * @warning The parameter theKey must not be nil.
  * @throws NSFUnexpectedParameterException is thrown if the key is nil.
- * @see \link sortDescriptorWithKey:ascending: - (NSFNanoSortDescriptor *)sortDescriptorWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink
- */
+ * @see \link sortDescriptorWithKey:ascending: - (NSFNanoSortDescriptor *)sortDescriptorWithKey:(NSString *)theKey ascending:(BOOL)ascending \endlink	*/
 
 - (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
 
 //@}
 
-/** @name Miscellaneous
- */
+/** @name Miscellaneous	*/
 
 //@{
 
 /** * Returns a string representation of the sort.
- * @note Check properties attribute and isAscending to find out the current state of the sort.
- */
+ * @note Check properties attribute and isAscending to find out the current state of the sort.	*/
 
 - (NSString *)description;
 

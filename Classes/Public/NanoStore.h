@@ -459,5 +459,4 @@
  
  @section officialsourcerepo_sec Official Source Repository
  The official repository for NanoStore is hosted on GitHub: https://github.com/tciuro/NanoStore
- 
- */
+ 	*/
