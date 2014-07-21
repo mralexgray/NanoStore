@@ -45,7 +45,7 @@
 {
     if (theAttribute.length == 0)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: theAttribute is invalid.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theAttribute is invalid.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [super init])) {

@@ -514,7 +514,7 @@
 
     NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    STAssertTrue (([[searchResults lastObject]isKindOfClass:NSString.class]), @"Expected the key to be a string.");
 
     [nanoStore closeWithError:nil];
     
@@ -547,7 +547,7 @@
     
     NSArray *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    STAssertTrue (([[searchResults lastObject]isKindOfClass:NSString.class]), @"Expected the key to be a string.");
     
     [nanoStore closeWithError:nil];
     
@@ -569,7 +569,7 @@
 
     NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    STAssertTrue (([[searchResults lastObject]isKindOfClass:NSString.class]), @"Expected the key to be a string.");
     
     [nanoStore closeWithError:nil];
     
@@ -602,7 +602,7 @@
     
     NSArray *searchResults = [search searchObjectsAdded:NSFAfterDate date:date returnType:NSFReturnKeys error:nil];
     
-    STAssertTrue (([[searchResults lastObject]isKindOfClass:[NSString class]]), @"Expected the key to be a string.");
+    STAssertTrue (([[searchResults lastObject]isKindOfClass:NSString.class]), @"Expected the key to be a string.");
     
     [nanoStore closeWithError:nil];
     

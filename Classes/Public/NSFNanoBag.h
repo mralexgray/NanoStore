@@ -103,7 +103,7 @@
  * @param theName the name of the bag. Can be nil.
  * @return An empty bag upon success, nil otherwise.	*/
 
-+ bagWithName:(NSString *)theName;
++ (instancetype)bagWithName:(NSString *)theName;
 
 /** * Creates and returns a bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
@@ -113,7 +113,7 @@
  * @warning If theObjects is nil, an NSFUnexpectedParameterException will be thrown.
  * @see \link initBagWithNanoObjects: - (NSFNanoBag*)initBagWithNanoObjects:(NSArray *)theObjects \endlink	*/
 
-+ bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
++ (instancetype) bagWithName:(NSString *)theName andObjects:(NSArray *)theObjects;
 
 /** * Initializes a newly allocated bag with the specified name adding to it the objects contained in the given array.
  * @param theName the name of the bag. Can be nil.
@@ -282,3 +282,4 @@
 //@}
 
 @end
+

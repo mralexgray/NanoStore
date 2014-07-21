@@ -51,7 +51,7 @@
 {
     if (nil == store) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: store is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: store is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -86,8 +86,8 @@
     NSMutableString *description = [NSMutableString string];
     
     [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : 0x%x\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Document store            : 0x%x\n", nanoStore]];
+    [description appendString:[NSString stringWithFormat:@"NanoSearch address        : %@\n", self]];
+    [description appendString:[NSString stringWithFormat:@"Document store            : %@\n", nanoStore]];
     [description appendString:[NSString stringWithFormat:@"Attributes to be returned : %@\n", (attributesToBeReturned ? [attributesToBeReturned componentsJoinedByString:@","] : @"All")]];
     [description appendString:[NSString stringWithFormat:@"Key                       : %@\n", key]];
     [description appendString:[NSString stringWithFormat:@"Attribute                 : %@\n", attribute]];
@@ -106,13 +106,13 @@
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if (0 == [theSQLStatement length]) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is empty.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -133,13 +133,13 @@
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if (0 == [theSQLStatement length]) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is empty.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -155,13 +155,13 @@
 {
     if (nil == theSQLStatement) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is nil.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if (0 == [theSQLStatement length]) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %s]: the SQL statement is empty.", [self class], _cmd]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the SQL statement is empty.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -393,7 +393,7 @@
             NSString *msg = [NSString stringWithFormat:@"SQLite error ID: %ld", status];
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %s]: %@", [self class], _cmd, msg]
+                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: %@", [self class], NSStringFromSelector(_cmd), msg]
                                                                              forKey:NSLocalizedFailureReasonErrorKey]];
         }
         searchResults = nil;
@@ -676,7 +676,7 @@
     NSInteger mutatedStringLength = 0;
     unichar sentinelChar;
     
-    if (YES == [aValue isKindOfClass:[NSString class]]) {
+    if (YES == [aValue isKindOfClass:NSString.class]) {
         switch (match) {
             case NSFEqualTo:
                 value = [[NSMutableString alloc]initWithFormat:@"%@ = '%@'", aColumn, aValue];
@@ -750,7 +750,7 @@
     NSMutableString *segment = [NSMutableString string];
     NSMutableString *value = nil;
 
-    if ((YES == [aValue isKindOfClass:[NSString class]]) || (nil == aValue)) {
+    if ((YES == [aValue isKindOfClass:NSString.class]) || (nil == aValue)) {
         if (nil == aValue) {
             value = [[NSMutableString alloc]initWithFormat:@"(%@ = '%@') OR (%@ GLOB '%@.*') OR (%@ GLOB '*.%@.*') OR (%@ GLOB '*.%@')", NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue, NSFAttribute, anAttributeValue];
             [segment appendString:value];
