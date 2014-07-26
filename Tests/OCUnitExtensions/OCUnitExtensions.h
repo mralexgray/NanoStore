@@ -29,8 +29,6 @@
 #import <SenTestingKit/SenTestLog.h>
 
 @interface SenTestLogWithGrowl : SenTestLog
-{
-}
 
 #if defined(__MACH__)
 + (void)notifyGrowlAboutTestRun:(SenTestRun *)run;

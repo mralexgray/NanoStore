@@ -8,14 +8,18 @@
 
 #import "NanoStore.h"
 #import "NanoStore_Private.h"
-#import "NanoStoreResultTests.h"
 #import "NSFNanoStore_Private.h"
+
+
+@interface NanoStoreResultTests : XCTestCase
+{
+    NSDictionary *_defaultTestInfo;
+}
+@end
 
 @implementation NanoStoreResultTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     

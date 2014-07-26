@@ -27,10 +27,6 @@
 #import "OCUnitExtensions.h"
 #import <SenTestingKit/SenTestRun.h>
 
-@interface SenTestObserver(Internal)
-+ (void)setCurrentObserver:(Class)observer;
-@end
-
 @implementation SenTestLogWithGrowl
 
 #if defined(__MACH__)
@@ -73,13 +69,7 @@
 {
     [self performGrowlRegistration];
     
-    NSString *title = nil;
-    
-    if ([run hasSucceeded]) {
-        title = @"OCUnit Test Suite Passed";
-    } else {
-        title = @"OCUnit Test Suite Failed";
-    }
+    NSString *title = run.hasSucceeded ? @"OCUnit Test Suite Passed" : @"OCUnit Test Suite Failed";
     
     NSString *msg = [NSString stringWithFormat:@"Test Suite '%@'.\n\nPassed %d test%s, with %d failure%s (%d unexpected) in %.3f (%.3f) seconds\n",
         [[run test] name],
@@ -105,14 +95,9 @@
         [notiInfo setObject:[NSNumber numberWithBool:YES] forKey:@"NotificationSticky"];
     }
     
-    NSData *icon = [NSData dataWithContentsOfFile:iconPath];
-    if (icon) {
-        [notiInfo setObject:icon forKey:@"NotificationIcon"];
-    }
+    NSData *icon; if ((icon = [NSData dataWithContentsOfFile:iconPath])) [notiInfo setObject:icon forKey:@"NotificationIcon"];
     
-    [[NSDistributedNotificationCenter defaultCenter]
-        postNotificationName:@"GrowlNotification" 
-                      object:nil userInfo:notiInfo];    
+    [NSDistributedNotificationCenter.defaultCenter postNotificationName:@"GrowlNotification" object:nil userInfo:notiInfo];    
 }
 #endif
 

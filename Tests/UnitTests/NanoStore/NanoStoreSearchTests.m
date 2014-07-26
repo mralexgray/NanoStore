@@ -8,7 +8,6 @@
 
 #import "NanoStore.h"
 #import "NSFNanoSearch_Private.h"
-#import "NanoStoreSearchTests.h"
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoObject_Private.h"
 #import "NSFNanoSortDescriptor.h"
@@ -16,11 +15,17 @@
 #import "NanoPersonTestClass.h"
 #import "NSFNanoGlobals_Private.h"
 
+@interface NanoStoreSearchTests : XCTestCase
+{
+    NSDictionary    *_defaultTestInfo;
+    double          _systemVersion;
+}
+
+@end
+
 @implementation NanoStoreSearchTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
@@ -884,10 +889,11 @@
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    BOOL isClassCorrect = [[searchResults objectForKey:obj1.key]isKindOfClass:[NSFNanoObject class]];
+    id theObject = [searchResults objectForKey:obj1.key];
+//    BOOL isClassCorrect = [isKindOfClass:[]];
     [nanoStore closeWithError:nil];
-    
-    XCTAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
+    XCTAssertTrue (searchResults.count == 2, @"Expected 2 results.");
+    XCTAssertTrue([theObject isKindOfClass:NSFNanoObject.class], @"Got a %@. Expected to find two objects of type NSFNanoObject. ", NSStringFromClass([theObject class]));
 }
 
 - (void)testSearchReturningObjectsWithCalendarDateOfClassNSFNanoObject

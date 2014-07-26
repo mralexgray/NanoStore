@@ -28,18 +28,18 @@
  @brief A unit that describes the result of a search.
  */
 
-/*!	@class NSFNanoResult
+/** @class NSFNanoResult
  * A unit that describes the result of a search.
  *
-	@note
+ * @note
  * The NanoResult is the object representation of a SQL result set. From it, you can obtain the number of rows, the column names and their
  * associated values.
  *
-	@par
+ * @par
  * After obtaining a NanoResult, it's always a good idea to check whether the <i>error</i> property is nil. If so, the result can be assumed to be
  * correct. Otherwise, <i>error</i> will point to the main cause of failure.
  *
-	@details <b>Example:</b>
+ * @details <b>Example:</b>
  @code
  // Instantiate a NanoStore and open it
  NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
@@ -69,73 +69,73 @@
 
 @interface NSFNanoResult : NSObject
 
-/*! Number of rows contained in the result set. */
+/** * Number of rows contained in the result set. */
 @property (nonatomic, assign, readonly) NSUInteger numberOfRows;
-/*! A reference to the error encountered while processing the request, otherwise nil if the request was successful. */
+/** * A reference to the error encountered while processing the request, otherwise nil if the request was successful. */
 @property (nonatomic, strong, readonly) NSError *error;
 
-/*!	@name Accessors
+/** @name Accessors
  */
 
 //@{
 
-/*! Returns a new array containing the columns.
-	@returns An array with the columns retrieved from the result set.
+/** * Returns a new array containing the columns.
+ * @returns An array with the columns retrieved from the result set.
  */
 
-- (NSArray*)columns;
+- (NSArray *)columns;
 
-/*! Returns a new array containing the values for a given column.
-	@param theIndex is the index of the value in the result set.
-	@param theColumn is the name of the column in the result set.
-	@returns An array with the values associated with a given column.
-	@throws NSRangeException is thrown if the index is out of bounds.
+/** * Returns a new array containing the values for a given column.
+ * @param theIndex is the index of the value in the result set.
+ * @param theColumn is the name of the column in the result set.
+ * @returns An array with the values associated with a given column.
+ * @throws NSRangeException is thrown if the index is out of bounds.
  */
 
-- (NSString*)valueAtIndex:(NSUInteger)theIndex forColumn:(NSString*)theColumn;
+- (NSString *)valueAtIndex:(NSUInteger)theIndex forColumn:(NSString *)theColumn;
 
-/*! Returns a new array containing the values for a given column.
-	@param theColumn is the name of the column in the result set.
-	@returns An array with the values associated with a given column.
+/** * Returns a new array containing the values for a given column.
+ * @param theColumn is the name of the column in the result set.
+ * @returns An array with the values associated with a given column.
  */
 
-- (NSArray*)valuesForColumn:(NSString*)theColumn;
+- (NSArray *)valuesForColumn:(NSString *)theColumn;
 
-/*! Returns the first value.
-	@returns The value of the first element from the result set.
+/** * Returns the first value.
+ * @returns The value of the first element from the result set.
  */
 
-- (NSString*)firstValue;
+- (NSString *)firstValue;
 
 //@}
 
-/*!	@name Exporting the Results to a File
+/** @name Exporting the Results to a File
  */
 
 //@{
 
-/*! Saves the result to a file.
-	@param thePath is the location where the result will be saved to a file.
+/** * Saves the result to a file.
+ * @param thePath is the location where the result will be saved to a file.
  */
 
-- (void)writeToFile:(NSString*)thePath;
+- (void)writeToFile:(NSString *)thePath;
 
 //@}
 
-/*!	@name Miscellaneous
+/** @name Miscellaneous
  */
 
 //@{
 
-/*! Returns a string representation of the result.
+/** * Returns a string representation of the result.
  */
 
-- (NSString*)description;
+- (NSString *)description;
 
 /** Returns a JSON representation of the result.
  */
 
-- (NSString*)JSONDescription;
+- (NSString *)JSONDescription;
 
 //@}
 

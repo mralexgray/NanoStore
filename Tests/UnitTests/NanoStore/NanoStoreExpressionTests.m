@@ -7,14 +7,18 @@
 //
 
 #import "NanoStore.h"
-#import "NanoStoreExpressionTests.h"
 #import "NSFNanoStore_Private.h"
+
+@interface NanoStoreExpressionTests : XCTestCase
+{
+    NSDictionary *_defaultTestInfo;
+}
+
+@end
 
 @implementation NanoStoreExpressionTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     

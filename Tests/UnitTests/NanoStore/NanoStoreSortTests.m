@@ -7,13 +7,12 @@
 //
 
 #import "NanoStore.h"
-#import "NanoStoreSortTests.h"
+
+@interface NanoStoreSortTests : XCTestCase @end
 
 @implementation NanoStoreSortTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     NSFSetIsDebugOn (NO);
 }

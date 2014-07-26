@@ -63,12 +63,12 @@
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
     return [[self arrayDescription]lastObject];
 }
 
-- (NSArray *)arrayDescription
+- (NSArray*)arrayDescription
 {
     NSMutableArray *values = [NSMutableArray new];
     
@@ -141,7 +141,7 @@
     return values;
 }
 
-- (NSString *)JSONDescription
+- (NSString*)JSONDescription
 {
     NSArray *values = [self arrayDescription];
     

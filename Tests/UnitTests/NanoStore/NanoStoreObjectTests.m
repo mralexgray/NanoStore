@@ -7,14 +7,18 @@
 //
 
 #import "NanoStore.h"
-#import "NanoStoreObjectTests.h"
 #import "NSFNanoStore_Private.h"
+
+@interface NanoStoreObjectTests : XCTestCase
+{
+    NSDictionary *_defaultTestInfo;
+}
+
+@end
 
 @implementation NanoStoreObjectTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
@@ -31,20 +35,15 @@
 
 #pragma mark -
 
-- (void)testObjectEmptyNanoObject
-{
-    NSFNanoObject *nanoObject = [NSFNanoObject nanoObject];
-    NSString *key = nanoObject.key;
-    XCTAssertTrue (([key length] > 0), @"Expected key to be valid.");
-    NSDictionary *info = nanoObject.info;
-    XCTAssertTrue ((nil == info) && ([info count] == 0), @"Expected info to be valid.");
-    NSString *originalClassString = nanoObject.originalClassString;
-    XCTAssertTrue ((nil == originalClassString), @"Expected originalClassString to be valid.");
+- (void)testObjectEmptyNanoObject { NSFNanoObject *nanoObject = NSFNanoObject.nanoObject;
+
+    NSString                 *key = nanoObject.key;                   XCTAssertTrue (key.length, @"Expected key to be valid.");
+    NSDictionary            *info = nanoObject.info;                  XCTAssertTrue (!info && !info.count, @"Expected info to be valid.");
+    NSString *originalClassString = nanoObject.originalClassString;   XCTAssertTrue (!originalClassString, @"Expected originalClassString to be valid.");
 }
 
-- (void)testObjectForUUID
-{
-    NSFNanoObject *nanoObject = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+- (void)testObjectForUUID { NSFNanoObject *nanoObject = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
+
     NSString *objectKey = [nanoObject nanoObjectKey];
     XCTAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected key to be valid.");
     

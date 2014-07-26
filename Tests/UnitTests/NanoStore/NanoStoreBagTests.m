@@ -7,17 +7,20 @@
 //
 
 #import "NanoStore.h"
-#import "NanoStoreBagTests.h"
 #import "NSFNanoBag.h"
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoStore_Private.h"
 #import "NanoCarTestClass.h"
 
+@interface NanoStoreBagTests : XCTestCase
+{
+    NSDictionary *_defaultTestInfo;
+}
+@end
+
 @implementation NanoStoreBagTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     

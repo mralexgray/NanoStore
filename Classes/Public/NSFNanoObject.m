@@ -35,32 +35,32 @@
     NSMutableDictionary *_info;
 }
 
-+ (NSFNanoObject *)nanoObject
++ (NSFNanoObject*)nanoObject
 {
     return [[self alloc]initNanoObjectFromDictionaryRepresentation:nil forKey:nil store:nil];
 }
 
-+ (NSFNanoObject *)nanoObjectWithDictionary:(NSDictionary *)aDictionary
++ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary*)aDictionary
 {
     return [[self alloc]initNanoObjectFromDictionaryRepresentation:aDictionary forKey:nil store:nil];
 }
 
-+ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary key:(NSString *)theKey
++ (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary*)theDictionary key:(NSString*)theKey
 {
     return [[self alloc]initNanoObjectFromDictionaryRepresentation:theDictionary forKey:theKey store:nil];
 }
 
-- (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary
+- (id)initFromDictionaryRepresentation:(NSDictionary*)aDictionary
 {
     return [self initNanoObjectFromDictionaryRepresentation:aDictionary forKey:nil store:nil];
 }
 
-- (id)initFromDictionaryRepresentation:(NSDictionary *)aDictionary key:(NSString *)theKey
+- (id)initFromDictionaryRepresentation:(NSDictionary*)aDictionary key:(NSString*)theKey
 {
     return [self initNanoObjectFromDictionaryRepresentation:aDictionary forKey:theKey store:nil];
 }
 
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)aDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
+- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary*)aDictionary forKey:(NSString*)aKey store:(NSFNanoStore*)aStore
 {
     // We allow a nil dictionary because: 1) it's interpreted as empty and 2) reduces memory consumption on the caller if no data is being passed.
     
@@ -83,17 +83,17 @@
     return self;
 }
 
-- (void)setStore:(NSFNanoStore *)store
+- (void)setStore:(NSFNanoStore*)store
 {
     _store = store;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
     return [self JSONDescription];
 }
 
-- (NSDictionary *)dictionaryDescription
+- (NSDictionary*)dictionaryDescription
 {
     NSFOrderedDictionary *values = [NSFOrderedDictionary new];
     
@@ -106,7 +106,7 @@
     return values;
 }
 
-- (NSString *)JSONDescription
+- (NSString*)JSONDescription
 {
     NSDictionary *values = [self dictionaryDescription];
     
@@ -116,7 +116,7 @@
     return description;
 }
 
-- (void)addEntriesFromDictionary:(NSDictionary *)otherDictionary
+- (void)addEntriesFromDictionary:(NSDictionary*)otherDictionary
 {
     // Allocate the dictionary if needed
     if (nil == _info) {
@@ -128,24 +128,24 @@
     _hasUnsavedChanges = YES;
 }
 
-- (void)setObject:(id)anObject forKey:(NSString *)aKey
+- (void)setObject:(id)anObject forKey:(NSString*)aKey
 {
     // Allocate the dictionary if needed
     if (nil == _info) {
         _info = [NSMutableDictionary new];
     }
     
-    [_info setObject:anObject forKey:aKey];
+    _info[aKey] = anObject;
     
     _hasUnsavedChanges = YES;
 }
 
-- (id)objectForKey:(NSString *)aKey
+- (id)objectForKey:(NSString*)aKey
 {
-    return [_info objectForKey:aKey];
+    return _info[aKey];
 }
 
-- (void)removeObjectForKey:(NSString *)aKey
+- (void)removeObjectForKey:(NSString*)aKey
 {
     [_info removeObjectForKey:aKey];
     
@@ -159,14 +159,14 @@
     _hasUnsavedChanges = YES;
 }
 
-- (void)removeObjectsForKeys:(NSArray *)keyArray
+- (void)removeObjectsForKeys:(NSArray*)keyArray
 {
     [_info removeObjectsForKeys:keyArray];
     
     _hasUnsavedChanges = YES;
 }
 
-- (BOOL)isEqualToNanoObject:(NSFNanoObject *)otherNanoObject
+- (BOOL)isEqualToNanoObject:(NSFNanoObject*)otherNanoObject
 {
     if (self == otherNanoObject) {
         return YES;
@@ -187,7 +187,7 @@
     return success;
 }
 
-- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError
+- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing*)outError
 {
     [_store addObject:self error:outError];
     
@@ -196,7 +196,7 @@
     return result;
 }
 
-- (NSDictionary *)dictionaryRepresentation
+- (NSDictionary*)dictionaryRepresentation
 {
     return self.info;
 }
@@ -218,19 +218,19 @@
 
 #pragma mark -
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone*)zone
 {
     NSFNanoObject *copy = [[[self class]allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:nil];
     return copy;
 }
 
 
-- (NSDictionary *)nanoObjectDictionaryRepresentation
+- (NSDictionary*)nanoObjectDictionaryRepresentation
 {
     return [self dictionaryRepresentation];
 }
 
-- (NSString *)nanoObjectKey
+- (NSString*)nanoObjectKey
 {
     return self.key;
 }
@@ -244,14 +244,14 @@
 #pragma mark Private Methods
 #pragma mark -
 
-- (void)_setOriginalClassString:(NSString *)theClassString
+- (void)_setOriginalClassString:(NSString*)theClassString
 {
     if (_originalClassString != theClassString) {
         _originalClassString = theClassString;
     }
 }
 
-+ (NSString *)_NSObjectToJSONString:(id)object error:(NSError **)error
++ (NSString*)_NSObjectToJSONString:(id)object error:(NSError **)error
 {
     // Make sure we have a safe object
     object = [NSFNanoObject _safeObjectFromObject:object];
@@ -297,27 +297,27 @@
 	return [object description];
 }
 
-+ (NSDictionary *)_safeDictionaryFromDictionary:(NSDictionary *)dictionary
++ (NSDictionary*)_safeDictionaryFromDictionary:(NSDictionary*)dictionary
 {
 	NSMutableDictionary *cleanDictionary = [NSMutableDictionary dictionary];
     
 	for (NSString *theKey in [dictionary allKeys]) {
-		id object = [dictionary objectForKey:theKey];
+		id object = dictionary[theKey];
         
 		if ([object isKindOfClass:[NSDictionary class]])
-			[cleanDictionary setObject:[NSFNanoObject _safeDictionaryFromDictionary:object] forKey:theKey];
+			cleanDictionary[theKey] = [NSFNanoObject _safeDictionaryFromDictionary:object];
         
 		else if ([object isKindOfClass:[NSArray class]])
-			[cleanDictionary setObject:[NSFNanoObject _safeArrayFromArray:object] forKey:theKey];
+			cleanDictionary[theKey] = [NSFNanoObject _safeArrayFromArray:object];
         
 		else
-			[cleanDictionary setObject:[NSFNanoObject _safeObjectFromObject:object] forKey:theKey];
+			cleanDictionary[theKey] = [NSFNanoObject _safeObjectFromObject:object];
 	}
     
 	return cleanDictionary;
 }
 
-+ (NSArray *)_safeArrayFromArray:(NSArray *)array
++ (NSArray*)_safeArrayFromArray:(NSArray*)array
 {
 	NSMutableArray *cleanArray = [NSMutableArray array];
     

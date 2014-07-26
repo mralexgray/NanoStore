@@ -7,50 +7,25 @@
 //
 
 #import "NanoStore.h"
-#import "NanoStoreGlobalsTests.h"
 #import "NSFNanoGlobals.h"
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoStore_Private.h"
 
-@interface NanoStoreGlobalsTests ()
+@interface NanoStoreGlobalsTests : XCTestCase
 @property (nonatomic) NSDictionary *defaultTestInfo;
 @end
 
 @implementation NanoStoreGlobalsTests
 
-- (void)setUp
-{
-    [super setUp];
-    
-    _defaultTestInfo = [NSFNanoStore _defaultTestData];
-    
-    NSFSetIsDebugOn (NO);
-}
+- (void)setUp { [super setUp]; _defaultTestInfo = NSFNanoStore._defaultTestData; NSFSetIsDebugOn (NO); }
 
-- (void)tearDown
-{
-    _defaultTestInfo = nil;
-    
-    NSFSetIsDebugOn (NO);
-    
-    [super tearDown];
-}
+- (void)tearDown { _defaultTestInfo = nil; NSFSetIsDebugOn (NO); [super tearDown]; }
 
 #pragma mark -
 
-- (void)testCheckDebugOn
-{
-    NSFSetIsDebugOn (YES);
-    BOOL isDebugOn = NSFIsDebugOn();
-    XCTAssertTrue (isDebugOn, @"Expected isDebugOn to be YES.");
-}
+- (void)testCheckDebugOn  { NSFSetIsDebugOn (YES); XCTAssertTrue (NSFIsDebugOn(), @"Expected isDebugOn to be YES."); }
 
-- (void)testCheckDebugOff
-{
-    NSFSetIsDebugOn (NO);
-    BOOL isDebugOn = NSFIsDebugOn();
-    XCTAssertTrue (NO == isDebugOn, @"Expected isDebugOn to be NO.");
-}
+- (void)testCheckDebugOff { NSFSetIsDebugOn (NO);  XCTAssertTrue (!NSFIsDebugOn(), @"Expected isDebugOn to be NO."); }
 
 - (void)testStringFromNanoDataType
 {

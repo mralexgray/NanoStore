@@ -56,7 +56,7 @@
 }
 /** \endcond */
 
-- (NSString *)description
+- (NSString*)description
 {
     NSUInteger numberOfColumns = [[_results allKeys]count];
     
@@ -86,7 +86,7 @@
         // Print the names of the columns
         [description appendString:[NSString stringWithFormat:@"%-15@ | ", @"Row #          "]];
         for (i = 0; i < numberOfColumns; i++) {
-            const char *value = [[columns objectAtIndex:i]UTF8String];
+            const char *value = [columns[i]UTF8String];
             if (numberOfColumns - 1 > i) {
                 [description appendString:[NSString stringWithFormat:@"%-15s | ", value]];
             } else {
@@ -117,7 +117,7 @@
             for (i = 0; i < numberOfRowsToPrint; i++) {
                 [description appendString:[NSString stringWithFormat:@"%-15lu | ", (unsigned long)i]];
                 for (j = 0; j < numberOfColumns; j++) {
-                    NSString *columnName = [columns objectAtIndex:j];
+                    NSString *columnName = columns[j];
                     const char *value = "<plist data>    ";
                     if (NO == [columnName hasSuffix:@"NSFKeyedArchive"]) {
                         value = [[self valueAtIndex:i forColumn:columnName]UTF8String];
@@ -140,7 +140,7 @@
     return description;
 }
 
-- (NSFOrderedDictionary *)dictionaryDescription
+- (NSFOrderedDictionary*)dictionaryDescription
 {
     NSUInteger numberOfColumns = [[_results allKeys]count];
 
@@ -174,7 +174,7 @@
         // Print the names of the columns
         [contentString appendString:[NSString stringWithFormat:@"%-15@ | ", @"Row #          "]];
         for (i = 0; i < numberOfColumns; i++) {
-            const char *value = [[columns objectAtIndex:i]UTF8String];
+            const char *value = [columns[i]UTF8String];
             if (numberOfColumns - 1 > i) {
                 [contentString appendString:[NSString stringWithFormat:@"%-15s | ", value]];
             } else {
@@ -210,7 +210,7 @@
             for (i = 0; i < numberOfRowsToPrint; i++) {
                 [contentString appendString:[NSString stringWithFormat:@"%-15lu | ", (unsigned long)i]];
                 for (j = 0; j < numberOfColumns; j++) {
-                    NSString *columnName = [columns objectAtIndex:j];
+                    NSString *columnName = columns[j];
                     const char *value = "<plist data>    ";
                     if (NO == [columnName hasSuffix:@"NSFPlist"]) {
                         value = [[self valueAtIndex:i forColumn:columnName]UTF8String];
@@ -235,7 +235,7 @@
     return values;
 }
 
-- (NSString *)JSONDescription
+- (NSString*)JSONDescription
 {
     NSFOrderedDictionary *values = [self dictionaryDescription];
     
@@ -250,37 +250,37 @@
 
 #pragma mark -
 
-- (NSArray *)columns
+- (NSArray*)columns
 {
     return [_results allKeys];
 }
 
-- (NSString *)valueAtIndex:(NSUInteger)index forColumn:(NSString *)column
+- (NSString*)valueAtIndex:(NSUInteger)index forColumn:(NSString*)column
 {
-    return [[_results objectForKey:column]objectAtIndex:index];
+    return _results[column][index];
 }
 
-- (NSArray *)valuesForColumn:(NSString *)column
+- (NSArray*)valuesForColumn:(NSString*)column
 {
-    NSArray *values = [_results objectForKey:column];
+    NSArray *values = _results[column];
     
     if (nil == values)
-        values = [NSArray array];
+        values = @[];
     
     return values;
 }
 
-- (NSString *)firstValue
+- (NSString*)firstValue
 {
     NSArray *columns = [_results allKeys];
     if (([columns count] > 0) && (_numberOfRows > 0)) {
-        return [[_results objectForKey:[columns objectAtIndex:0]]objectAtIndex:0];
+        return _results[columns[0]][0];
     }
     
     return nil;
 }
 
-- (void)writeToFile:(NSString *)path;
+- (void)writeToFile:(NSString*)path;
 {
     [_results writeToFile:[path stringByExpandingTildeInPath] atomically:YES];
 }
@@ -289,17 +289,17 @@
 #pragma mark -
 
 /** \cond */
-+ (NSFNanoResult *)_resultWithDictionary:(NSDictionary *)theResults
++ (NSFNanoResult*)_resultWithDictionary:(NSDictionary*)theResults
 {
     return [[self alloc]_initWithDictionary:theResults];
 }
 
-+ (NSFNanoResult *)_resultWithError:(NSError *)theError
++ (NSFNanoResult*)_resultWithError:(NSError*)theError
 {
     return [[self alloc]_initWithError:theError];
 }
 
-- (id)_initWithDictionary:(NSDictionary *)theResults
+- (id)_initWithDictionary:(NSDictionary*)theResults
 {
     if (nil == theResults)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -319,7 +319,7 @@
     return self;
 }
 
-- (id)_initWithError:(NSError *)theError
+- (id)_initWithError:(NSError*)theError
 {
     if (nil == theError)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -354,7 +354,7 @@
         if ([allKeys count] == 0)
             _numberOfRows = 0;
         else
-            _numberOfRows = [[_results objectForKey:[allKeys lastObject]]count];
+            _numberOfRows = [_results[[allKeys lastObject]]count];
     }
 }
 /** \endcond */

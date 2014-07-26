@@ -36,12 +36,12 @@
     /** \endcond */
 }
 
-+ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)aPredicate
++ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate*)aPredicate
 {
     return [[self alloc]initWithPredicate:aPredicate];
 }
 
-- (id)initWithPredicate:(NSFNanoPredicate *)aPredicate
+- (id)initWithPredicate:(NSFNanoPredicate*)aPredicate
 {
     if (nil == aPredicate) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -53,7 +53,7 @@
         _predicates = [NSMutableArray new];
         [_predicates addObject:aPredicate];
         _operators = [NSMutableArray new];
-        [_operators addObject:[NSNumber numberWithInt:NSFAnd]];
+        [_operators addObject:@(NSFAnd)];
     }
     
     return self;
@@ -66,7 +66,7 @@
 
 #pragma mark -
 
-- (void)addPredicate:(NSFNanoPredicate *)aPredicate withOperator:(NSFOperator)someOperator
+- (void)addPredicate:(NSFNanoPredicate*)aPredicate withOperator:(NSFOperator)someOperator
 {
     if (nil == aPredicate)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -77,30 +77,30 @@
     [_operators addObject:[NSNumber numberWithInt:someOperator]];
 }
 
-- (NSString *)description
+- (NSString*)description
 {
     NSArray *values = [self arrayDescription];
     
     return [values componentsJoinedByString:@""];
 }
 
-- (NSArray *)arrayDescription
+- (NSArray*)arrayDescription
 {
     NSUInteger i, count = [_predicates count];
     NSMutableArray *values = [NSMutableArray new];
     
     // We always have one predicate, so make sure add it
-    [values addObject:[[_predicates objectAtIndex:0]description]];
+    [values addObject:[_predicates[0]description]];
     
     for (i = 1; i < count; i++) {
-        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[_operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[_predicates objectAtIndex:i]description]];
+        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([_operators[i]intValue] == NSFAnd) ? @"AND" : @"OR", [_predicates[i]description]];
         [values addObject:compound];
     }
     
     return values;
 }
 
-- (NSString *)JSONDescription
+- (NSString*)JSONDescription
 {
     NSArray *values = [self arrayDescription];
     
