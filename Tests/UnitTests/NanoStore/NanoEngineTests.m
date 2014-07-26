@@ -3,18 +3,22 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 9/11/10.
-//  Copyright 2010 Webbo, L.L.C. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
 #import "NanoStore.h"
-#import "NanoEngineTests.h"
 #import "NSFNanoStore_Private.h"
+
+@interface NanoEngineTests : XCTestCase
+{
+    NSDictionary *_defaultTestInfo;
+}
+
+@end
 
 @implementation NanoEngineTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
@@ -44,7 +48,7 @@
     
     [nanoStore closeWithError:nil];
     
-    STAssertTrue (maxRowUID == 2, @"Expected to find the max RowUID for the given table.");
+    XCTAssertTrue (maxRowUID == 2, @"Expected to find the max RowUID for the given table.");
 }
 
 @end

@@ -3,17 +3,16 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 5/26/11.
-//  Copyright 2010 Webbo, L.L.C. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
 #import "NanoStore.h"
-#import "NanoStoreSortTests.h"
+
+@interface NanoStoreSortTests : XCTestCase @end
 
 @implementation NanoStoreSortTests
 
-- (void)setUp
-{
-    [super setUp];
+- (void)setUp { [super setUp];
     
     NSFSetIsDebugOn (NO);
 }
@@ -32,22 +31,22 @@
     @try {
         sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:nil ascending:YES];
     } @catch (NSException *e) {
-        STAssertTrue (e != nil, @"We should have caught the exception.");
+        XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
 }
 
 - (void)testSortParametersAscending
 {
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Foo" ascending:YES];
-    STAssertTrue ([[sort attribute]isEqualToString:@"Foo"], @"Expected the key to be the same.");
-    STAssertTrue (YES == sort.isAscending, @"Expected the sort order to be the same.");
+    XCTAssertTrue ([[sort attribute]isEqualToString:@"Foo"], @"Expected the key to be the same.");
+    XCTAssertTrue (sort.isAscending, @"Expected the sort order to be the same.");
 }
 
 - (void)testSortParametersDescending
 {
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Bar" ascending:NO];
-    STAssertTrue ([[sort attribute]isEqualToString:@"Bar"], @"Expected the key to be the same.");
-    STAssertTrue (NO == sort.isAscending, @"Expected the sort order to be the same.");
+    XCTAssertTrue ([[sort attribute]isEqualToString:@"Bar"], @"Expected the key to be the same.");
+    XCTAssertTrue (NO == sort.isAscending, @"Expected the sort order to be the same.");
 }
 
 - (void)testSortObjectsAscending
@@ -73,8 +72,8 @@
     
     // Perform the search
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
-    STAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+    XCTAssertTrue ([searchResults count] == 5, @"Expected to find five objects.");
+    XCTAssertTrue ([[[[searchResults objectAtIndex:0]info]objectForKey:@"City"]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
     
@@ -103,8 +102,8 @@
     search.sort = [NSArray arrayWithObject: sortBagNameDescriptor];
     
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    STAssertTrue ([searchResults count] == 4, @"Expected to find four objects.");
-    STAssertTrue (YES == [[[searchResults objectAtIndex:0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
+    XCTAssertTrue ([searchResults count] == 4, @"Expected to find four objects.");
+    XCTAssertTrue ([[[searchResults objectAtIndex:0]name]isEqualToString:@"Barcelona"], @"Expected to find Barcelona.");
     
     // Cleanup
     

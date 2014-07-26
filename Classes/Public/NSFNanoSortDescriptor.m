@@ -2,7 +2,7 @@
      NSFNanoSortDescriptor.m
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -25,16 +25,19 @@
 
 #import "NSFNanoSortDescriptor.h"
 #import "NSFNanoGlobals.h"
+#import "NSFOrderedDictionary.h"
+#import "NSFNanoObject_Private.h"
+
+@interface NSFNanoSortDescriptor ()
+
+/** \cond */
+@property (nonatomic, copy, readwrite) NSString *attribute;
+@property (nonatomic, readwrite) BOOL isAscending;
+/** \endcond */
+
+@end
 
 @implementation NSFNanoSortDescriptor
-{
-    /** \cond */
-    NSString    *attribute;
-    BOOL        isAscending;
-    /** \endcond */
-}
-
-@synthesize attribute, isAscending;
 
 + (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
 {
@@ -49,8 +52,8 @@
                                userInfo:nil]raise];
     
     if ((self = [super init])) {
-        attribute = [theAttribute copy];
-        isAscending = ascending;
+        _attribute = theAttribute;
+        _isAscending = ascending;
     }
     
     return self;
@@ -62,14 +65,28 @@
 /** \endcond */
 
 
-- (NSString*)description
+- (NSString *)description
 {
-    NSMutableString *description = [NSMutableString string];
+    return [self JSONDescription];
+}
+
+- (NSFOrderedDictionary *)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
     
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"Sort descriptor address  : 0x%x\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Attribute                : %@\n", attribute]];
-    [description appendString:[NSString stringWithFormat:@"Is ascending?            : %@\n", (isAscending ? @"YES" : @"NO")]];
+    values[@"Sort descriptor address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Attribute"] = _attribute;
+    values[@"Is ascending?"] = (_isAscending ? @"YES" : @"NO");
+    
+    return values;
+}
+
+- (NSString *)JSONDescription
+{
+    NSFOrderedDictionary *values = [self dictionaryDescription];
+    
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
 }

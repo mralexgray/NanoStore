@@ -2,7 +2,7 @@
      NSFNanoSortDescriptor.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -72,7 +72,7 @@
 @interface NSFNanoSortDescriptor : NSObject
 
 /** * The property key to use when performing a comparison */
-@property (nonatomic, readonly) NSString *attribute;
+@property (nonatomic, copy, readonly) NSString *attribute;
 /** * The property to indicate whether the comparison should be performed in ascending mode */
 @property (nonatomic, readonly) BOOL isAscending;
 
@@ -110,6 +110,12 @@
  * @note Check properties attribute and isAscending to find out the current state of the sort.	*/
 
 - (NSString *)description;
+
+/** Returns a JSON representation of the sort.
+ * @note Check properties attribute and isAscending to find out the current state of the sort.
+ */
+
+- (NSString *)JSONDescription;
 
 //@}
 

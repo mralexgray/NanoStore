@@ -2,7 +2,7 @@
      NSFNanoExpression.m
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -21,53 +21,62 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.	*/
+     SUCH DAMAGE.
+ */
 
 #import "NSFNanoExpression.h"
 #import "NanoStore_Private.h"
+#import "NSFOrderedDictionary.h"
+
+@interface NSFNanoPredicate ()
+
+    /** \cond */
+    @property (nonatomic, assign, readwrite) NSFTableColumnType column;
+    @property (nonatomic, assign, readwrite) NSFMatchType match;
+    @property (nonatomic, readwrite) id value;
+    /** \endcond */
+
+@end
 
 @implementation NSFNanoPredicate
-
-@synthesize column, match, value;
 
 // ----------------------------------------------
 // Initialization / Cleanup
 // ----------------------------------------------
 
-+ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(NSString *)aValue
++ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
 {
-    if (nil == aValue)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
     return [[self alloc]initWithColumn:type matching:matching value:aValue];
 }
 
-- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(NSString *)aValue
+- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
 {
-    if (nil == aValue)
-        [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd)]
-                               userInfo:nil]raise];
-    
+    NSAssert(nil != aValue, @"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd));
+    NSAssert([aValue isKindOfClass:[NSString class]] || [aValue isKindOfClass:[NSNull class]], @"*** -[%@ %@]: value must be of type NSString or NSNull.", [self class], NSStringFromSelector(_cmd));
+
     if ((self = [super init])) {
-        column = type;
-        match = matching;
-        value = aValue;
+        _column = type;
+        _match = matching;
+        _value = aValue;
     }
     
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    NSMutableString *description = [NSMutableString string];
+    return [[self arrayDescription]lastObject];
+}
+
+- (NSArray*)arrayDescription
+{
+    NSMutableArray *values = [NSMutableArray new];
+    
+    NSString *columnValue = nil;
     NSMutableString *mutatedString = nil;
     NSInteger mutatedStringLength = 0;
-    NSString *columnValue = nil;
     
-    switch (column) {
+    switch (_column) {
         case NSFKeyColumn:
             columnValue = NSFKey;
             break;
@@ -79,44 +88,65 @@
             break;
     }
     
-    switch (match) {
+    // Make sure we escape quotes if present and the value is a string
+    if ([_value isKindOfClass:[NSString class]]) {
+        _value = [_value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    } else {
+        _value = NSFStringFromNanoDataType(NSFNanoTypeNULL);
+        columnValue = NSFDatatype;
+    }
+    
+    switch (_match) {
         case NSFEqualTo:
-            [description appendString:[NSString stringWithFormat:@"%@ = '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ = '%@'", columnValue, _value]];
             break;
         case NSFBeginsWith:
-            mutatedString = [NSMutableString stringWithString:value];
-            mutatedStringLength = [value length];
+            mutatedString = [NSMutableString stringWithString:_value];
+            mutatedStringLength = [_value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [description appendString:[NSString stringWithFormat:@"(%@ >= '%@' AND %@ < '%@')", columnValue, value, columnValue, mutatedString]];
+            [values addObject:[NSString stringWithFormat:@"(%@ >= '%@' AND %@ < '%@')", columnValue, _value, columnValue, mutatedString]];
             break;
         case NSFContains:
-            [description appendString:[NSString stringWithFormat:@"%@ GLOB '*%@*'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@*'", columnValue, _value]];
             break;
         case NSFEndsWith:
-            [description appendString:[NSString stringWithFormat:@"%@ GLOB '*%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ GLOB '*%@'", columnValue, _value]];
             break;
         case NSFInsensitiveEqualTo:
-            [description appendString:[NSString stringWithFormat:@"upper(%@) = '%@'", columnValue, [value uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"upper(%@) = '%@'", columnValue, [_value uppercaseString]]];
             break;
         case NSFInsensitiveBeginsWith:
-            mutatedString = [NSMutableString stringWithString:value];
-            mutatedStringLength = [value length];
+            mutatedString = [NSMutableString stringWithString:_value];
+            mutatedStringLength = [_value length];
             [mutatedString replaceCharactersInRange:NSMakeRange(mutatedStringLength - 1, 1) withString:[NSString stringWithFormat:@"%c", [mutatedString characterAtIndex:mutatedStringLength - 1]+1]];
-            [description appendString:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [value uppercaseString], columnValue, [mutatedString uppercaseString]]];
+            [values addObject:[NSString stringWithFormat:@"(upper(%@) >= '%@' AND upper(%@) < '%@')", columnValue, [_value uppercaseString], columnValue, [mutatedString uppercaseString]]];
             break;
         case NSFInsensitiveContains:
-            [description appendString:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", value, @"%"]];
+            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@%@'", columnValue, @"%", _value, @"%"]];
             break;
         case NSFInsensitiveEndsWith:
-            [description appendString:[NSString stringWithFormat:@"%@ LIKE '%@%@'", columnValue, @"%", value]];
+            [values addObject:[NSString stringWithFormat:@"%@ LIKE '%@%@'", columnValue, @"%", _value]];
             break;
         case NSFGreaterThan:
-            [description appendString:[NSString stringWithFormat:@"%@ > '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ > '%@'", columnValue, _value]];
             break;
         case NSFLessThan:
-            [description appendString:[NSString stringWithFormat:@"%@ < '%@'", columnValue, value]];
+            [values addObject:[NSString stringWithFormat:@"%@ < '%@'", columnValue, _value]];
+            break;
+        case NSFNotEqualTo:
+            [values addObject:[NSString stringWithFormat:@"%@ <> '%@'", columnValue, _value]];
             break;
     }
+    
+    return values;
+}
+
+- (NSString*)JSONDescription
+{
+    NSArray *values = [self arrayDescription];
+    
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
     
     return description;
 }

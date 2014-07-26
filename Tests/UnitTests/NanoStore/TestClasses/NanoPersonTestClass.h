@@ -3,17 +3,19 @@
 //  NanoStore
 //
 //  Created by Tito Ciuro on 5/26/12.
-//  Copyright (c) 2012 Webbo, LLC. All rights reserved.
+//  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-#import "NSFNanoObjectProtocol.h"
+#import "NSFNanoObject.h"
 
-@interface NanoPersonTestClass : NSObject <NSFNanoObjectProtocol>
+extern NSString *NanoPersonFirst;
+extern NSString *NanoPersonLast;
+
+@interface NanoPersonTestClass : NSFNanoObject
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *last;
-@property (nonatomic, strong) NSString *key;
 
 @end

@@ -2,7 +2,7 @@
      NSFNanoBag.m
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -21,7 +21,8 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.	*/
+     SUCH DAMAGE.
+ */
 
 #import "NSFNanoBag.h"
 #import "NSFNanoBag_Private.h"
@@ -29,40 +30,39 @@
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoStore_Private.h"
 #import "NSFNanoSearch_Private.h"
+#import "NSFOrderedDictionary.h"
+#import "NSFNanoObject_Private.h"
 
 @implementation NSFNanoBag
 {
-@protected
     /** \cond */
-    NSMutableDictionary     *savedObjects;
-    NSMutableDictionary     *unsavedObjects;
-    NSMutableDictionary     *removedObjects;
+    NSMutableDictionary *_savedObjects;
+    NSMutableDictionary *_unsavedObjects;
+    NSMutableDictionary *_removedObjects;
     /** \endcond */
 }
 
-@synthesize store, name, key, savedObjects, unsavedObjects, removedObjects, hasUnsavedChanges;
-
 + (NSFNanoBag*)bag
 {
-    return [[self alloc]initBagWithName:nil andObjects:[NSArray array]];
+    return [[self alloc]initBagWithName:nil andObjects:@[]];
 }
 
-+ (NSFNanoBag*)bagWithObjects:(NSArray *)someObjects
++ (NSFNanoBag*)bagWithObjects:(NSArray*)someObjects
 {
     return [[self alloc]initBagWithName:nil andObjects:someObjects];
 }
 
-+ bagWithName:(NSString *)theName
++ bagWithName:(NSString*)theName
 {
-    return [[self alloc]initBagWithName:theName andObjects:[NSArray array]];
+    return [[self alloc]initBagWithName:theName andObjects:@[]];
 }
 
-+ bagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
++ bagWithName:(NSString*)theName andObjects:(NSArray*)someObjects
 {
     return [[self alloc]initBagWithName:theName andObjects:someObjects];
 }
 
-- (id)initBagWithName:(NSString *)theName andObjects:(NSArray *)someObjects
+- (id)initBagWithName:(NSString*)theName andObjects:(NSArray*)someObjects
 {
     if (nil == someObjects) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -73,8 +73,8 @@
     if ((self = [self init])) {
         [self addObjectsFromArray:someObjects error:nil];
         
-        name = [theName copy];
-        hasUnsavedChanges = YES;
+        _name = theName;
+        _hasUnsavedChanges = YES;
     }
     
     return self;
@@ -85,20 +85,21 @@
 - (id)init
 {
     if ((self = [super init])) {
-        key = [NSFNanoEngine stringWithUUID];
-        savedObjects = [NSMutableDictionary new];
-        unsavedObjects = [NSMutableDictionary new];
-        removedObjects = [NSMutableDictionary new];
-        
-        hasUnsavedChanges = NO;
+        _store = nil;
+        _key = [NSFNanoEngine stringWithUUID];
+        _name = nil;
+        _savedObjects = [NSMutableDictionary new];
+        _unsavedObjects = [NSMutableDictionary new];
+        _removedObjects = [NSMutableDictionary new];
+        _hasUnsavedChanges = NO;
     }
     
     return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone*)zone
 {
-    NSFNanoBag *copy = [[[self class]allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:store];
+    NSFNanoBag *copy = [[[self class]allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:_store];
     return copy;
 }
 
@@ -110,41 +111,73 @@
 
 #pragma mark -
 
-- (void)setName:(NSString *)aName
+- (void)setName:(NSString*)aName
 {
-    name = [aName copy];
-    hasUnsavedChanges = YES;
+    _name = aName;
+    _hasUnsavedChanges = YES;
 }
 
 /** \endcond */
 
-- (NSString *)name
-{
-    return name;
-}
-
 - (NSUInteger)count
 {
-    return savedObjects.count + unsavedObjects.count;
+    return _savedObjects.count + _unsavedObjects.count;
 }
 
 - (NSString*)description
 {
-    NSMutableString *description = [NSMutableString string];
-    
-    [description appendString:@"\n"];
-    [description appendString:[NSString stringWithFormat:@"NanoBag address      : %@\n", self]];
-    [description appendString:[NSString stringWithFormat:@"Name                 : %@\n", (nil != name) ? name : @"<untitled>"]];
-    [description appendString:[NSString stringWithFormat:@"Document store       : %@\n", store]];
-    [description appendString:[NSString stringWithFormat:@"Has unsaved changes? : %@\n", (hasUnsavedChanges ? @"YES" : @"NO")]];
-    [description appendString:[NSString stringWithFormat:@"Saved objects        : %lu key/value pairs\n", [savedObjects count]]];
-    [description appendString:[NSString stringWithFormat:@"Unsaved objects      : %lu key/value pairs\n", [unsavedObjects count]]];
-    [description appendString:[NSString stringWithFormat:@"Removed objects      : %lu key/value pairs\n", [removedObjects count]]];
+    return [self JSONDescription];
+}
 
+- (NSDictionary*)dictionaryDescription
+{
+    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    
+    values[@"NanoBag address"] = [NSString stringWithFormat:@"%p", self];
+    values[@"Key"] = _key;
+    values[@"Name"] = (nil != _name) ? _name : @"<untitled>";
+    values[@"Document store"] = ([_store dictionaryDescription] ? [_store dictionaryDescription] : @"<nil>");
+    values[@"Has unsaved changes?"] = (_hasUnsavedChanges ? @"YES" : @"NO");
+    values[@"Saved objects"] = @([_savedObjects count]);
+    values[@"Unsaved objects"] = @([_unsavedObjects count]);
+    values[@"Removed objects"] = @([_removedObjects count]);
+    
+    return values;
+}
+
+- (NSString*)JSONDescription
+{
+    NSDictionary *values = [self dictionaryDescription];
+    
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
+    
     return description;
 }
 
-- (BOOL)isEqualToNanoBag:(NSFNanoBag *)otherNanoBag
+- (NSDictionary*)dictionaryRepresentation
+{
+    // Iterate the objects collecting the object keys
+    NSMutableArray *objectKeys = [NSMutableArray new];
+    for (NSString *objectKey in _savedObjects) {
+        [objectKeys addObject:objectKey];
+    }
+    for (NSString *objectKey in _unsavedObjects) {
+        [objectKeys addObject:objectKey];
+    }
+    
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    
+    if (nil != _name) {
+        info[NSF_Private_NSFNanoBag_Name] = _name;
+    }
+    info[NSF_Private_NSFNanoBag_NSFKey] = self.key;
+    info[NSF_Private_NSFNanoBag_NSFObjectKeys] = objectKeys;
+    
+    return info;
+}
+
+- (BOOL)isEqualToNanoBag:(NSFNanoBag*)otherNanoBag
 {
     if (self == otherNanoBag) {
         return YES;
@@ -152,17 +185,17 @@
     
     BOOL success = YES;
     
-    NSArray *sortedArraySelf = [[[self savedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    NSArray *sortedArraySelf = [[_savedObjects allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     NSArray *sortedArrayOther = [[[otherNanoBag savedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     if (NO == [sortedArraySelf isEqualToArray:sortedArrayOther]) {
         success = NO;
     } else {
-        sortedArraySelf = [[[self unsavedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        sortedArraySelf = [[_unsavedObjects allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         sortedArrayOther = [[[otherNanoBag unsavedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         if (NO == [sortedArraySelf isEqualToArray:sortedArrayOther]) {
             success = NO;
         } else {
-            sortedArraySelf = [[[self removedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+            sortedArraySelf = [[_removedObjects allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
             sortedArrayOther = [[[otherNanoBag removedObjects]allKeys]sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
             if (NO == [sortedArraySelf isEqualToArray:sortedArrayOther]) {
                 success = NO;
@@ -173,31 +206,9 @@
     return success;
 }
 
-- (NSDictionary *)dictionaryRepresentation
-{
-    // Iterate the objects collecting the object keys
-    NSMutableArray *objectKeys = [NSMutableArray new];
-    for (NSString *objectKey in self.savedObjects) {
-        [objectKeys addObject:objectKey];
-    }
-    for (NSString *objectKey in self.unsavedObjects) {
-        [objectKeys addObject:objectKey];
-    }
-    
-    NSMutableDictionary *info = [NSMutableDictionary dictionary];
-    
-    if (nil != name) {
-        [info setObject:name forKey:NSF_Private_NSFNanoBag_Name];
-    }
-    [info setObject:self.key forKey:NSF_Private_NSFNanoBag_NSFKey];
-    [info setObject:objectKeys forKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
-    
-    return info;
-}
-
 #pragma mark -
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:(out NSError **)outError
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:(NSError * __autoreleasing*)outError
 {
     if (NO == [(id)object conformsToProtocol:@protocol(NSFNanoObjectProtocol)]) {
         [[NSException exceptionWithName:NSFNonConformingNanoObjectProtocolException
@@ -206,13 +217,13 @@
     }
     
     NSString *objectKey = [(id)object nanoObjectKey];
-    NSDictionary *info = [(id)object dictionaryRepresentation];
+    NSDictionary *info = [object nanoObjectDictionaryRepresentation];
     
     if (objectKey && info) {
-        [savedObjects removeObjectForKey:objectKey];
-        [unsavedObjects setObject:object forKey:objectKey];
-        [removedObjects removeObjectForKey:objectKey];
-        hasUnsavedChanges = YES;
+        [_savedObjects removeObjectForKey:objectKey];
+        _unsavedObjects[objectKey] = object;
+        [_removedObjects removeObjectForKey:objectKey];
+        _hasUnsavedChanges = YES;
     } else {
         NSString *message = nil;
         if (nil == objectKey)
@@ -226,14 +237,13 @@
     return YES;
 }
 
-- (BOOL)addObjectsFromArray:(NSArray *)someObjects error:(out NSError **)outError
+- (BOOL)addObjectsFromArray:(NSArray*)someObjects error:(NSError * __autoreleasing*)outError
 {
     if (nil == someObjects) {
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: the object cannot be added because the list provided is nil.", [self class], NSStringFromSelector(_cmd)]
-                                                                             forKey:NSLocalizedFailureReasonErrorKey]];
+                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: the object cannot be added because the list provided is nil.", [self class], NSStringFromSelector(_cmd)]}];
         }
         return NO;
     }
@@ -262,31 +272,30 @@
 
 - (void)removeAllObjects
 {
-    NSMutableDictionary *objects = [[NSMutableDictionary alloc]initWithCapacity:(savedObjects.count + removedObjects.count)];
+    NSMutableDictionary *objects = [[NSMutableDictionary alloc]initWithCapacity:(_savedObjects.count + _removedObjects.count)];
     
     // Save the object and its key
-    for (id object in savedObjects) {
-        [objects setObject:object forKey:[object performSelector:@selector(key)]];
+    for (id object in _savedObjects) {
+        objects[[object performSelector:@selector(key)]] = object;
     }
     
     // Save the previously removed objects (if any)
-    [objects addEntriesFromDictionary:removedObjects];
+    [objects addEntriesFromDictionary:_removedObjects];
     
-    [savedObjects removeAllObjects];
-    [unsavedObjects removeAllObjects];
-    [removedObjects setDictionary:objects];
-    hasUnsavedChanges = YES;
-    
+    [_savedObjects removeAllObjects];
+    [_unsavedObjects removeAllObjects];
+    [_removedObjects setDictionary:objects];
+    _hasUnsavedChanges = YES;
 }
 
-- (void)removeObjectsInArray:(NSArray *)someObjects
+- (void)removeObjectsInArray:(NSArray*)someObjects
 {
     for (id object in someObjects) {
         [self removeObject:object];
     }
 }
 
-- (void)removeObjectWithKey:(NSString *)objectKey
+- (void)removeObjectWithKey:(NSString*)objectKey
 {
     if (nil == objectKey) {
         [[NSException exceptionWithName:NSFNanoObjectBehaviorException
@@ -295,91 +304,89 @@
     }
     
     // Is the object an existing one?
-    id object = [savedObjects objectForKey:objectKey];
+    id object = _savedObjects[objectKey];
     if (nil != object) {
-        [savedObjects removeObjectForKey:objectKey];
+        [_savedObjects removeObjectForKey:objectKey];
     } else {
         // Is the object still unsaved?
-        object = [unsavedObjects objectForKey:objectKey];
+        object = _unsavedObjects[objectKey];
         if (nil != object) {
-            [unsavedObjects removeObjectForKey:objectKey];
+            [_unsavedObjects removeObjectForKey:objectKey];
         }
     }
     
     if (nil == object) {
         // The object doesn't exist, so there is no need to mark the bag as dirty
     } else {
-        [removedObjects setObject:object forKey:objectKey];
-        hasUnsavedChanges = YES;
+        _removedObjects[objectKey] = object;
+        _hasUnsavedChanges = YES;
     }
 }
 
-- (void)removeObjectsWithKeysInArray:(NSArray *)someKeys
+- (void)removeObjectsWithKeysInArray:(NSArray*)someKeys
 {
     for (NSString *objectKey in someKeys) {
         [self removeObjectWithKey:objectKey];
     }
 }
 
-- (BOOL)saveAndReturnError:(out NSError **)outError
+- (BOOL)saveAndReturnError:(NSError * __autoreleasing*)outError
 {
     if (NO == self.hasUnsavedChanges) {
         return YES;
     }
     
-    if (nil == store) {
+    if (nil == _store) {
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: unable to save the bag. Reason: the store has not been set.", [self class], NSStringFromSelector(_cmd)]
-                                                                             forKey:NSLocalizedFailureReasonErrorKey]];
+                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: unable to save the bag. Reason: the store has not been set.", [self class], NSStringFromSelector(_cmd)]}];
         }
         return NO;
     }
     
-    return [self _saveInStore:store error:outError];
+    return [self _saveInStore:_store error:outError];
 }
 
 #pragma mark -
 
 - (void)deflateBag
 {
-    NSArray *savedObjectsCopy = [[NSArray alloc]initWithArray:[savedObjects allKeys]];
+    NSArray *savedObjectsCopy = [[NSArray alloc]initWithArray:[_savedObjects allKeys]];
     
     for (id saveObjectKey in savedObjectsCopy) {
-        [savedObjects setObject:[NSNull null] forKey:saveObjectKey];
+        _savedObjects[saveObjectKey] = [NSNull null];
     }
     
 }
 
 - (void)inflateBag
 {
-    NSArray *objectKeys = [savedObjects allKeys];
+    NSArray *objectKeys = [_savedObjects allKeys];
     [self _inflateObjectsWithKeys:objectKeys];
 }
 
-- (BOOL)reloadBagWithError:(out NSError **)outError
+- (BOOL)reloadBagWithError:(NSError * __autoreleasing*)outError
 {
     // If the bag is not associated to a document store, there is no need to continue
-    if (nil == store) {
+    if (nil == _store) {
         return YES;
     }
     
     // Refresh the bag to match the contents stored on the database
-    [self _inflateObjectsWithKeys:[NSArray arrayWithObject:key]];
-    NSFNanoBag *savedBag = [savedObjects objectForKey:key];
+    [self _inflateObjectsWithKeys:@[_key]];
+    NSFNanoBag *savedBag = _savedObjects[_key];
     if (nil != savedBag) {
-        [savedObjects removeAllObjects];
-        [savedObjects addEntriesFromDictionary:savedBag.savedObjects];
-        for (NSString *objectKey in unsavedObjects) {
-            [savedObjects removeObjectForKey:objectKey];
+        [_savedObjects removeAllObjects];
+        [_savedObjects addEntriesFromDictionary:savedBag.savedObjects];
+        for (NSString *objectKey in _unsavedObjects) {
+            [_savedObjects removeObjectForKey:objectKey];
         }
     } else {
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"*** -[%@ %@]: the bag could not be refreshed.", [self class], NSStringFromSelector(_cmd)]
-                                                                             forKey:NSLocalizedFailureReasonErrorKey]];
+                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: the bag could not be refreshed.", [self class], NSStringFromSelector(_cmd)]}];
         }
         return NO;
     }
@@ -387,78 +394,79 @@
     return YES;
 }
 
-- (BOOL)undoChangesWithError:(out NSError **)outError
+- (BOOL)undoChangesWithError:(NSError * __autoreleasing*)outError
 {
-    [savedObjects removeAllObjects];
-    [unsavedObjects removeAllObjects];
-    [removedObjects removeAllObjects];
+    [_savedObjects removeAllObjects];
+    [_unsavedObjects removeAllObjects];
+    [_removedObjects removeAllObjects];
     
-    hasUnsavedChanges = NO;
+    _hasUnsavedChanges = NO;
     
     return [self reloadBagWithError:outError];
 }
 
-#pragma mark - Private Methods
+#pragma mark -
+#pragma mark Private Methods
 #pragma mark -
 
 /** \cond */
 
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)dictionary forKey:(NSString *)aKey store:(NSFNanoStore *)aStore
+- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary*)dictionary forKey:(NSString*)aKey store:(NSFNanoStore*)aStore
 {
     if ((self = [self init])) {
-        name = [[dictionary objectForKey:NSF_Private_NSFNanoBag_Name]copy];
-        store = aStore;
-        key = aKey;
-        savedObjects = [NSMutableDictionary new];
-        unsavedObjects = [NSMutableDictionary new];
-        removedObjects = [NSMutableDictionary new];
+        _name = dictionary[NSF_Private_NSFNanoBag_Name];
+        _store = aStore;
+        _key = aKey;
+        _savedObjects = [NSMutableDictionary new];
+        _unsavedObjects = [NSMutableDictionary new];
+        _removedObjects = [NSMutableDictionary new];
         
-        NSArray *objectKeys = [dictionary objectForKey:NSF_Private_NSFNanoBag_NSFObjectKeys];
+        NSArray *objectKeys = dictionary[NSF_Private_NSFNanoBag_NSFObjectKeys];
         
         [self _inflateObjectsWithKeys:objectKeys];
         
-        hasUnsavedChanges = NO;
+        _hasUnsavedChanges = NO;
     }
     
     return self;
 }
 
-- (NSDictionary *)nanoObjectDictionaryRepresentation
+- (NSDictionary*)nanoObjectDictionaryRepresentation
 {
     return [self dictionaryRepresentation];
 }
 
-- (NSString *)nanoObjectKey
+- (NSString*)nanoObjectKey
 {
-    return key;
+    return _key;
 }
 
-- (void)_setStore:(NSFNanoStore *)aStore
+- (void)_setStore:(NSFNanoStore*)aStore
 {
-    store = aStore;
+    _store = aStore;
 }
 
-- (BOOL)_saveInStore:(NSFNanoStore *)someStore error:(out NSError **)outError
+- (BOOL)_saveInStore:(NSFNanoStore*)someStore error:(NSError * __autoreleasing*)outError
 {
     // Save the unsaved objects first...
-    NSArray *contentsToBeSaved = [unsavedObjects allValues];
+    NSArray *contentsToBeSaved = [_unsavedObjects allValues];
     if ([contentsToBeSaved count] > 0) {
         [someStore _addObjectsFromArray:contentsToBeSaved forceSave:YES error:outError];
     }
     
     // Move the existing objects to the unsaved list, in order to save the bag
-    [unsavedObjects addEntriesFromDictionary:savedObjects];
-    [savedObjects removeAllObjects];
-    [removedObjects removeAllObjects];
+    [_unsavedObjects addEntriesFromDictionary:_savedObjects];
+    [_savedObjects removeAllObjects];
+    [_removedObjects removeAllObjects];
     
     // Save the unsaved bag...
-    BOOL success = [someStore _addObjectsFromArray:[NSArray arrayWithObject:self] forceSave:YES error:outError];
+    BOOL success = [someStore _addObjectsFromArray:@[self] forceSave:YES error:outError];
     
-    if (YES == success) {
-        [unsavedObjects removeAllObjects];
+    if (success) {
+        [_unsavedObjects removeAllObjects];
         success = [self reloadBagWithError:outError];
-        if (YES == success) {
-            hasUnsavedChanges = NO;
+        if (success) {
+            _hasUnsavedChanges = NO;
         }
         return success;
     }
@@ -466,17 +474,17 @@
     return success;
 }
 
-- (void)_inflateObjectsWithKeys:(NSArray *)someKeys
+- (void)_inflateObjectsWithKeys:(NSArray*)someKeys
 {
     if ([someKeys count] != 0) {
-        NSFNanoSearch *search = [NSFNanoSearch searchWithStore:store];
+        NSFNanoSearch *search = [NSFNanoSearch searchWithStore:_store];
         NSString *quotedString = [NSFNanoSearch _quoteStrings:someKeys joiningWithDelimiter:@","];
-        NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFPlist, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", quotedString];
+        NSString *theSQLStatement = [NSString stringWithFormat:@"SELECT NSFKey, NSFKeyedArchive, NSFObjectClass FROM NSFKeys WHERE NSFKey IN (%@)", quotedString];
         
         NSDictionary *results = [search executeSQL:theSQLStatement returnType:NSFReturnObjects error:nil];
         
         if (nil != results) {
-            [savedObjects addEntriesFromDictionary:results];
+            [_savedObjects addEntriesFromDictionary:results];
         }
     }
 }
@@ -484,4 +492,3 @@
 /** \endcond */
 
 @end
-

@@ -2,7 +2,7 @@
      NSFNanoSearch_Private.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -28,20 +28,20 @@
 /** \cond */
 
 @interface NSFNanoSearch (Private)
-- (NSDictionary *)_retrieveDataWithError:(out NSError **)outError;
-- (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match;
-- (NSArray *)_dataWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(NSString *)aValue matching:(NSFMatchType)match returning:(NSFReturnType)returnedObjectType;
-- (NSDictionary *)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate *)aDate error:(out NSError **)outError;
-- (NSString *)_preparedSQL;
-- (NSString *)_prepareSQLQueryStringWithKey:(NSString *)aKey attribute:(NSString *)anAttribute value:(id)aValue matching:(NSFMatchType)match;
-- (NSString *)_prepareSQLQueryStringWithExpressions:(NSArray *)someExpressions;
-- (NSArray *)_resultsFromSQLQuery:(NSString *)theSQLStatement;
-+ (NSString *)_prepareSQLQueryStringWithKeys:(NSArray *)someKeys;
-+ (NSString *)_querySegmentForColumn:(NSString *)aColumn value:(id)aValue matching:(NSFMatchType)match;
-+ (NSString *)_querySegmentForAttributeColumnWithValue:(id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(id)aValue;
-- (NSDictionary *)_dictionaryForKeyPath:(NSString *)keyPath value:(id)value;
-+ (NSString *)_quoteStrings:(NSArray *)strings joiningWithDelimiter:(NSString *)delimiter;
-- (id)_sortResultsIfApplicable:(NSDictionary *)results returnType:(NSFReturnType)theReturnType;
+- (NSDictionary*)_retrieveDataWithError:(NSError * __autoreleasing*)outError;
+- (NSArray*)_dataWithKey:(NSString*)aKey attribute:(NSString*)anAttribute value:(NSString*)aValue matching:(NSFMatchType)match;
+- (NSArray*)_dataWithKey:(NSString*)aKey attribute:(NSString*)anAttribute value:(NSString*)aValue matching:(NSFMatchType)match returning:(NSFReturnType)returnedObjectType;
+- (NSDictionary*)_retrieveDataAdded:(NSFDateMatchType)aDateMatch calendarDate:(NSDate*)aDate error:(NSError * __autoreleasing*)outError;
+- (NSString*)_preparedSQL;
+- (NSString*)_prepareSQLQueryStringWithKey:(NSString*)aKey attribute:(NSString*)anAttribute value:(id)aValue matching:(NSFMatchType)match;
+- (NSString*)_prepareSQLQueryStringWithExpressions:(NSArray*)someExpressions;
+- (NSArray*)_resultsFromSQLQuery:(NSString*)theSQLStatement;
++ (NSString*)_prepareSQLQueryStringWithKeys:(NSArray*)someKeys;
++ (NSString*)_querySegmentForColumn:(NSString*)aColumn value:(id)aValue matching:(NSFMatchType)match;
++ (NSString*)_querySegmentForAttributeColumnWithValue:(id)anAttributeValue matching:(NSFMatchType)match valueColumnWithValue:(id)aValue;
+- (NSDictionary*)_dictionaryForKeyPath:(NSString*)keyPath value:(id)value;
++ (NSString*)_quoteStrings:(NSArray*)strings joiningWithDelimiter:(NSString*)delimiter;
+- (id)_sortResultsIfApplicable:(NSDictionary*)results returnType:(NSFReturnType)theReturnType;
 @end
 
 /** \endcond */

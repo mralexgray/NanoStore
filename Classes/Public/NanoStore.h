@@ -2,7 +2,7 @@
      NanoStore.h
      NanoStore
 
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -64,6 +64,13 @@
  - iOS library runs on the device and simulator
  - ARC compliant
  
+ @section latest_changes Latest changes
+ v2.5 - January 1, 2013
+ 
+ Starting with v2.5, the plist mechanism has been replaced with NSKeyedArchiver. There are several reasons for it: it's more compact, faster and uses less memory. Perhaps the most important reason is that it opens the possibility to store other data types.
+ 
+ NSNull is now supported. Big thanks to Wanny (https://github.com/mrwanny) for taking the time to improve this section of NanoStore.
+ 
  @section installation_sec Installation
  
  Building NanoStore is very easy. Just follow these steps:
@@ -85,7 +92,7 @@
  
  @implementation MyDemoAppDelegate
  
- - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+ - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
  {
      // Override point for customization after application launch.
      // Instantiate a NanoStore and open it
@@ -157,7 +164,7 @@
  Until the limit set by NSFNanoEngine's \link NSFNanoEngine::cacheSize - (NSUInteger)cacheSize \endlink has been reached, memory usage would be the same for in-memory store and on-disk store. When the size
  of the store grows beyond \link NSFNanoEngine::cacheSize - (NSUInteger)cacheSize \endlink in-memory stores start to consume more memory than on-disk ones, because it has nowhere to push pages out of the cache.
  
- Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(out NSError **)outError \endlink method.
+ Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's \link createAndOpenStoreWithType:path:error: + (NSFNanoStore*)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath error:(NSError * __autoreleasing*)outError \endlink method.
  
  @details <b>Example:</b>
  @code
@@ -175,7 +182,7 @@
  In the case of file-based document stores, the file gets created automatically if it doesn't exist and then opened. If it already exists, it gets opened and made available for use right away.
  
  There are instances where you may want to fine-tune the engine. Tunning the engine has to be performed before the document store is opened. Another method is available In NSFNanoStore for this
- purpose: \link createStoreWithType:path: + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath \endlink.
+ purpose: \link createStoreWithType:path: + (NSFNanoStore*)createStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath \endlink.
  
  @details <b>Example:</b>
  @code
@@ -226,11 +233,11 @@
  [nanoStore closeWithError:nil];
  @endcode
  
- Alternatively, you can instantiate a \link NSFNanoObject::nanoObject NanoObject \endlink providing a dictionary via \link NSFNanoObject::nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary. \endlink
+ Alternatively, you can instantiate a \link NSFNanoObject::nanoObject NanoObject \endlink providing a dictionary via \link NSFNanoObject::nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary*)theDictionary. \endlink
  NanoStore will assign a UUID automatically when the \link NSFNanoObject::nanoObjectWithDictionary: NanoObject \endlink
  is instantiated. This means that requesting the key from the \link NSFNanoObject::nanoObjectWithDictionary: NanoObject \endlink will return a valid UUID.
  The same holds true for objects that inherit from NSFNanoObject. However, classes that implement the NSFNanoObjectProtocol protocol should
- make sure they return a valid key via \link NSFNanoObjectProtocol::nanoObjectKey - (NSString *)nanoObjectKey \endlink
+ make sure they return a valid key via \link NSFNanoObjectProtocol::nanoObjectKey - (NSString*)nanoObjectKey \endlink
  
  @warning
  If an attempt is made to add or remove an object without a valid key, an exception of type \ref NSFGlobals::NSFNanoObjectBehaviorException
@@ -259,9 +266,9 @@
  
  To remove an object, there are several options available. The most common methods are found in NSFNanoStore:
  
- - \link NSFNanoStore::removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(out NSError **)outError \endlink
- - \link NSFNanoStore::removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError \endlink
- - \link NSFNanoStore::removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(out NSError **)outError \endlink
+ - \link NSFNanoStore::removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing*)outError \endlink
+ - \link NSFNanoStore::removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray*)theKeys error:(NSError * __autoreleasing*)outError \endlink
+ - \link NSFNanoStore::removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray*)theObjects error:(NSError * __autoreleasing*)outError \endlink
 
  @details <b>Example:</b>
  @code
@@ -311,7 +318,7 @@
  - 3) Obtain the results specifying whether objects or keys should be returned (*)
  
  (*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to another method, such as NSFNanoStore
- \link NSFNanoStore::removeObjectsWithKeysInArray:error: -(BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(out NSError **)outError \endlink method.
+ \link NSFNanoStore::removeObjectsWithKeysInArray:error: -(BOOL)removeObjectsWithKeysInArray:(NSArray*)theKeys error:(NSError * __autoreleasing*)outError \endlink method.
  
  @details <b>Example: finding all objects with the attribute 'LastName' and value 'Doe'.</b>
  @code
@@ -338,7 +345,7 @@
  
  // Remove the NanoObjects matching the selected UUIDs
  NSError *outError = nil;
- if (YES == [nanoStore removeObjectsWithKeysInArray:matchingKeys error:&outError]) {
+ if ([nanoStore removeObjectsWithKeysInArray:matchingKeys error:&outError]) {
     NSLog(@"The matching objects have been removed.");
  } else {
     NSLog(@"An error has occurred while removing the matching objects. Reason: %@", [outError localizedDescription]);
@@ -423,6 +430,35 @@
  [sortByLastName release];
  @endcode
 
+ @section paging_limit_sec Paging using Limit and Offset
+ SQLite provides a really cool feature called OFFSET that is usually used with a LIMIT clause.
+ 
+ The LIMIT clause is used to limit the number of results returned in a SQL statement. So if you have 1000 rows in table, but only want to return the first 10, you would do something like this:
+ @code
+ SELECT column FROM table LIMIT 10
+ @endcode
+ Now suppose you wanted to show results 11-20. With the OFFSET keyword it's just as easy. The following query will do:
+ @code
+ SELECT column FROM table LIMIT 10 OFFSET 10
+ @endcode
+ Using pagination is also quite easy with NanoStore. This example based on one of the unit tests provided with the NanoStore distro:
+ @code
+ NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
+ 
+ // Assume we have added objects to the store
+ 
+ NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
+ search.value = @"Barcelona";
+ search.match = NSFEqualTo;
+ search.limit = 5;
+ search.offset = 3;
+ 
+ NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
+ 
+ // Assuming the query matches some results, NanoStore should have retrieved
+ // the first 5 records right after the 3rd one from the result set.
+ @endcode
+ 
  @section performancetips_sec Performance Tips
  
  NanoStore by defaults saves every object to disk one by one. To speed up inserts and edited objects, increase NSFNanoStore's \link NSFNanoStore::saveInterval saveInterval \endlink property.
@@ -441,7 +477,7 @@
  [nanoStore saveStoreAndReturnError:nil];
  @endcode
  
- @note If you set the saveInterval value to anything other one, keep in mind that some objects may still be left unsaved after being added or modified. To make sure they're saved properly, call \link NSFNanoStore::saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(out NSError **)outError \endlink.
+ @note If you set the saveInterval value to anything other one, keep in mind that some objects may still be left unsaved after being added or modified. To make sure they're saved properly, call \link NSFNanoStore::saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing*)outError \endlink.
  
  Choosing a good saveInterval value is more art than science. While testing NanoStore using a medium-sized dictionary (iTunes' MP3 dictionary) setting saveInterval to 1000 resulted in the best performance. You may want to test with different numbers and fine-tune it for your data set.
  

@@ -2,7 +2,7 @@
      NSFNanoBag.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -21,13 +21,16 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.	*/
+     SUCH DAMAGE.
+ */
 
 /*! @file NSFNanoEngine.h
- @brief A wrapper around SQLite, it provides convenience methods as well as "raw" access to the database.	*/
+ @brief A wrapper around SQLite, it provides convenience methods as well as "raw" access to the database.
+ */
 
-/** @class NSFNanoEngine
- * A wrapper around SQLite, it provides convenience methods as well as "raw" access to the database.	*/
+/*!	@class NSFNanoEngine
+ * A wrapper around SQLite, it provides convenience methods as well as "raw" access to the database.
+ */
 
 #import "sqlite3.h"
 
@@ -38,180 +41,205 @@
 
 @interface NSFNanoEngine : NSObject
 
-/** * A reference to the SQLite database.  */
+/*! A reference to the SQLite database.  */
 @property (nonatomic, assign, readonly) sqlite3 *sqlite;
-/** * The file path where the database is located. */
+/*! The file path where the database is located. */
 @property (nonatomic, copy, readonly) NSString *path;
-/** * The cache mechanism being used. */
+/*! The cache mechanism being used. */
 @property (nonatomic, assign, readwrite) NSFCacheMethod cacheMethod;
 
-/** @name Creating and Initializing NanoEngine	*/
+/*!	@name Creating and Initializing NanoEngine
+ */
 
 //@{
 
 /** Creates and returns an engine object at a given file path.
- * @param thePath the file path where the document store will be created. Must not be nil.
- * @return An engine object upon success, nil otherwise.
- * @note To manipulate the document store, you must first open it.
- * @see - (id)initWithPath:(NSString *)thePath;
- * @see - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode;	*/
+	@param thePath the file path where the document store will be created. Must not be nil.
+	@return An engine object upon success, nil otherwise.
+	@note To manipulate the document store, you must first open it.
+	@see - (id)initWithPath:(NSString*)thePath;
+	@see - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode;
+ */
 
-+ (id)databaseWithPath:(NSString *)thePath;
++ (id)databaseWithPath:(NSString*)thePath;
 
 /** Initializes a newly allocated document store at a given file path.
- * @param thePath the file path where the document store will be created. Must not be nil.
- * @return An engine object upon success, nil otherwise.
- * @note To manipulate the document store, you must first open it.
- * @see + (id)databaseWithPath:(NSString *)thePath;
- * @see - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode;	*/
+	@param thePath the file path where the document store will be created. Must not be nil.
+	@return An engine object upon success, nil otherwise.
+	@note To manipulate the document store, you must first open it.
+	@see + (id)databaseWithPath:(NSString*)thePath;
+	@see - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode;
+ */
 
-- (id)initWithPath:(NSString *)thePath;
+- (id)initWithPath:(NSString*)thePath;
 
 //@}
 
-/** @name Opening and Closing	*/
+/*!	@name Opening and Closing
+ */
 
 //@{
 
 /** Opens the engine, making it ready for manipulation.
- * @param theCacheMethod allows to specify hwo the data will be read from the database:. This setting incurs a tradeoff between speed and memory usage.
- * @param useFastMode if set to YES, the document store is opened with all performance turned on (more risky in case of failure). Setting it to NO is slower, but safer. See the note below for more information.
- * @return YES upon success, NO otherwise.
- * @note
+	@param theCacheMethod allows to specify hwo the data will be read from the database:. This setting incurs a tradeoff between speed and memory usage.
+	@param useFastMode if set to YES, the document store is opened with all performance turned on (more risky in case of failure). Setting it to NO is slower, but safer. See the note below for more information.
+	@return YES upon success, NO otherwise.
+	@note
  * When FastMode is activated NanoStore continues without pausing as soon as it has handed data off to the operating system.
  * If the application running NanoStore crashes, the data will be safe, but the database might become corrupted if the operating system crashes
  * or the computer loses power before that data has been written to the disk surface.
  * On the other hand, some operations are as much as 50 or more times faster with FastMode activated.
  * 
- * @par
+	@par
  * If FastMode is deactivated, NanoStore will pause at critical moments to make sure that data has actually been written to the disk surface
  * before continuing. This ensures that if the operating system crashes or if there is a power failure, the database will be uncorrupted after rebooting.
- * Deactivating FastMode is very safe, but it is also slower.	*/
+ * Deactivating FastMode is very safe, but it is also slower.
+ */
 
 - (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode;
 
 /** Closes the database.
- * @return YES upon success, NO otherwise.	*/
+	@return YES upon success, NO otherwise.
+ */
 
 - (BOOL)close;
 
 //@}
 
-/** @name Accessors	*/
+/*!	@name Accessors
+ */
 
 //@{
 
 /** Checks whether the document store is open or closed.
- * @see - (void)close;	*/
+	@see - (void)close;
+ */
 
 - (BOOL)isDatabaseOpen;
 
 /** Checks whether a transaction is currently active.
- * @return YES if a transaction is currently active, NO otherwise.	*/
+	@return YES if a transaction is currently active, NO otherwise.
+ */
 
 - (BOOL)isTransactionActive;
 
 /** Sets the busy timeout.
- * @param theTimeout is number of milliseconds that SQLite will wait to retry a busy operation.
- * @note The acceptable range is between 100 and 5000 milliseconds. If the value is out of range, the 250 millisecond default timeout will be set instead.
- * @see - (unsigned int)busyTimeout;	*/
+	@param theTimeout is number of milliseconds that SQLite will wait to retry a busy operation.
+	@note The acceptable range is between 100 and 5000 milliseconds. If the value is out of range, the 250 millisecond default timeout will be set instead.
+	@see - (unsigned int)busyTimeout;
+ */
 
 - (void)setBusyTimeout:(unsigned int)theTimeout;
 
 /** Returns the current busy timeout.
- * @see - (void)setBusyTimeout:(unsigned int)theTimeout;	*/
+	@see - (void)setBusyTimeout:(unsigned int)theTimeout;
+ */
 
 - (unsigned int)busyTimeout;
 
 /** Returns the recommended cache size based on the system resources available.
- * @return The recommended cache size in number of pages.	*/
+	@return The recommended cache size in number of pages.
+ */
 
 + (NSUInteger)recommendedCacheSize;
 
 /** Sets the cache size.
- * @param numberOfPages is the number of pages.
- * @return YES upon success, NO otherwise.
- * @see + (NSUInteger)recommendedCacheSize;
- * @see - (NSUInteger)cacheSize;	*/
+	@param numberOfPages is the number of pages.
+	@return YES upon success, NO otherwise.
+	@see + (NSUInteger)recommendedCacheSize;
+	@see - (NSUInteger)cacheSize;
+ */
 
 - (BOOL)setCacheSize:(NSUInteger)numberOfPages;
 
 /** Returns the cache size.
- * @return The current cache size.
- * @see + (NSUInteger)recommendedCacheSize;
- * @see - (BOOL)setCacheSize:(NSUInteger)numberOfPages;	*/
+	@return The current cache size.
+	@see + (NSUInteger)recommendedCacheSize;
+	@see - (BOOL)setCacheSize:(NSUInteger)numberOfPages;
+ */
 
 - (NSUInteger)cacheSize;
 
-/** Returns the system's page size	*/
+/** Returns the system's page size
+ */
 
 + (NSInteger)systemPageSize;
 
 /** Sets the page size.
- * @param numberOfBytes is the size of the page.
- * @return YES upon success, NO otherwise.
- * @see + (NSInteger)systemPageSize;
- * @see - (NSUInteger)pageSize;	*/
+	@param numberOfBytes is the size of the page.
+	@return YES upon success, NO otherwise.
+	@see + (NSInteger)systemPageSize;
+	@see - (NSUInteger)pageSize;
+ */
 
 - (BOOL)setPageSize:(NSUInteger)numberOfBytes;
 
 /** Returns the page size.
- * @return The current page size.
- * @see + (NSInteger)systemPageSize;
- * @see - (BOOL)setPageSize:(NSUInteger)numberOfBytes;	*/
+	@return The current page size.
+	@see + (NSInteger)systemPageSize;
+	@see - (BOOL)setPageSize:(NSUInteger)numberOfBytes;
+ */
 
 - (NSUInteger)pageSize;
 
 /** Sets the text encoding type.
- * @param theEncodingType is the encoding type. Can be NSFEncodingUTF8 or NSFEncodingUTF16.
- * @return YES upon success, NO otherwise.
- * @see - (NSFEncodingType)encoding;	*/
+	@param theEncodingType is the encoding type. Can be NSFEncodingUTF8 or NSFEncodingUTF16.
+	@return YES upon success, NO otherwise.
+	@see - (NSFEncodingType)encoding;
+ */
 
 - (BOOL)setEncodingType:(NSFEncodingType)theEncodingType;
 
 /** Returns the encoding type.
- * @return The current encoding type.
- * @see - (BOOL)setEncodingType:(NSFEncodingType)theEncodingType;	*/
+	@return The current encoding type.
+	@see - (BOOL)setEncodingType:(NSFEncodingType)theEncodingType;
+ */
 
 - (NSFEncodingType)encoding;
 
 /** Returns the encoding type from its string equivalent.
- * @return The encoding type if successful, NSFEncodingUnknown otherwise.
- * @see + (NSString *)NSFEncodingTypeToNSString:(NSFEncodingType)value;	*/
+	@return The encoding type if successful, NSFEncodingUnknown otherwise.
+	@see + (NSString*)NSFEncodingTypeToNSString:(NSFEncodingType)value;
+ */
 
-+ (NSFEncodingType)NSStringToNSFEncodingType:(NSString *)value;
++ (NSFEncodingType)NSStringToNSFEncodingType:(NSString*)value;
 
 /** Returns the string equivalent of an encoding type.
- * @return The string equivalent if successful, nil otherwise.
- * @see + (NSFEncodingType)NSStringToNSFEncodingType:(NSString *)value;	*/
+	@return The string equivalent if successful, nil otherwise.
+	@see + (NSFEncodingType)NSStringToNSFEncodingType:(NSString*)value;
+ */
 
-+ (NSString *)NSFEncodingTypeToNSString:(NSFEncodingType)value;
++ (NSString*)NSFEncodingTypeToNSString:(NSFEncodingType)value;
 
 /** Sets the synchronous mode.
- * @param theSynchronousMode is the synchronous mode. Can be SynchronousModeOff, SynchronousModeNormal or SynchronousModeFull.
- * @see - (NSFSynchronousMode)synchronousMode;	*/
+	@param theSynchronousMode is the synchronous mode. Can be SynchronousModeOff, SynchronousModeNormal or SynchronousModeFull.
+	@see - (NSFSynchronousMode)synchronousMode;
+ */
 
 - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
 
 /** Returns the synchronous mode.
- * @return The current synchronous mode.
- * @see - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;	*/
+	@return The current synchronous mode.
+	@see - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
+ */
 
 - (NSFSynchronousMode)synchronousMode;
 
 /** Sets the temporary storage mode.
- * @param theTempStoreMode is the temporary storage mode. Can be TempStoreModeDefault, TempStoreModeFile or TempStoreModeMemory.
- * @see - (NSFTempStoreMode)tempStoreMode;	*/
+	@param theTempStoreMode is the temporary storage mode. Can be TempStoreModeDefault, TempStoreModeFile or TempStoreModeMemory.
+	@see - (NSFTempStoreMode)tempStoreMode;
+ */
 
 - (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
 
 /** Returns the temporary storage mode.
- * @return The current temporary storage mode.
- * @see - (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;	*/
+	@return The current temporary storage mode.
+	@see - (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
+ */
 
 - (NSFTempStoreMode)tempStoreMode;
 
-/** * Journal mode.
+/*! Journal mode.
  * These values represent the options used by SQLite to the the journal mode for databases associated with the current database connection.
  
  @par
@@ -250,230 +278,269 @@
      the journal_mode of an in-memory database to any setting other than <b>MEMORY</b> or <b>OFF</b> is ignored. Note also that the journal_mode cannot be changed
      while a transaction is active.
  
- @see NSFNanoEngine	*/
+ @see NSFNanoEngine
+ */
 
-- (NSFJournalModeMode)journalModeAndReturnError:(out NSError **)outError;
+- (NSFJournalModeMode)journalModeAndReturnError:(NSError * __autoreleasing*)outError;
 
 /** Returns the journal mode.
- * @return The current journal mode.
- * @see - (NSFJournalModeMode)journalModeAndReturnError:(out NSError **)outError;	*/
+	@return The current journal mode.
+	@see - (NSFJournalModeMode)journalModeAndReturnError:(NSError * __autoreleasing*)outError;
+ */
 - (BOOL)setJournalMode:(NSFJournalModeMode)theMode;
 
 /** Returns a new array containing the datatypes recognized by NanoStore.
- * @return A new array containing the datatypes recognized by NanoStore.	*/
+	@return A new array containing the datatypes recognized by NanoStore.
+ */
 
-+ (NSSet *)sharedNanoStoreEngineDatatypes;
++ (NSSet*)sharedNanoStoreEngineDatatypes;
 
 /** Returns the NanoStore engine version.
- * @return The NanoStore engine version.	*/
+	@return The NanoStore engine version.
+ */
 
-+ (NSString *)nanoStoreEngineVersion;
++ (NSString*)nanoStoreEngineVersion;
 
 /** Returns the SQLite version.
- * @return The SQLite version.	*/
+	@return The SQLite version.
+ */
 
-+ (NSString *)sqliteVersion;
++ (NSString*)sqliteVersion;
 
 //@}
 
-/** @name Transactions	*/
+/*!	@name Transactions
+ */
 
 //@{
 
 /** Starts a transaction.
- * @return YES upon success, NO otherwise.
- * @see - (BOOL)beginTransaction;
- * @see - (BOOL)beginDeferredTransaction;
- * @see - (BOOL)commitTransaction;
- * @see - (BOOL)rollbackTransaction;
- * @see - (BOOL)isTransactionActive;	*/
+	@return YES upon success, NO otherwise.
+	@see - (BOOL)beginTransaction;
+	@see - (BOOL)beginDeferredTransaction;
+	@see - (BOOL)commitTransaction;
+	@see - (BOOL)rollbackTransaction;
+	@see - (BOOL)isTransactionActive;
+ */
 
 - (BOOL)beginTransaction;
 
 /** Starts a deferred transaction.
- * @return YES upon success, NO otherwise.
- * @see - (BOOL)beginTransaction;
- * @see - (BOOL)commitTransaction;
- * @see - (BOOL)rollbackTransaction;
- * @see - (BOOL)isTransactionActive;	*/
+	@return YES upon success, NO otherwise.
+	@see - (BOOL)beginTransaction;
+	@see - (BOOL)commitTransaction;
+	@see - (BOOL)rollbackTransaction;
+	@see - (BOOL)isTransactionActive;
+ */
 
 - (BOOL)beginDeferredTransaction;
 
 /** Commits a transaction.
- * @return YES upon success, NO otherwise.
- * @see - (BOOL)beginTransaction;
- * @see - (BOOL)beginDeferredTransaction;
- * @see - (BOOL)rollbackTransaction;
- * @see - (BOOL)isTransactionActive;	*/
+	@return YES upon success, NO otherwise.
+	@see - (BOOL)beginTransaction;
+	@see - (BOOL)beginDeferredTransaction;
+	@see - (BOOL)rollbackTransaction;
+	@see - (BOOL)isTransactionActive;
+ */
 
 - (BOOL)commitTransaction;
 
 /** Rolls back a transaction.
- * @return YES upon success, NO otherwise.
- * @see - (BOOL)beginTransaction;
- * @see - (BOOL)beginDeferredTransaction;
- * @see - (BOOL)commitTransaction;
- * @see - (BOOL)isTransactionActive;	*/
+	@return YES upon success, NO otherwise.
+	@see - (BOOL)beginTransaction;
+	@see - (BOOL)beginDeferredTransaction;
+	@see - (BOOL)commitTransaction;
+	@see - (BOOL)isTransactionActive;
+ */
 
 - (BOOL)rollbackTransaction;
 
 //@}
 
-/** @name Everything About Tables	*/
+/*!	@name Everything About Tables
+ */
 
 //@{
 
 /** Creates a table.
- * @param theTable the name of the table. Must not be nil.
- * @param theColumns the names of the columns. Must not be nil.
- * @param theDatatypes the datatypes of the columns. Must not be nil.
- * @see - (BOOL)dropTable:(NSString *)theTable;
- * @return YES upon success, NO otherwise.
- * @note
+	@param theTable the name of the table. Must not be nil.
+	@param theColumns the names of the columns. Must not be nil.
+	@param theDatatypes the datatypes of the columns. Must not be nil.
+	@see - (BOOL)dropTable:(NSString*)theTable;
+	@return YES upon success, NO otherwise.
+	@note
  * Allowed datatypes: NSFNanoTypeRowUID, NSFNanoTypeString, NSFNanoTypeData, NSFNanoTypeDate and NSFNanoTypeNumber.
- * @throws NSFUnexpectedParameterException is thrown if any of the parameters are nil.
- * @throws NSFUnexpectedParameterException is thrown if the number of columns and datatypes are not equal.	*/
+	@throws NSFUnexpectedParameterException is thrown if any of the parameters are nil.
+	@throws NSFUnexpectedParameterException is thrown if the number of columns and datatypes are not equal.
+ */
 
-- (BOOL)createTable:(NSString *)theTable withColumns:(NSArray *)theColumns datatypes:(NSArray *)theDatatypes;
+- (BOOL)createTable:(NSString*)theTable withColumns:(NSArray*)theColumns datatypes:(NSArray*)theDatatypes;
 
 /** Returns a new array containing the tables found in the main document store.
- * @return A new array containing the tables in the main document store, or an empty array if none is found.
- * @see - (NSDictionary *)allTables;
- * @see - (NSArray *)temporaryTables;	*/
+	@return A new array containing the tables in the main document store, or an empty array if none is found.
+	@see - (NSDictionary*)allTables;
+	@see - (NSArray*)temporaryTables;
+ */
 
-- (NSArray *)tables;
+- (NSArray*)tables;
 
 /** Returns a new array containing the tables found in the main and attached document stores.
- * @return A new array containing the tables in the main and attached document stores, or an empty array if none is found.
- * @note
+	@return A new array containing the tables in the main and attached document stores, or an empty array if none is found.
+	@note
  * The dictionary key is the document store name and its value, an array of the tables associated with that document store.
- * @see - (NSArray *)tables;
- * @see - (NSArray *)temporaryTables;	*/
+	@see - (NSArray*)tables;
+	@see - (NSArray*)temporaryTables;
+ */
 
-- (NSDictionary *)allTables;
+- (NSDictionary*)allTables;
 
 /** Returns a new array containing the columns for a given table.
- * @param theTable is the name of the table.
- * @return A new array containing the columns for a given table, or an empty array if none is found.	*/
+	@param theTable is the name of the table.
+	@return A new array containing the columns for a given table, or an empty array if none is found.
+ */
 
-- (NSArray *)columnsForTable:(NSString *)theTable;
+- (NSArray*)columnsForTable:(NSString*)theTable;
 
 /** Returns a new array containing the temporary tables found in the main document store.
- * @return A new array containing the temporary tables in the main document store, or an empty array if none is found.
- * @see - (NSArray *)tables;
- * @see - (NSDictionary *)allTables;	*/
+	@return A new array containing the temporary tables in the main document store, or an empty array if none is found.
+	@see - (NSArray*)tables;
+	@see - (NSDictionary*)allTables;
+ */
 
-- (NSArray *)temporaryTables;
+- (NSArray*)temporaryTables;
 
 /** Returns a new array containing the datatypes for a given table.
- * @param theTable is the name of the table.
- * @return A new array containing the datatypes for a given table, or an empty array if none is found.	*/
+	@param theTable is the name of the table.
+	@return A new array containing the datatypes for a given table, or an empty array if none is found.
+ */
 
-- (NSArray *)datatypesForTable:(NSString *)theTable;
+- (NSArray*)datatypesForTable:(NSString*)theTable;
 
 /** Removes the table from the document store.
- * @param theTable is the name of the table.
- * @return YES upon success, NO otherwise.
- * @see - (BOOL)createTable:(NSString *)theTable withColumns:(NSArray *)theColumns datatypes:(NSArray *)theDatatypes;	*/
+	@param theTable is the name of the table.
+	@return YES upon success, NO otherwise.
+	@see - (BOOL)createTable:(NSString*)theTable withColumns:(NSArray*)theColumns datatypes:(NSArray*)theDatatypes;
+ */
 
-- (BOOL)dropTable:(NSString *)theTable;
+- (BOOL)dropTable:(NSString*)theTable;
 
 //@}
 
-/** @name Everything about Indexes	*/
+/*!	@name Everything about Indexes
+ */
 
 //@{
 
 /** Creates an index.
- * @param theColumn is the name of the column.
- * @param theTable is the name of the table.
- * @param isUnique whether the index should be unique or allow duplicates.
- * @return YES upon success, NO otherwise.
- * @see - (void)dropIndex:(NSString *)indexName;	*/
+	@param theColumn is the name of the column.
+	@param theTable is the name of the table.
+	@param isUnique whether the index should be unique or allow duplicates.
+	@return YES upon success, NO otherwise.
+	@see - (void)dropIndex:(NSString*)indexName;
+ */
 
-- (BOOL)createIndexForColumn:(NSString *)theColumn table:(NSString *)theTable isUnique:(BOOL)isUnique;
+- (BOOL)createIndexForColumn:(NSString*)theColumn table:(NSString*)theTable isUnique:(BOOL)isUnique;
 
 /** Returns a new array containing the indexes found in the main document store.
- * @return A new array containing the indexes in the main document store, or an empty array if none is found.	*/
+	@return A new array containing the indexes in the main document store, or an empty array if none is found.
+ */
 
-- (NSArray *)indexes;
+- (NSArray*)indexes;
 
 /** Returns a new array containing the indexes found for a given table.
- * @return A new array containing the indexes for a given table, or an empty array if none is found.	*/
+	@return A new array containing the indexes for a given table, or an empty array if none is found.
+ */
 
-- (NSArray *)indexedColumnsForTable:(NSString *)theTable;
+- (NSArray*)indexedColumnsForTable:(NSString*)theTable;
 
 /** Removes an index.
- * @param theIndex is the name of the index to be removed.
- * @see - (BOOL)createIndexForColumn:(NSString *)theColumn table:(NSString *)theTable isUnique:(BOOL)isUnique;	*/
+	@param theIndex is the name of the index to be removed.
+	@see - (BOOL)createIndexForColumn:(NSString*)theColumn table:(NSString*)theTable isUnique:(BOOL)isUnique;
+ */
 
-- (void)dropIndex:(NSString *)theIndex;
+- (void)dropIndex:(NSString*)theIndex;
 
 //@}
 
-/** @name Database Maintenance	*/
+/*!	@name Database Maintenance
+ */
 
 //@{
 
 /** Compacts the database, attempting to reclaim unused space.
- * @return YES upon success, NO otherwise.
- * @note If a transaction is open, the operation will not proceed and NO will be returned instead.	*/
+	@return YES upon success, NO otherwise.
+	@note If a transaction is open, the operation will not proceed and NO will be returned instead.
+ */
 
 - (BOOL)compact;
 
 /** Performs an integrity check on the database.
- * @return YES upon success, NO otherwise.
- * @note If a transaction is open, the operation will not proceed and NO will be returned instead.	*/
+	@return YES upon success, NO otherwise.
+	@note If a transaction is open, the operation will not proceed and NO will be returned instead.
+ */
 
 - (BOOL)integrityCheck;
 
 //@}
 
-/** @name Searching and Retrieving	*/
+/*!	@name Searching and Retrieving
+ */
 
 //@{
 
 /** Executes a SQL statement.
- * @param theSQLStatement is the SQL statement to be executed. Must not be nil or an empty string.
- * @return Returns a NSFNanoResult.
- * @throws NSFUnexpectedParameterException is thrown if the statement is nil or an empty string.
- * @attention Check NSFNanoResult's error property to find out if there was a problem executing the statement.
- * @note The result set will always contain string values. If you need to obtain NanoObjects instead, use the NSFNanoSearch class.
- * @see NSFNanoSearch	*/
+	@param theSQLStatement is the SQL statement to be executed. Must not be nil or an empty string.
+	@return Returns a NSFNanoResult.
+	@throws NSFUnexpectedParameterException is thrown if the statement is nil or an empty string.
+	@attention Check NSFNanoResult's error property to find out if there was a problem executing the statement.
+	@note The result set will always contain string values. If you need to obtain NanoObjects instead, use the NSFNanoSearch class.
+	@see NSFNanoSearch
+ */
 
-- (NSFNanoResult *)executeSQL:(NSString *)theSQLStatement;
+- (NSFNanoResult*)executeSQL:(NSString*)theSQLStatement;
 
 /** Returns the largest ROWUID for a given table.
- * @param theTable is the table from which to obtain the largest ROWUID. Must not be nil.
- * @return The largest ROWUID in use.
- * @throws NSFUnexpectedParameterException is thrown if the table is nil.	*/
+	@param theTable is the table from which to obtain the largest ROWUID. Must not be nil.
+	@return The largest ROWUID in use.
+	@throws NSFUnexpectedParameterException is thrown if the table is nil.
+ */
 
-- (long long)maxRowUIDForTable:(NSString *)theTable;
+- (long long)maxRowUIDForTable:(NSString*)theTable;
 
 //@}
 
-/** @name Miscellaneous	*/
+/*!	@name Miscellaneous
+ */
 
 //@{
 
 /** Returns a string containing the base 64 representation of a data element.
- * @return A string encoded in base 64 format.	*/
+	@return A string encoded in base 64 format.
+ */
 
-+ (NSString *)encodeDataToBase64:(NSData *)theData;
++ (NSString*)encodeDataToBase64:(NSData*)theData;
 
 /** Returns a data element containing from a base 64 formatted string.
- * @return A data element.	*/
+	@return A data element.
+ */
 
-+ (NSData *)decodeDataFromBase64:(NSString *)theEncodedData;
++ (NSData*)decodeDataFromBase64:(NSString*)theEncodedData;
 
 /** Returns a UUID string
- * @return A string containing a representation of a UUID.	*/
+	@return A string containing a representation of a UUID.
+ */
 
-+ (NSString *)stringWithUUID;
++ (NSString*)stringWithUUID;
 
-/** Returns a string representation of the engine.	*/
+/** Returns a string representation of the engine.
+ */
 
-- (NSString *)description;
+- (NSString*)description;
+
+/** Returns a JSON representation of the engine.
+ */
+
+- (NSString*)JSONDescription;
 
 //@}
 

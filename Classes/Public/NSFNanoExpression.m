@@ -2,7 +2,7 @@
      NSFNanoExpression.m
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -25,23 +25,22 @@
 
 #import "NSFNanoExpression.h"
 #import "NanoStore_Private.h"
+#import "NSFOrderedDictionary.h"
 
 @implementation NSFNanoExpression
 {
     /** \cond */
-    NSMutableArray      *predicates;
-    NSMutableArray      *operators;
+    NSMutableArray *_predicates;
+    NSMutableArray *_operators;
     /** \endcond */
 }
 
-@synthesize predicates, operators;
-
-+ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate *)aPredicate
++ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate*)aPredicate
 {
     return [[self alloc]initWithPredicate:aPredicate];
 }
 
-- (id)initWithPredicate:(NSFNanoPredicate *)aPredicate
+- (id)initWithPredicate:(NSFNanoPredicate*)aPredicate
 {
     if (nil == aPredicate) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -50,10 +49,10 @@
     }
     
     if ((self = [super init])) {
-        predicates = [NSMutableArray new];
-        [predicates addObject:aPredicate];
-        operators = [NSMutableArray new];
-        [operators addObject:[NSNumber numberWithInt:NSFAnd]];
+        _predicates = [NSMutableArray new];
+        [_predicates addObject:aPredicate];
+        _operators = [NSMutableArray new];
+        [_operators addObject:@(NSFAnd)];
     }
     
     return self;
@@ -65,33 +64,48 @@
 /** \endcond */
 
 
-- (void)addPredicate:(NSFNanoPredicate *)aPredicate withOperator:(NSFOperator)someOperator
+- (void)addPredicate:(NSFNanoPredicate*)aPredicate withOperator:(NSFOperator)someOperator
 {
     if (nil == aPredicate)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
                                  reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", [self class], NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
-    [predicates addObject:aPredicate];
-    [operators addObject:[NSNumber numberWithInt:someOperator]];
+    [_predicates addObject:aPredicate];
+    [_operators addObject:[NSNumber numberWithInt:someOperator]];
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    NSUInteger i, count = [predicates count];
+    NSArray *values = [self arrayDescription];
+    
+    return [values componentsJoinedByString:@""];
+}
+
+- (NSArray*)arrayDescription
+{
+    NSUInteger i, count = [_predicates count];
     NSMutableArray *values = [NSMutableArray new];
     
     // We always have one predicate, so make sure add it
-    [values addObject:[[predicates objectAtIndex:0]description]];
-
+    [values addObject:[_predicates[0]description]];
+    
     for (i = 1; i < count; i++) {
-        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([[operators objectAtIndex:i]intValue] == NSFAnd) ? @"AND" : @"OR", [[predicates objectAtIndex:i]description]];
+        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([_operators[i]intValue] == NSFAnd) ? @"AND" : @"OR", [_predicates[i]description]];
         [values addObject:compound];
     }
     
-    NSString *value = [values componentsJoinedByString:@""];
+    return values;
+}
+
+- (NSString*)JSONDescription
+{
+    NSArray *values = [self arrayDescription];
     
-    return value;
+    NSError *outError = nil;
+    NSString *description = [NSFNanoObject _NSObjectToJSONString:values error:&outError];
+    
+    return description;
 }
 
 @end

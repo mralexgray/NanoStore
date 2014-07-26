@@ -2,7 +2,7 @@
      NSFNanoGlobals_Private.h
      NanoStore
      
-     Copyright (c) 2010 Webbo, L.L.C. All rights reserved.
+     Copyright (c) 2013 Webbo, Inc. All rights reserved.
      
      Redistribution and use in source and binary forms, with or without modification, are permitted
      provided that the following conditions are met:
@@ -21,7 +21,8 @@
      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
      CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.	*/
+     SUCH DAMAGE.
+ */
 
 #import <Foundation/Foundation.h>
 #import "NSFNanoGlobals.h"
@@ -49,7 +50,12 @@
  
  Note: there isn't a dedicated data type homologous to CFBoolean in Cocoa. Therefore,
  NSNumber will be used for that purpose.
- 	*/
+ 
+ */
+
+extern NSDictionary * safeJSONDictionaryFromDictionary (NSDictionary *dictionary);
+extern NSArray * safeJSONArrayFromArray (NSArray *array);
+extern id safeJSONObjectFromObject (id object);
 
 extern NSString * NSFStringFromMatchType (NSFMatchType aMatchType);
 
@@ -65,12 +71,13 @@ extern NSString * const NSFValue;
 extern NSString * const NSFDatatype;
 extern NSString * const NSFCalendarDate;
 extern NSString * const NSFObjectClass;
-extern NSString * const NSFPlist;
+extern NSString * const NSFKeyedArchive;
 extern NSString * const NSFAttribute;
 
+#pragma mark -
 
 extern NSString * const NSF_Private_NSFKeys_NSFKey;
-extern NSString * const NSF_Private_NSFKeys_NSFPlist;
+extern NSString * const NSF_Private_NSFKeys_NSFKeyedArchive;
 extern NSString * const NSF_Private_NSFValues_NSFKey;
 extern NSString * const NSF_Private_NSFValues_NSFAttribute;
 extern NSString * const NSF_Private_NSFValues_NSFValue;
@@ -82,14 +89,12 @@ extern NSString * const NSF_Private_ToDeleteTableKey;
 extern NSInteger const NSF_Private_InvalidParameterDataCodeKey;
 extern NSInteger const NSF_Private_MacOSXErrorCodeKey;
 
+#pragma mark -
 
 extern NSString * const NSFP_TableIdentifier;
 extern NSString * const NSFP_ColumnIdentifier;
 extern NSString * const NSFP_DatatypeIdentifier;
-extern NSString * const NSFP_FullDatatypeIdentifier;
 
 extern NSString * const NSFRowIDColumnName;         // SQLite's standard UID property
-
-extern NSString * const NSFP_SchemaTable;           // Private, reserved NSF table name to store datatypes
 
 /** \endcond */
