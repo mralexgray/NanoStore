@@ -2,26 +2,6 @@
      NSFNanoBag.h
      NanoStore
      
-     Copyright (c) 2013 Webbo, Inc. All rights reserved.
-     
-     Redistribution and use in source and binary forms, with or without modification, are permitted
-     provided that the following conditions are met:
-     
-     * Redistributions of source code must retain the above copyright notice, this list of conditions
-     and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions
-     and the following disclaimer in the documentation and/or other materials provided with the distribution.
-     * Neither the name of Webbo nor the names of its contributors may be used to endorse or promote
-     products derived from this software without specific prior written permission.
-     
-     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-     WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-     PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-     PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-     OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
  */
 
 /*! @file NSFNanoBag.h
@@ -136,10 +116,10 @@
 	@return YES upon success, NO otherwise.
 	@warning This value cannot be nil and it must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
 	@throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
-	@see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray*)theObjects error:(NSError * __autoreleasing*)outError \endlink
+	@see \link addObjectsFromArray:error: - (BOOL)addObjectsFromArray:(NSArray*)theObjects error:ERROR_PTR \endlink
  */
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing*)outError;
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:ERROR_PTR;
 
 /*! Adds a series of \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant objects to the bag.
 	@param theObjects is an array of objects to be added to the bag. The objects must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
@@ -147,10 +127,10 @@
 	@return YES upon success, NO otherwise.
 	@warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
 	@throws NSFNonConformingNanoObjectProtocolException is thrown if the object is non-\link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink compliant.
-	@see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing*)outError \endlink
+	@see \link addObject:error: - (BOOL)addObject:(id <NSFNanoObjectProtocol>)theObject error:ERROR_PTR \endlink
  */
 
-- (BOOL)addObjectsFromArray:(NSArray*)theObjects error:(NSError * __autoreleasing*)outError;
+- (BOOL)addObjectsFromArray:(NSArray*)theObjects error:ERROR_PTR;
 
 /*! Removes the specified object from the bag.
 	@param theObject the object to be removed from the bag.
@@ -211,31 +191,31 @@
 	@param outError is used if an error occurs. May be NULL.
 	@return YES upon success, NO otherwise.
 	@note Check property hasUnsavedChanges to find out whether the bag has unsaved contents.
-	@see \link reloadBagWithError: - (BOOL)reloadBagWithError:(NSError * __autoreleasing*)outError \endlink
-	@see \link undoChangesWithError: - (BOOL)undoChangesWithError:(NSError * __autoreleasing*)outError \endlink
+	@see \link reloadBagWithError: - (BOOL)reloadBagWithError:ERROR_PTR \endlink
+	@see \link undoChangesWithError: - (BOOL)undoChangesWithError:ERROR_PTR \endlink
  */
 
-- (BOOL)saveAndReturnError:(NSError * __autoreleasing*)outError;
+- (BOOL)saveAndReturnError:ERROR_PTR;
 
 /*! Refreshes the bag to match the contents stored in the document store. The unsaved contents are preserved.
 	@param outError is used if an error occurs. May be NULL.
 	@return YES upon success, NO otherwise.
 	@note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
-	@see \link saveAndReturnError: - (BOOL)saveAndReturnError:(NSError * __autoreleasing*)outError \endlink
-	@see \link undoChangesWithError: - (BOOL)undoChangesWithError:(NSError * __autoreleasing*)outError \endlink
+	@see \link saveAndReturnError: - (BOOL)saveAndReturnError:ERROR_PTR \endlink
+	@see \link undoChangesWithError: - (BOOL)undoChangesWithError:ERROR_PTR \endlink
  */
 
-- (BOOL)reloadBagWithError:(NSError * __autoreleasing*)outError;
+- (BOOL)reloadBagWithError:ERROR_PTR;
 
 /*! Discards the changes made in the bag.
 	@param outError is used if an error occurs. May be NULL.
 	@return YES upon success, NO otherwise.
 	@note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
-	@see \link saveAndReturnError: - (BOOL)saveAndReturnError:(NSError * __autoreleasing*)outError \endlink
-	@see \link reloadBagWithError: - (BOOL)reloadBagWithError:(NSError * __autoreleasing*)outError \endlink
+	@see \link saveAndReturnError: - (BOOL)saveAndReturnError:ERROR_PTR \endlink
+	@see \link reloadBagWithError: - (BOOL)reloadBagWithError:ERROR_PTR \endlink
  */
 
-- (BOOL)undoChangesWithError:(NSError * __autoreleasing*)outError;
+- (BOOL)undoChangesWithError:ERROR_PTR;
 /*!	@name Inflating and Deflating */
 
 /*! Inflates the bag by reconstructing the objects flattened with - (void)deflateBag;

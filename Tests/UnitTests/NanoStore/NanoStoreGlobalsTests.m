@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
-#import "NanoStore.h"
-#import "NSFNanoGlobals.h"
+//#import "NanoStore.h"
+//#import "NSFNanoGlobals.h"
 #import "NSFNanoGlobals_Private.h"
 #import "NSFNanoStore_Private.h"
 

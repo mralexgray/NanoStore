@@ -3,5 +3,11 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+
+  #import <Foundation/Foundation.h>
+
+  #ifndef ERROR_PTR
+  #define ERROR_PTR (NSError * __autoreleasing*)outError
+  #endif
+
 #endif

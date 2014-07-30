@@ -63,7 +63,7 @@
     return [[self alloc]initStoreWithType:theType path:thePath];
 }
 
-+ (NSFNanoStore*)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath error:(NSError * __autoreleasing*)outError
++ (NSFNanoStore*)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath error:ERROR_PTR
 {
     NSFNanoStore *nanoStore = [[self alloc]initStoreWithType:theType path:thePath];
     [nanoStore openWithError:outError];
@@ -125,7 +125,7 @@
     return [nanoStoreEngine path];
 }
 
-- (BOOL)openWithError:(NSError * __autoreleasing*)outError
+- (BOOL)openWithError:ERROR_PTR
 {
     if ([nanoStoreEngine isDatabaseOpen] == YES)
         return YES;
@@ -162,7 +162,7 @@
     return YES;
 }
 
-- (BOOL)closeWithError:(NSError * __autoreleasing*)outError
+- (BOOL)closeWithError:ERROR_PTR
 {
     BOOL success = [self saveStoreAndReturnError:outError];
     [self _releasePreparedStatements];
@@ -205,14 +205,14 @@
 
 #pragma mark -
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:(NSError * __autoreleasing*)outError
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:ERROR_PTR
 {
     NSArray *wrapper = @[object];
     BOOL success = [self addObjectsFromArray:wrapper error:outError];
     return success;
 }
 
-- (BOOL)addObjectsFromArray:(NSArray*)someObjects error:(NSError * __autoreleasing*)outError
+- (BOOL)addObjectsFromArray:(NSArray*)someObjects error:ERROR_PTR
 {
     if (nil == someObjects) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -274,14 +274,14 @@
     return success;
 }
 
-- (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing*)outError
+- (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:ERROR_PTR
 {
     NSArray *wrapper = @[theObject];
     BOOL success = [self removeObjectsInArray:wrapper error:outError];
     return success;
 }
 
-- (BOOL)removeObjectsWithKeysInArray:(NSArray*)someKeys error:(NSError * __autoreleasing*)outError
+- (BOOL)removeObjectsWithKeysInArray:(NSArray*)someKeys error:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -353,7 +353,7 @@
     return YES;
 }
 
-- (BOOL)removeObjectsInArray:(NSArray*)someObjects error:(NSError * __autoreleasing*)outError
+- (BOOL)removeObjectsInArray:(NSArray*)someObjects error:ERROR_PTR
 {
     NSMutableArray *someKeys = [NSMutableArray array];
     
@@ -501,7 +501,7 @@
 #pragma mark Database Optimizations and Maintenance
 #pragma mark -
 
-- (BOOL)beginTransactionAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)beginTransactionAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -514,7 +514,7 @@
     return [self _isOurTransaction];
 }
 
-- (BOOL)commitTransactionAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)commitTransactionAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -529,7 +529,7 @@
     return NO;
 }
 
-- (BOOL)rollbackTransactionAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)rollbackTransactionAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -549,7 +549,7 @@
 // Store/save unsaved objects
 // ----------------------------------------------
 
-- (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)saveStoreAndReturnError:ERROR_PTR
 {
     // We are really not saving anything new, just indicating that we should commit the unsaved changes.
     if (NO == self.hasUnsavedChanges) {
@@ -570,7 +570,7 @@
 // Clearing the store
 // ----------------------------------------------
 
-- (BOOL)removeAllObjectsFromStoreAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)removeAllObjectsFromStoreAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -598,7 +598,7 @@
 // Compacting the database
 // ----------------------------------------------
 
-- (BOOL)compactStoreAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)compactStoreAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -606,7 +606,7 @@
     return [[self nanoStoreEngine]compact];
 }
 
-- (BOOL)clearIndexesAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)clearIndexesAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -625,7 +625,7 @@
     return YES;
 }
 
-- (BOOL)rebuildIndexesAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)rebuildIndexesAndReturnError:ERROR_PTR
 {
     if ([self _checkNanoStoreIsReadyAndReturnError:outError] == NO)
         return NO;
@@ -650,7 +650,7 @@
     return YES;
 }
 
-- (BOOL)saveStoreToDirectoryAtPath:(NSString*)path compactDatabase:(BOOL)compact error:(NSError * __autoreleasing*)outError
+- (BOOL)saveStoreToDirectoryAtPath:(NSString*)path compactDatabase:(BOOL)compact error:ERROR_PTR
 {
     if (nil == path)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -708,7 +708,7 @@
     return [[self nanoStoreEngine]executeSQL:theSQLStatement];
 }
 
-- (BOOL)_initializePreparedStatementsWithError:(NSError * __autoreleasing*)outError
+- (BOOL)_initializePreparedStatementsWithError:ERROR_PTR
 {
     BOOL hasInitializationSucceeded = YES;
     
@@ -762,7 +762,7 @@
     return _isOurTransaction;
 }
 
-- (BOOL)_checkNanoStoreIsReadyAndReturnError:(NSError * __autoreleasing*)outError
+- (BOOL)_checkNanoStoreIsReadyAndReturnError:ERROR_PTR
 {
     if (nil == [self nanoStoreEngine]) {
         if (nil != outError)
@@ -811,7 +811,7 @@
     return YES;
 }
 
-- (BOOL)_storeDictionary:(NSDictionary*)someInfo forKey:(NSString*)aKey forClassNamed:(NSString*)classType error:(NSError * __autoreleasing*)outError
+- (BOOL)_storeDictionary:(NSDictionary*)someInfo forKey:(NSString*)aKey forClassNamed:(NSString*)classType error:ERROR_PTR
 {
     if (nil == someInfo)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
@@ -1094,7 +1094,7 @@
     } while (waitingForRow);
 }
 
-- (BOOL)_addObjectsFromArray:(NSArray*)someObjects forceSave:(BOOL)forceSave error:(NSError * __autoreleasing*)outError
+- (BOOL)_addObjectsFromArray:(NSArray*)someObjects forceSave:(BOOL)forceSave error:ERROR_PTR
 {
     // Collect the objects
     [_addedObjects addObjectsFromArray:someObjects];
@@ -1269,7 +1269,7 @@
 // Backup the store to a specific location
 // ----------------------------------------------
 
-- (BOOL)_backupFileStoreToDirectoryAtPath:(NSString*)backupPath extension:(NSString*)anExtension compact:(BOOL)flag error:(NSError * __autoreleasing*)outError
+- (BOOL)_backupFileStoreToDirectoryAtPath:(NSString*)backupPath extension:(NSString*)anExtension compact:(BOOL)flag error:ERROR_PTR
 {
     NSString *filePath = [self filePath];
     if ((anExtension != nil) && (NO == [backupPath hasSuffix:anExtension]))
@@ -1316,7 +1316,7 @@
     return YES;
 }
 
-- (BOOL)_backupMemoryStoreToDirectoryAtPath:(NSString*)backupPath extension:(NSString*)anExtension compact:(BOOL)flag error:(NSError * __autoreleasing*)outError
+- (BOOL)_backupMemoryStoreToDirectoryAtPath:(NSString*)backupPath extension:(NSString*)anExtension compact:(BOOL)flag error:ERROR_PTR
 {
     NSString *filePath = [self filePath];
     if ((anExtension != nil) && (NO == [backupPath hasSuffix:anExtension])) {

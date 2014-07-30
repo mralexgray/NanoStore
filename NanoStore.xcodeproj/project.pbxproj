@@ -128,7 +128,6 @@
 		74FA5DE4155795CC00217E09 /* fopenCompatibilityFix.c in Sources */ = {isa = PBXBuildFile; fileRef = 74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */; };
 		74FA5DE5155795CC00217E09 /* fopenCompatibilityFix.c in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */; };
 		74FA5DE6155795CC00217E09 /* fopenCompatibilityFix.c in Sources */ = {isa = PBXBuildFile; fileRef = 74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */; };
-		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -157,7 +156,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		32DBCF5E0370ADEE00C91783 /* NanoStore_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NanoStore_Prefix.pch; sourceTree = "<group>"; };
 		7404174C126783FF001E0CB4 /* NanoStoreObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NanoStoreObjectTests.m; path = UnitTests/NanoStore/NanoStoreObjectTests.m; sourceTree = "<group>"; };
 		74116B0A1538E9C600AEAD62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -204,7 +202,7 @@
 		74B63DDC129F25C400B3B2A7 /* NSFNanoResult_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoResult_Private.h; sourceTree = "<group>"; };
 		74B63DDD129F25C400B3B2A7 /* NSFNanoSearch_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoSearch_Private.h; sourceTree = "<group>"; };
 		74B63DDE129F25C400B3B2A7 /* NSFNanoStore_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoStore_Private.h; sourceTree = "<group>"; };
-		74B63DE0129F25C400B3B2A7 /* NanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NanoStore.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		74B63DE0129F25C400B3B2A7 /* NanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NanoStore.h; sourceTree = "<group>"; };
 		74B63DE1129F25C400B3B2A7 /* NSFNanoBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoBag.h; sourceTree = "<group>"; };
 		74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoBag.m; sourceTree = "<group>"; };
 		74B63DE3129F25C400B3B2A7 /* NSFNanoExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoExpression.h; sourceTree = "<group>"; };
@@ -277,24 +275,15 @@
 				74B63DCE129F25C400B3B2A7 /* Classes */,
 				74B20981122B280C0079E2FF /* Tests */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
-				089C1665FE841158C02AAC07 /* Resources */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
 			name = NanoStore;
 			sourceTree = "<group>";
 		};
-		089C1665FE841158C02AAC07 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				8DC2EF5A0486A6940098B216 /* Info.plist */,
-				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
 				748D3455139772B600FD5565 /* libnanostore2 */,
 				32DBCF5E0370ADEE00C91783 /* NanoStore_Prefix.pch */,
 				74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */,
@@ -627,7 +616,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,14 +776,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				089C1667FE841158C02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		74116B091538E9C600AEAD62 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

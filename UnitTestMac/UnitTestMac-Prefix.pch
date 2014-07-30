@@ -3,6 +3,7 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+    #import <AppKit/AppKit.h>
+    #import <NanoStore/NanoStore.h>
     #import <XCTest/XCTest.h>
 #endif

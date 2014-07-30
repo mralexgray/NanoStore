@@ -16,10 +16,8 @@
 		74FB58FA12E3C1B60070E4D0 /* NSFNanoPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FB58EF12E3C1B60070E4D0 /* NSFNanoPredicate.m */; };
 		74FB58FB12E3C1B60070E4D0 /* NSFNanoSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FB58F112E3C1B60070E4D0 /* NSFNanoSearch.m */; };
 		74FB58FC12E3C1B60070E4D0 /* NSFNanoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 74FB58F312E3C1B60070E4D0 /* NSFNanoStore.m */; };
-		74FB590512E3C1D10070E4D0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 74FB590412E3C1D10070E4D0 /* libsqlite3.dylib */; };
 		7B4C24AB198328FF00DC62BA /* NSFOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4C24AA198328FF00DC62BA /* NSFOrderedDictionary.m */; };
 		8DD76F9A0486AA7600D96B5E /* iTunesImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* iTunesImporter.m */; settings = {ATTRIBUTES = (); COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		8DD76F9F0486AA7600D96B5E /* iTunesImporter.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* iTunesImporter.1 */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* iTunesImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iTunesImporter.m; sourceTree = "<group>"; };
-		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* iTunesImporter_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunesImporter_Prefix.pch; sourceTree = "<group>"; };
 		74FB58D412E3C1B60070E4D0 /* NSFNanoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoEngine.h; sourceTree = "<group>"; };
 		74FB58D512E3C1B60070E4D0 /* NSFNanoEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoEngine.m; sourceTree = "<group>"; };
@@ -70,7 +67,6 @@
 		74FB58F112E3C1B60070E4D0 /* NSFNanoSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoSearch.m; sourceTree = "<group>"; };
 		74FB58F212E3C1B60070E4D0 /* NSFNanoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFNanoStore.h; sourceTree = "<group>"; };
 		74FB58F312E3C1B60070E4D0 /* NSFNanoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFNanoStore.m; sourceTree = "<group>"; };
-		74FB590412E3C1D10070E4D0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		7B4C24A9198328FF00DC62BA /* NSFOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFOrderedDictionary.h; sourceTree = "<group>"; };
 		7B4C24AA198328FF00DC62BA /* NSFOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFOrderedDictionary.m; sourceTree = "<group>"; };
 		8DD76FA10486AA7600D96B5E /* iTunesImporter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iTunesImporter; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,8 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
-				74FB590512E3C1D10070E4D0 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +90,6 @@
 				08FB7795FE84155DC02AAC07 /* Source */,
 				74FB58D212E3C1B60070E4D0 /* Classes */,
 				C6859EA2029092E104C91782 /* Documentation */,
-				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
 			name = iTunesImporter;
@@ -109,15 +102,6 @@
 				08FB7796FE84155DC02AAC07 /* iTunesImporter.m */,
 			);
 			name = Source;
-			sourceTree = "<group>";
-		};
-		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
-				74FB590412E3C1D10070E4D0 /* libsqlite3.dylib */,
-			);
-			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
 		};
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
@@ -291,6 +275,7 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-lsqlite3";
 				PRODUCT_NAME = iTunesImporter;
 				SDKROOT = macosx;
 			};
@@ -314,6 +299,7 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-lsqlite3";
 				PRODUCT_NAME = iTunesImporter;
 				SDKROOT = macosx;
 			};

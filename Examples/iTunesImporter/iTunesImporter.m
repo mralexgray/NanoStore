@@ -6,21 +6,22 @@
 void importDataUsingNanoStore(NSDictionary *iTunesInfo)
 {
 
-  NSString *p = @"~/Desktop/test.nanostoredb".stringByStandardizingPath;
+  NSString *p = @"~/Desktop/itunesimporter.sqlite".stringByStandardizingPath;
 //  NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFPersistentStoreType path:p error:nil];
 
-  NSFSetIsDebugOn(YES);
+//  NSFSetIsDebugOn(YES);
   [nanoStore setSaveInterval:59];
 
   NSDictionary     * tracks = iTunesInfo[@"Tracks"];
-                     tracks = [tracks dictionaryWithValuesForKeys:[tracks.allKeys subarrayWithRange:NSMakeRange(0,MIN(1000,tracks.allKeys.count))]];
+                     tracks = [tracks dictionaryWithValuesForKeys:[tracks.allKeys
+                                                subarrayWithRange:NSMakeRange(0,MIN(1000,tracks.allKeys.count))]];
   NSDate * startStoringDate = NSDate.date;
   NSMutableArray     * keys = @[].mutableCopy;//[NSMutableArray arrayWithCapacity:[tracks count]];
+  __block int    iterations = 0;
 
-  @autoreleasepool {
+//  @autoreleasepool {
 
-    __block NSUInteger iterations = 0;
     [tracks enumerateKeysAndObjectsUsingBlock:^(id trackID, id obj, BOOL *stop) {
 
       NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:obj];
@@ -42,26 +43,27 @@ void importDataUsingNanoStore(NSDictionary *iTunesInfo)
 
     //    books = @[].mutableCopy;
     //    for (Book *book in results) [books addObject:book];
-  }
+//  }
 
   NSFNanoSearch      * search = [NSFNanoSearch searchWithStore:nanoStore];
   //    NSUInteger numImportedItems = [[search aggregateOperation:NSFCount onAttribute:@"Track ID"]longValue];
   //  id numItems = [search aggregateOperation:NSFCount onAttribute:@"Track ID"];
-    search.filterClass = @"NSDictionary";
+    search.filterClass = @"NSFNanoObject";
 
   NSError *outError       = nil;
   //    search.sort  = @[[NSFNanoSortDescriptor.alloc initWithAttribute:@"title" ascending:NO]]; // sortByKey
-  NSMutableArray *results = [search searchObjectsWithReturnType:NSFReturnObjects error:&outError];
+  id results = [search searchObjectsWithReturnType:NSFReturnObjects error:&outError];
 
 //  books = @[].mutableCopy;
 //  for (Book *book in results) [books addObject:book];
 
-  NSLog(@"Number of items imported: %@", results); // numImportedItems);
+  NSLog(@"Number of items imported: %@", [results allObjects]);
+  // valueForKeyPath:@"className"]);//@"nanoObjectDictionaryRepresentation"]); // numImportedItems);
 
   //    startStoringDate = ;
-  [nanoStore removeObjectsWithKeysInArray:keys error:nil];
+//  [nanoStore removeObjectsWithKeysInArray:keys error:nil];
   //    secondsStoring = ;
-  NSLog(@"Done removing. Removing the objects took %.3f seconds.", [NSDate.date timeIntervalSinceDate:NSDate.date]);
+//  NSLog(@"Done removing. Removing the objects took %.3f seconds.", [NSDate.date timeIntervalSinceDate:NSDate.date]);
 
   //  }
   //  NSError *e = nil;
