@@ -5,9 +5,9 @@
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
 
-#ifndef ERROR_PTR
-#define ERROR_PTR (NSError * __autoreleasing*)outError
-#endif
+//#ifndef ERROR_PTR
+//#define ERROR_PTR (NSError * __autoreleasing*)outError
+//#endif
 
 #ifndef NSLog
 #define NSLog(fmt...) ((void)printf("%s %s\n",__PRETTY_FUNCTION__,[[NSString.alloc initWithFormat:fmt]UTF8String]))

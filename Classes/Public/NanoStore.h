@@ -4,9 +4,10 @@
 
 */
 
-#ifndef ERROR_PTR
-#define ERROR_PTR (NSError * __autoreleasing*)outError
-#endif
+//#ifndef ERROR_PTR
+////#define ERROR_PTR (NSError * __autoreleasing*)outError
+//#define ERROR_PTR (NSError**)outError
+//#endif
 
 #import <NanoStore/NSFNanoObjectProtocol.h>
 #import <NanoStore/NSFNanoObject.h>

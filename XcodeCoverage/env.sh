@@ -1,5 +1,0 @@
-export BUILT_PRODUCTS_DIR="/dd/AtoZ/Products/Debug"
-export CURRENT_ARCH="x86_64"
-export OBJECT_FILE_DIR_normal="/dd/AtoZ/Intermediates/NanoStore.build/Debug/UnitTestMac.build/Objects-normal"
-export OBJROOT="/dd/AtoZ/Intermediates"
-export SRCROOT="/Volumes/2T/ServiceData/AtoZ.framework/Frameworks/NanoStore"
