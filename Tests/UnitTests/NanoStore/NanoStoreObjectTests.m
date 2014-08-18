@@ -106,7 +106,7 @@
 {
     NSFNanoObject *object = nil;
     @try {
-        object = [NSFNanoObject nanoObjectWithDictionary:[NSDictionary dictionary]];
+        object = [NSFNanoObject nanoObjectWithDictionary:@{}];
     } @catch (NSException *e) {
         XCTAssertTrue (e != nil, @"We should have caught the exception.");
     }
@@ -128,7 +128,7 @@
     [object setObject:@"bar" forKey:@"foo"];
     NSDictionary *info = object.info;
 
-    XCTAssertTrue ((nil != info) && ([info count] == 8) && ([[info objectForKey:@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
+    XCTAssertTrue ((nil != info) && ([info count] == 8) && ([info[@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
 }
 
 - (void)testObjectSetObjectForKeyEmptyObject
@@ -137,7 +137,7 @@
     [object setObject:@"bar" forKey:@"foo"];
     NSDictionary *info = object.info;
     
-    XCTAssertTrue ((nil != info) && ([info count] == 1) && ([[info objectForKey:@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
+    XCTAssertTrue ((nil != info) && ([info count] == 1) && ([info[@"foo"]isEqualToString:@"bar"]), @"Expected setObject:forKey: to work.");
 }
 
 - (void)testObjectRemoveObjectForKeyNonEmptyObject
@@ -147,7 +147,7 @@
     [object removeObjectForKey:@"foo"];
     NSDictionary *info = object.info;
     
-    XCTAssertTrue ((nil != info) && ([info count] == 7) && (nil == [info objectForKey:@"foo"]), @"Expected removeObjectForKey: to work.");
+    XCTAssertTrue ((nil != info) && ([info count] == 7) && (nil == info[@"foo"]), @"Expected removeObjectForKey: to work.");
 }
 
 - (void)testObjectRemoveObjectForKeyEmptyObject
@@ -157,7 +157,7 @@
     [object removeObjectForKey:@"foo"];
     NSDictionary *info = object.info;
     
-    XCTAssertTrue ((nil != info) && ([info count] == 0) && (nil == [info objectForKey:@"foo"]), @"Expected removeObjectForKey: to work.");
+    XCTAssertTrue ((nil != info) && ([info count] == 0) && (nil == info[@"foo"]), @"Expected removeObjectForKey: to work.");
 }
 
 #pragma mark -
@@ -182,7 +182,7 @@
     
     XCTAssertTrue (nil == [object store], @"Expected the object store to be nil.");
 
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:object, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[object] error:nil];
     
     XCTAssertTrue (nil != [object store], @"Expected the object store to be valid.");
     
@@ -258,7 +258,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:object, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[object] error:nil];
     
     NSError *error = nil;
     BOOL success = [object saveStoreAndReturnError:&error];
@@ -275,7 +275,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     NSFNanoObject *object = [NSFNanoObject nanoObjectWithDictionary:@{@"foo" : @"bar"}];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:object, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[object] error:nil];
     
     NSError *error = nil;
     BOOL success = [object saveStoreAndReturnError:&error];

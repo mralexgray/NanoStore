@@ -60,8 +60,6 @@
 /*!	@name Creating and Initializing Bags
  */
 
-//@{
-
 /*! Creates and returns an empty bag.
 	@return An empty bag upon success, nil otherwise.
  */

@@ -58,8 +58,6 @@
 
 /** @name Creating and Initializing Expressions	*/
 
-//@{
-
 /** * Creates and returns an sort descriptor with the specified key and ordering.
  * @param theKey the property key to use when performing a comparison. Must not be nil or empty.
  * @param ascending YES if the sort descriptor specifies sorting in ascending order, otherwise NO.
@@ -80,23 +78,17 @@
 
 - (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending;
 
-//@}
-
 /** @name Miscellaneous	*/
-
-//@{
 
 /** * Returns a string representation of the sort.
  * @note Check properties attribute and isAscending to find out the current state of the sort.	*/
 
-- (NSString *)description;
+@property (readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the sort.
  * @note Check properties attribute and isAscending to find out the current state of the sort.
  */
 
-- (NSString *)JSONDescription;
-
-//@}
+@property (readonly, copy) NSString *JSONDescription;
 
 @end

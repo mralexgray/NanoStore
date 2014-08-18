@@ -3,6 +3,7 @@
      NanoStore
      	*/
 
+#import "NanoStore.h"
 #import "NSFNanoObject.h"
 #import "NSFNanoObject_Private.h"
 #import "NSFNanoGlobals.h"
@@ -106,6 +107,9 @@
     
     _hasUnsavedChanges = YES;
 }
+
+-                  objectForKeyedSubscript:(id)x { return [self objectForKey:x]; }
+- (void) setObject:(id)x forKeyedSubscript:(id<NSCopying>)k { [self setObject:x forKey:(id)k]; }
 
 - (void)setObject:(id)anObject forKey:(NSString*)aKey
 {

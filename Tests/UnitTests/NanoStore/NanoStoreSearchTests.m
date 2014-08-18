@@ -154,7 +154,7 @@
     
     NSFNanoStore *nanoStore = [NSFNanoStore createStoreWithType:NSFMemoryStoreType path:nil];
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObjects:expression1, expression2, nil]];
+    [search setExpressions:@[expression1, expression2]];
     
     NSArray *expressions = [search expressions];
     
@@ -163,7 +163,7 @@
 
 - (void)testSearchAttributesAccessor
 {
-    NSArray *value = [NSArray arrayWithObjects:@"one", @"two", @"three", nil];
+    NSArray *value = @[@"one", @"two", @"three"];
     
     NSFNanoStore *nanoStore = [NSFNanoStore createStoreWithType:NSFMemoryStoreType path:nil];
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
@@ -183,7 +183,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = NanoPersonFirst;
@@ -235,8 +235,8 @@
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]];
     
     NSFNanoBag *bag = [NSFNanoBag bag];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"Rating";
@@ -302,8 +302,8 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -319,8 +319,8 @@
 {
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+    [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -339,7 +339,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.key = obj1.key;
@@ -359,7 +359,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.key = obj2.key;
@@ -385,13 +385,13 @@
                           @"John", @"FirstName",
                           @"Doe", @"LastName",
                           countriesInfo, @"Countries",
-                          [NSNumber numberWithUnsignedInt:(arc4random() % 32767) + 1], @"SomeNumber",
+                          @((arc4random() % 32767) + 1), @"SomeNumber",
                           @"To be decided", @"Rating",
                           nil, nil];
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:info];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"Countries.Spain";
@@ -413,7 +413,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"Countries.Spain";
@@ -432,7 +432,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     for (int i = 0; i < 10; i++) {
-        [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]]] error:nil];
+        [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]]] error:nil];
     }
     
     NSFNanoSortDescriptor *sortByNumber = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"SomeNumber" ascending:YES];
@@ -442,7 +442,7 @@
     search.match = NSFEqualTo;
     search.limit = 5;
     search.offset = 3;
-    search.sort = [NSArray arrayWithObjects:sortByNumber, nil];
+    search.sort = @[sortByNumber];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -457,7 +457,7 @@
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
     for (int i = 0; i < 10; i++) {
-        [nanoStore addObjectsFromArray:[NSArray arrayWithObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
+        [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
     }
     
     NSFNanoSortDescriptor *sortByValue = [[NSFNanoSortDescriptor alloc]initWithAttribute:NSFKey ascending:YES];
@@ -474,10 +474,10 @@
     [expression2 addPredicate:cityPred withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    search.expressions = [NSArray arrayWithObjects:expression1, expression2, nil];
+    search.expressions = @[expression1, expression2];
     search.limit = 5;
     search.offset = 3;
-    search.sort = [NSArray arrayWithObjects:sortByValue, sortByROWID, nil];
+    search.sort = @[sortByValue, sortByROWID];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -505,7 +505,7 @@
     [expression2 addPredicate:cityPred withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObjects:expression1, expression2, nil]];
+    [search setExpressions:@[expression1, expression2]];
 
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -538,7 +538,7 @@
     [expression3 addPredicate:cityPred2 withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObjects:expression1, expression2, expression3, nil]];
+    [search setExpressions:@[expression1, expression2, expression3]];
 
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -556,7 +556,7 @@
 
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSDate *date = [[NSDate date]dateByAddingTimeInterval:60 * 60];
     
@@ -582,7 +582,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"kName";
@@ -606,7 +606,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSDate *date = [[NSDate date]dateByAddingTimeInterval:-(60 * 60)];
 
@@ -632,7 +632,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"kName";
@@ -656,7 +656,7 @@
 
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSDate *date = [[NSDate date]dateByAddingTimeInterval:60 * 60];
 
@@ -684,7 +684,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"kName";
@@ -710,7 +710,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSDate *date = [[NSDate date]dateByAddingTimeInterval:-(60 * 60)];
 
@@ -738,7 +738,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"kName";
@@ -790,7 +790,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *results = [search executeSQL:@"SELECT Blah, Foo, Bar FROM NSFKeys" returnType:NSFReturnObjects error:nil];
@@ -805,7 +805,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnObjects error:nil];
@@ -820,7 +820,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSFNanoResult *result = [search executeSQL:@"SELECT COUNT(*) FROM NSFKEYS"];
@@ -836,7 +836,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoResult *result = [nanoStore _executeSQL:@"SELECT COUNT FROM NSFKEYS"];
     
@@ -852,7 +852,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSArray *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnKeys error:nil];
@@ -868,7 +868,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     NSDictionary *result = [search executeSQL:@"SELECT * FROM NSFKEYS" returnType:NSFReturnObjects error:nil];
@@ -884,12 +884,12 @@
 
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    id theObject = [searchResults objectForKey:obj1.key];
+    id theObject = searchResults[obj1.key];
 //    BOOL isClassCorrect = [isKindOfClass:[]];
     [nanoStore closeWithError:nil];
     XCTAssertTrue (searchResults.count == 2, @"Expected 2 results.");
@@ -903,14 +903,14 @@
 
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSDate *date = [[NSDate date]dateByAddingTimeInterval:5];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
     NSDictionary *searchResults = [search searchObjectsAdded:NSFBeforeDate date:date returnType:NSFReturnObjects error:nil];
-    BOOL isClassCorrect = [[searchResults objectForKey:obj1.key]isKindOfClass:[NSFNanoObject class]];
+    BOOL isClassCorrect = [searchResults[obj1.key]isKindOfClass:[NSFNanoObject class]];
     [nanoStore closeWithError:nil];
     
     XCTAssertTrue (([searchResults count] == 2) && isClassCorrect, @"Expected to find two objects of type NSFNanoObject.");
@@ -929,7 +929,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
 
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"kName";
@@ -938,7 +938,7 @@
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
-    BOOL isClassCorrect = [[searchResults objectForKey:car.key]isKindOfClass:[NanoCarTestClass class]];
+    BOOL isClassCorrect = [searchResults[car.key]isKindOfClass:[NanoCarTestClass class]];
     [nanoStore closeWithError:nil];
     
     XCTAssertTrue (([searchResults count] == 1) && isClassCorrect, @"Expected to find one object of type NanoCarTestClass.");
@@ -957,7 +957,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"kName";
@@ -985,7 +985,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
         
     NSFNanoPredicate *predicateAttr = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"kName"];
     NSFNanoPredicate *predicateVal  = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:@"Mercedes"];
@@ -993,13 +993,13 @@
     [expression addPredicate:predicateVal withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    [search setExpressions:@[expression]];
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object");
     
-    BOOL isClassCorrect = [[searchResults objectForKey:car.key] isKindOfClass:[NanoCarTestClass class]];
+    BOOL isClassCorrect = [searchResults[car.key] isKindOfClass:[NanoCarTestClass class]];
     [nanoStore closeWithError:nil];
     XCTAssertTrue (isClassCorrect, @"Expected to find type NanoCarTestClass.");
 }
@@ -1017,7 +1017,7 @@
     person.name = @"Mercedes";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:car, person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[car, person] error:nil];
     
     NSFNanoPredicate *predicateAttr = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"kName"];
     NSFNanoPredicate *predicateVal  = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:@"Mercedes"];
@@ -1025,7 +1025,7 @@
     [expression addPredicate:predicateVal withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObject:expression]];
+    [search setExpressions:@[expression]];
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
     
     NSArray *searchResults = [search searchObjectsWithReturnType:NSFReturnKeys error:nil];
@@ -1051,7 +1051,7 @@
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 
-    id objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
+    id objectReturned = searchResults[[[searchResults allKeys]lastObject]];
     
     [nanoStore closeWithError:nil];
     
@@ -1077,7 +1077,7 @@
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
     
-    id objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
+    id objectReturned = searchResults[[[searchResults allKeys]lastObject]];
 
     [nanoStore closeWithError:nil];
     
@@ -1104,7 +1104,7 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
     
     // Make sure we have a NanoObject of class foobar
-    NSFNanoObject *objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
+    NSFNanoObject *objectReturned = searchResults[[[searchResults allKeys]lastObject]];
     XCTAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName1]), @"Expected to retrieve a NanoObject which an original class name of type 'foobar'.");
 
     // Now, let's manipulate the original class name to make sure it gets honored and saved properly
@@ -1118,7 +1118,7 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
     
     // Make sure the saving process honored the foobar class and didn't overwrite it with NSFNanoObject
-    objectReturned = [searchResults objectForKey:[[searchResults allKeys]lastObject]];
+    objectReturned = searchResults[[[searchResults allKeys]lastObject]];
     XCTAssertTrue (([objectReturned isKindOfClass:[NSFNanoObject class]] == YES) && ([[objectReturned originalClassString]isEqualToString:bogusClassName2]), @"Expected to retrieve a NanoObject which an original class name of type 'superduper'.");
 
     [nanoStore closeWithError:nil];
@@ -1136,8 +1136,8 @@
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]];
     
     NSFNanoBag *bag = [NSFNanoBag bag];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     
@@ -1158,8 +1158,8 @@
     NSFNanoObject *obj3 = [NSFNanoObject nanoObjectWithDictionary:[NSFNanoStore _defaultTestData]];
     
     NSFNanoBag *bag = [NSFNanoBag bag];
-    [bag addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, nil] error:nil];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObject:bag] error:nil];
+    [bag addObjectsFromArray:@[obj1, obj2, obj3] error:nil];
+    [nanoStore addObjectsFromArray:@[bag] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"LastName";
@@ -1241,7 +1241,7 @@
     person.name = @"Leo'd";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[person] error:nil];
     
     NSArray* allPeople = [nanoStore objectsOfClassNamed:NSStringFromClass([NanoPersonTestClass class])];
     XCTAssertTrue(([allPeople count] == 1), @"Should have one person");
@@ -1266,7 +1266,7 @@
     person.name = @"Leo'd";
     person.last = @"Doe";
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:person, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[person] error:nil];
     
     NSFNanoObject *obj = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     [nanoStore addObject:obj error:nil];
@@ -1277,7 +1277,7 @@
     [expression addPredicate:valuePred withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObjects:expression, nil]];
+    [search setExpressions:@[expression]];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -1299,7 +1299,7 @@
     
     NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.match = NSFEqualTo;
@@ -1324,7 +1324,7 @@
     
     NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = @"last";
@@ -1350,7 +1350,7 @@
     
     NSDictionary *info = @{NanoPersonFirst : @"foo", NanoPersonLast : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.attribute = NanoPersonLast;
@@ -1379,7 +1379,7 @@
     
     NSDictionary *info = @{@"name" : @"foo", @"last" : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
     
     NSFNanoPredicate *lastNamePred = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"last"];
     NSFNanoPredicate *valuePred = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFEqualTo value:[NSNull null]];
@@ -1387,7 +1387,7 @@
     [expression addPredicate:valuePred withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObjects:expression, nil]];
+    [search setExpressions:@[expression]];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -1408,7 +1408,7 @@
     
     NSDictionary *info = @{NanoPersonFirst : @"foo", NanoPersonLast : [NSNull null]};
     NSFNanoObject *personB = [NSFNanoObject nanoObjectWithDictionary:info];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
     
     NSFNanoPredicate *lastNamePred = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:NanoPersonLast];
     NSFNanoPredicate *valuePred = [NSFNanoPredicate predicateWithColumn:NSFValueColumn matching:NSFNotEqualTo value:[NSNull null]];
@@ -1416,7 +1416,7 @@
     [expression addPredicate:valuePred withOperator:NSFAnd];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
-    [search setExpressions:[NSArray arrayWithObjects:expression, nil]];
+    [search setExpressions:@[expression]];
     
     NSDictionary *searchResults = [search searchObjectsWithReturnType:NSFReturnObjects error:nil];
     
@@ -1446,7 +1446,7 @@
     car.name = @"Mercedes";
     car.key = [NSFNanoEngine stringWithUUID];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
 
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.filterClass = NSStringFromClass([NanoPersonTestClass class]);
@@ -1475,7 +1475,7 @@
     car.name = @"Mercedes";
     car.key = [NSFNanoEngine stringWithUUID];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, car, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB, car] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);
@@ -1503,7 +1503,7 @@
     car.name = @"Mercedes";
     car.key = [NSFNanoEngine stringWithUUID];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.filterClass = NSStringFromClass([NanoPersonTestClass class]);
@@ -1532,7 +1532,7 @@
     car.name = @"Mercedes";
     car.key = [NSFNanoEngine stringWithUUID];
     
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:personA, personB, car, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[personA, personB, car] error:nil];
     
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
     search.filterClass = NSStringFromClass([NanoCarTestClass class]);

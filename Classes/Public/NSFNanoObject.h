@@ -157,8 +157,10 @@
  @endcode
  */
 
-#import "NanoStore.h"
 
+#import "NSFNanoObjectProtocol.h"
+
+@class NanoStore, NSFNanoObject;
 @interface NSFNanoObject : NSObject <NSFNanoObjectProtocol, NSCopying>
 
 /*! The store where the object is saved.  */
@@ -174,8 +176,6 @@
 
 /*!	@name Creating and Initializing a NanoObject
  */
-
-//@{
 
 /*! Creates and returns an empty NanoObject.
 	@return An empty NanoObject upon success, nil otherwise.
@@ -234,6 +234,10 @@
 	@note Raises an NSInvalidArgumentException if <i>aKey</i> or <i>anObject</i> is nil. If you need to represent a nil value in the dictionary, use NSNull.
 	@see \link removeObjectForKey: - (void)removeObjectForKey:(NSString*)aKey \endlink
  */
+
+
+-   (id)           objectForKeyedSubscript:(id)x;
+- (void) setObject:(id)x forKeyedSubscript:(id<NSCopying>)k;
 
 - (void) setObject:(id)anObject forKey:(NSString*)aKey;
 

@@ -41,7 +41,7 @@
     
     NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
     NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
-    [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, nil] error:nil];
+    [nanoStore addObjectsFromArray:@[obj1, obj2] error:nil];
     
     NSFNanoEngine *engine = [nanoStore nanoStoreEngine];
     long long maxRowUID = [engine maxRowUIDForTable:@"NSFKeys"];

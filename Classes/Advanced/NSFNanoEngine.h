@@ -31,8 +31,6 @@
 /*!	@name Creating and Initializing NanoEngine
  */
 
-//@{
-
 /** Creates and returns an engine object at a given file path.
 	@param thePath the file path where the document store will be created. Must not be nil.
 	@return An engine object upon success, nil otherwise.
@@ -53,12 +51,8 @@
 
 - (id)initWithPath:(NSString*)thePath;
 
-//@}
-
 /*!	@name Opening and Closing
  */
-
-//@{
 
 /** Opens the engine, making it ready for manipulation.
 	@param theCacheMethod allows to specify hwo the data will be read from the database:. This setting incurs a tradeoff between speed and memory usage.
@@ -82,26 +76,22 @@
 	@return YES upon success, NO otherwise.
  */
 
-- (BOOL)close;
-
-//@}
+@property (readonly) BOOL close;
 
 /*!	@name Accessors
  */
-
-//@{
 
 /** Checks whether the document store is open or closed.
 	@see - (void)close;
  */
 
-- (BOOL)isDatabaseOpen;
+@property (getter=isDatabaseOpen, readonly) BOOL databaseOpen;
 
 /** Checks whether a transaction is currently active.
 	@return YES if a transaction is currently active, NO otherwise.
  */
 
-- (BOOL)isTransactionActive;
+@property (getter=isTransactionActive, readonly) BOOL transactionActive;
 
 /** Sets the busy timeout.
 	@param theTimeout is number of milliseconds that SQLite will wait to retry a busy operation.
@@ -109,13 +99,12 @@
 	@see - (unsigned int)busyTimeout;
  */
 
-- (void)setBusyTimeout:(unsigned int)theTimeout;
 
 /** Returns the current busy timeout.
 	@see - (void)setBusyTimeout:(unsigned int)theTimeout;
  */
 
-- (unsigned int)busyTimeout;
+@property (nonatomic) unsigned int busyTimeout;
 
 /** Returns the recommended cache size based on the system resources available.
 	@return The recommended cache size in number of pages.
@@ -175,7 +164,7 @@
 	@see - (BOOL)setEncodingType:(NSFEncodingType)theEncodingType;
  */
 
-- (NSFEncodingType)encoding;
+@property (readonly) NSFEncodingType encoding;
 
 /** Returns the encoding type from its string equivalent.
 	@return The encoding type if successful, NSFEncodingUnknown otherwise.
@@ -196,28 +185,26 @@
 	@see - (NSFSynchronousMode)synchronousMode;
  */
 
-- (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
 
 /** Returns the synchronous mode.
 	@return The current synchronous mode.
 	@see - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
  */
 
-- (NSFSynchronousMode)synchronousMode;
+@property  NSFSynchronousMode synchronousMode;
 
 /** Sets the temporary storage mode.
 	@param theTempStoreMode is the temporary storage mode. Can be TempStoreModeDefault, TempStoreModeFile or TempStoreModeMemory.
 	@see - (NSFTempStoreMode)tempStoreMode;
  */
 
-- (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
 
 /** Returns the temporary storage mode.
 	@return The current temporary storage mode.
 	@see - (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
  */
 
-- (NSFTempStoreMode)tempStoreMode;
+@property  NSFTempStoreMode tempStoreMode;
 
 /*! Journal mode.
  * These values represent the options used by SQLite to the the journal mode for databases associated with the current database connection.
@@ -287,12 +274,8 @@
 
 + (NSString*)sqliteVersion;
 
-//@}
-
 /*!	@name Transactions
  */
-
-//@{
 
 /** Starts a transaction.
 	@return YES upon success, NO otherwise.
@@ -303,7 +286,7 @@
 	@see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)beginTransaction;
+@property (readonly) BOOL beginTransaction;
 
 /** Starts a deferred transaction.
 	@return YES upon success, NO otherwise.
@@ -313,7 +296,7 @@
 	@see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)beginDeferredTransaction;
+@property (readonly) BOOL beginDeferredTransaction;
 
 /** Commits a transaction.
 	@return YES upon success, NO otherwise.
@@ -323,7 +306,7 @@
 	@see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)commitTransaction;
+@property (readonly) BOOL commitTransaction;
 
 /** Rolls back a transaction.
 	@return YES upon success, NO otherwise.
@@ -333,14 +316,10 @@
 	@see - (BOOL)isTransactionActive;
  */
 
-- (BOOL)rollbackTransaction;
-
-//@}
+@property (readonly) BOOL rollbackTransaction;
 
 /*!	@name Everything About Tables
  */
-
-//@{
 
 /** Creates a table.
 	@param theTable the name of the table. Must not be nil.
@@ -362,7 +341,7 @@
 	@see - (NSArray*)temporaryTables;
  */
 
-- (NSArray*)tables;
+@property (readonly, copy) NSArray *tables;
 
 /** Returns a new array containing the tables found in the main and attached document stores.
 	@return A new array containing the tables in the main and attached document stores, or an empty array if none is found.
@@ -372,7 +351,7 @@
 	@see - (NSArray*)temporaryTables;
  */
 
-- (NSDictionary*)allTables;
+@property (readonly, copy) NSDictionary *allTables;
 
 /** Returns a new array containing the columns for a given table.
 	@param theTable is the name of the table.
@@ -387,7 +366,7 @@
 	@see - (NSDictionary*)allTables;
  */
 
-- (NSArray*)temporaryTables;
+@property (readonly, copy) NSArray *temporaryTables;
 
 /** Returns a new array containing the datatypes for a given table.
 	@param theTable is the name of the table.
@@ -404,12 +383,8 @@
 
 - (BOOL)dropTable:(NSString*)theTable;
 
-//@}
-
 /*!	@name Everything about Indexes
  */
-
-//@{
 
 /** Creates an index.
 	@param theColumn is the name of the column.
@@ -425,7 +400,7 @@
 	@return A new array containing the indexes in the main document store, or an empty array if none is found.
  */
 
-- (NSArray*)indexes;
+@property (readonly, copy) NSArray *indexes;
 
 /** Returns a new array containing the indexes found for a given table.
 	@return A new array containing the indexes for a given table, or an empty array if none is found.
@@ -440,33 +415,25 @@
 
 - (void)dropIndex:(NSString*)theIndex;
 
-//@}
-
 /*!	@name Database Maintenance
  */
-
-//@{
 
 /** Compacts the database, attempting to reclaim unused space.
 	@return YES upon success, NO otherwise.
 	@note If a transaction is open, the operation will not proceed and NO will be returned instead.
  */
 
-- (BOOL)compact;
+@property (readonly) BOOL compact;
 
 /** Performs an integrity check on the database.
 	@return YES upon success, NO otherwise.
 	@note If a transaction is open, the operation will not proceed and NO will be returned instead.
  */
 
-- (BOOL)integrityCheck;
-
-//@}
+@property (readonly) BOOL integrityCheck;
 
 /*!	@name Searching and Retrieving
  */
-
-//@{
 
 /** Executes a SQL statement.
 	@param theSQLStatement is the SQL statement to be executed. Must not be nil or an empty string.
@@ -487,12 +454,8 @@
 
 - (long long)maxRowUIDForTable:(NSString*)theTable;
 
-//@}
-
 /*!	@name Miscellaneous
  */
-
-//@{
 
 /** Returns a string containing the base 64 representation of a data element.
 	@return A string encoded in base 64 format.
@@ -515,13 +478,11 @@
 /** Returns a string representation of the engine.
  */
 
-- (NSString*)description;
+@property (readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the engine.
  */
 
-- (NSString*)JSONDescription;
-
-//@}
+@property (readonly, copy) NSString *JSONDescription;
 
 @end

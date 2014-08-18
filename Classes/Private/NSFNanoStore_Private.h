@@ -16,8 +16,8 @@
 - (BOOL)_initializePreparedStatementsWithError:ERROR_PTR;
 - (void)_releasePreparedStatements;
 - (void)_setIsOurTransaction:(BOOL)value;
-- (BOOL)_isOurTransaction;
-- (BOOL)_setupCachingSchema;
+@property (readonly) BOOL _isOurTransaction;
+@property (readonly) BOOL _setupCachingSchema;
 - (BOOL)_storeDictionary:(NSDictionary*)someInfo forKey:(NSString*)aKey forClassNamed:(NSString*)classType error:ERROR_PTR;
 - (BOOL)__storeDictionaries:(NSArray*)someObjects forKeys:(NSArray*)someKeys error:ERROR_PTR;
 - (BOOL)_bindValue:(id)aValue forAttribute:(NSString*)anAttribute parameterNumber:(NSInteger)aParamNumber usingSQLite3Statement:(sqlite3_stmt*)aStatement;

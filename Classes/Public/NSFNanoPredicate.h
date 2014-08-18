@@ -62,8 +62,6 @@
 /*!	@name Creating and Initializing a Predicate
  */
 
-//@{
-
 /*! Creates and returns a predicate.
 	@param theType is the column type. Can be \link Globals::NSFKeyColumn NSFKeyColumn \endlink, \link Globals::NSFAttributeColumn NSFAttributeColumn \endlink or \link Globals::NSFValueColumn NSFValueColumn \endlink.
 	@param theMatch is the match operator.
@@ -84,25 +82,19 @@
 
 - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(id)theValue;
 
-//@}
-
 /*!	@name Miscellaneous
  */
-
-//@{
 
 /*! Returns a string representation of the predicate.
 	@note Check properties column, match and value to find out the current state of the predicate.
  */
 
-- (NSString*)description;
+@property (readonly, copy) NSString *description;
 
 /*! Returns a JSON representation of the predicate.
 	@note Check properties column, match and value to find out the current state of the predicate.
  */
 
-- (NSString*)JSONDescription;
-
-//@}
+@property (readonly, copy) NSString *JSONDescription;
 
 @end

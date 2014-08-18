@@ -49,8 +49,6 @@
 /*!	@name Creating and Initializing Expressions
  */
 
-//@{
-
 /*! Creates and returns an expression with a given predicate.
 	@param thePredicate the predicate used to initialize the expression. Must not be nil.
 	@return An expression upon success, nil otherwise.
@@ -71,12 +69,8 @@
 
 - (id)initWithPredicate:(NSFNanoPredicate*)thePredicate;
 
-//@}
-
 /*!	@name Adding a Predicate
  */
-
-//@{
 
 /*! Adds a predicate to the expression.
 	@param thePredicate is added to the expression.
@@ -87,25 +81,19 @@
 
 - (void)addPredicate:(NSFNanoPredicate*)thePredicate withOperator:(NSFOperator)theOperator;
 
-//@}
-
 /*!	@name Miscellaneous
  */
-
-//@{
 
 /*! Returns a string representation of the expression.
 	@note Check properties predicates and operators to find out the current state of the expression.
  */
 
-- (NSString*)description;
+@property (readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the expression.
 	@note Check properties predicates and operators to find out the current state of the expression.
  */
 
-- (NSString*)JSONDescription;
-
-//@}
+@property (readonly, copy) NSString *JSONDescription;
 
 @end

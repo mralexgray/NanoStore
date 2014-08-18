@@ -127,8 +127,6 @@
 
 - (id)initStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath;
 
-//@}
-
 /*!	@name Opening and Closing
  */
 
@@ -292,7 +290,7 @@
 	@note The classes can be NSFNanoObject, NSFNanoBag or any \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant object.
  */
 
-- (NSArray*)allObjectClasses;
+@property (readonly, copy) NSArray *allObjectClasses;
 
 /*! Returns an array containing the objects in the document store which match a specific class name.
 	@param theClassName the name of the class that will be used for searching. Cannot be NULL.
@@ -322,12 +320,8 @@
 
 - (long long)countOfObjectsOfClassNamed:(NSString*)theClassName;
 
-//@}
-
 /*!	@name Saving and Maintenance
  */
-
-//@{
 
 /*! Saves the uncommitted changes to the document store.
 	@param outError is used if an error occurs. May be NULL.
@@ -381,12 +375,8 @@
 
 - (BOOL)saveStoreToDirectoryAtPath:(NSString*)thePath compactDatabase:(BOOL)shouldCompact error:ERROR_PTR;
 
-//@}
-
 /*!	@name Transactions
  */
-
-//@{
 
 /*! Start a transaction.
 	@param outError is used if an error occurs. May be NULL.
@@ -421,24 +411,18 @@
 
 - (BOOL)rollbackTransactionAndReturnError:ERROR_PTR;
 
-//@}
-
 /*!	@name Miscellaneous
  */
-
-//@{
 
 /*! Returns a string representation of the store.
 	@note Check properties nanoEngineProcessingMode and saveInterval to find out the current state of the object.
  */
 
-- (NSString*)description;
+@property (readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the store.
  */
 
-- (NSString*)JSONDescription;
-
-//@}
+@property (readonly, copy) NSString *JSONDescription;
 
 @end

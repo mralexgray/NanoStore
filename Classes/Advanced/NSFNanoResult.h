@@ -57,13 +57,11 @@
 /*!	@name Accessors
  */
 
-//@{
-
 /*! Returns a new array containing the columns.
 	@returns An array with the columns retrieved from the result set.
  */
 
-- (NSArray*)columns;
+@property (readonly, copy) NSArray *columns;
 
 /*! Returns a new array containing the values for a given column.
 	@param theIndex is the index of the value in the result set.
@@ -85,14 +83,10 @@
 	@returns The value of the first element from the result set.
  */
 
-- (NSString*)firstValue;
-
-//@}
+@property (readonly, copy) NSString *firstValue;
 
 /*!	@name Exporting the Results to a File
  */
-
-//@{
 
 /*! Saves the result to a file.
 	@param thePath is the location where the result will be saved to a file.
@@ -100,23 +94,17 @@
 
 - (void)writeToFile:(NSString*)thePath;
 
-//@}
-
 /*!	@name Miscellaneous
  */
-
-//@{
 
 /*! Returns a string representation of the result.
  */
 
-- (NSString*)description;
+@property (readonly, copy) NSString *description;
 
 /** Returns a JSON representation of the result.
  */
 
-- (NSString*)JSONDescription;
-
-//@}
+@property (readonly, copy) NSString *JSONDescription;
 
 @end

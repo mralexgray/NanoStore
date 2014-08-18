@@ -1,0 +1,3 @@
+[submodule "NanoStoreModel"]
+	path = NanoStoreModel
+	url = https://github.com/siuying/NanoStoreModel

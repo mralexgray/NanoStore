@@ -1,42 +1,26 @@
 /*
-     NanoStore.h
+     NanoStore.h/Volumes/2T/ServiceData/AtoZ.framework/Frameworks/NanoStore/Classes/Public/NanoStore.h
      NanoStore
 
-     Copyright (c) 2013 Webbo, Inc. All rights reserved.
-     
-     Redistribution and use in source and binary forms, with or without modification, are permitted
-     provided that the following conditions are met:
-     
-     * Redistributions of source code must retain the above copyright notice, this list of conditions
-     and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions
-     and the following disclaimer in the documentation and/or other materials provided with the distribution.
-     * Neither the name of Webbo nor the names of its contributors may be used to endorse or promote
-     products derived from this software without specific prior written permission.
-     
-     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-     WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-     PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-     PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-     OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
 */
 
-#import "NSFNanoObjectProtocol.h"
-#import "NSFNanoObject.h"
-#import "NSFNanoGlobals.h"
-#import "NSFNanoStore.h"
-#import "NSFNanoPredicate.h"
-#import "NSFNanoExpression.h"
-#import "NSFNanoSearch.h"
-#import "NSFNanoSortDescriptor.h"
-#import "NSFNanoResult.h"
-#import "NSFNanoBag.h"
-#import "NSFNanoEngine.h"
-#import "NSFNanoGlobals.h"
+#ifndef ERROR_PTR
+#define ERROR_PTR (NSError * __autoreleasing*)outError
+#endif
 
+#import <NanoStore/NSFNanoObjectProtocol.h>
+#import <NanoStore/NSFNanoObject.h>
+#import <NanoStore/NSFNanoGlobals.h>
+#import <NanoStore/NSFNanoStore.h>
+#import <NanoStore/NSFNanoPredicate.h>
+#import <NanoStore/NSFNanoExpression.h>
+#import <NanoStore/NSFNanoSearch.h>
+#import <NanoStore/NSFNanoSortDescriptor.h>
+#import <NanoStore/NSFNanoResult.h>
+#import <NanoStore/NSFNanoBag.h>
+#import <NanoStore/NSFNanoEngine.h>
+#import <NanoStore/NSFNanoGlobals.h>
+#import <NanoStore/NSMObject.h>
 /**
  @mainpage Welcome To NanoStore
  
@@ -92,7 +76,7 @@
  
  @implementation MyDemoAppDelegate
  
- - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+ - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
  {
      // Override point for customization after application launch.
      // Instantiate a NanoStore and open it
@@ -164,7 +148,7 @@
  Until the limit set by NSFNanoEngine's \link NSFNanoEngine::cacheSize - (NSUInteger)cacheSize \endlink has been reached, memory usage would be the same for in-memory store and on-disk store. When the size
  of the store grows beyond \link NSFNanoEngine::cacheSize - (NSUInteger)cacheSize \endlink in-memory stores start to consume more memory than on-disk ones, because it has nowhere to push pages out of the cache.
  
- Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's \link createAndOpenStoreWithType:path:error: + (NSFNanoStore *)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath error:(NSError * __autoreleasing *)outError \endlink method.
+ Typically, most developers may want to create and open the document store. To do that, use NSFNanoStore's \link createAndOpenStoreWithType:path:error: + (NSFNanoStore*)createAndOpenStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath error:ERROR_PTR \endlink method.
  
  @details <b>Example:</b>
  @code
@@ -182,7 +166,7 @@
  In the case of file-based document stores, the file gets created automatically if it doesn't exist and then opened. If it already exists, it gets opened and made available for use right away.
  
  There are instances where you may want to fine-tune the engine. Tunning the engine has to be performed before the document store is opened. Another method is available In NSFNanoStore for this
- purpose: \link createStoreWithType:path: + (NSFNanoStore *)createStoreWithType:(NSFNanoStoreType)theType path:(NSString *)thePath \endlink.
+ purpose: \link createStoreWithType:path: + (NSFNanoStore*)createStoreWithType:(NSFNanoStoreType)theType path:(NSString*)thePath \endlink.
  
  @details <b>Example:</b>
  @code
@@ -233,11 +217,11 @@
  [nanoStore closeWithError:nil];
  @endcode
  
- Alternatively, you can instantiate a \link NSFNanoObject::nanoObject NanoObject \endlink providing a dictionary via \link NSFNanoObject::nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary *)theDictionary. \endlink
+ Alternatively, you can instantiate a \link NSFNanoObject::nanoObject NanoObject \endlink providing a dictionary via \link NSFNanoObject::nanoObjectWithDictionary: + (NSFNanoObject*)nanoObjectWithDictionary:(NSDictionary*)theDictionary. \endlink
  NanoStore will assign a UUID automatically when the \link NSFNanoObject::nanoObjectWithDictionary: NanoObject \endlink
  is instantiated. This means that requesting the key from the \link NSFNanoObject::nanoObjectWithDictionary: NanoObject \endlink will return a valid UUID.
  The same holds true for objects that inherit from NSFNanoObject. However, classes that implement the NSFNanoObjectProtocol protocol should
- make sure they return a valid key via \link NSFNanoObjectProtocol::nanoObjectKey - (NSString *)nanoObjectKey \endlink
+ make sure they return a valid key via \link NSFNanoObjectProtocol::nanoObjectKey - (NSString*)nanoObjectKey \endlink
  
  @warning
  If an attempt is made to add or remove an object without a valid key, an exception of type \ref NSFGlobals::NSFNanoObjectBehaviorException
@@ -266,9 +250,9 @@
  
  To remove an object, there are several options available. The most common methods are found in NSFNanoStore:
  
- - \link NSFNanoStore::removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:(NSError * __autoreleasing *)outError \endlink
- - \link NSFNanoStore::removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError \endlink
- - \link NSFNanoStore::removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray *)theObjects error:(NSError * __autoreleasing *)outError \endlink
+ - \link NSFNanoStore::removeObject:error: - (BOOL)removeObject:(id <NSFNanoObjectProtocol>)theObject error:ERROR_PTR \endlink
+ - \link NSFNanoStore::removeObjectsWithKeysInArray:error: - (BOOL)removeObjectsWithKeysInArray:(NSArray*)theKeys error:ERROR_PTR \endlink
+ - \link NSFNanoStore::removeObjectsInArray:error: - (BOOL)removeObjectsInArray:(NSArray*)theObjects error:ERROR_PTR \endlink
 
  @details <b>Example:</b>
  @code
@@ -318,7 +302,7 @@
  - 3) Obtain the results specifying whether objects or keys should be returned (*)
  
  (*) If introspecting the data is needed, request objects. You should request keys if you need to feed the result to another method, such as NSFNanoStore
- \link NSFNanoStore::removeObjectsWithKeysInArray:error: -(BOOL)removeObjectsWithKeysInArray:(NSArray *)theKeys error:(NSError * __autoreleasing *)outError \endlink method.
+ \link NSFNanoStore::removeObjectsWithKeysInArray:error: -(BOOL)removeObjectsWithKeysInArray:(NSArray*)theKeys error:ERROR_PTR \endlink method.
  
  @details <b>Example: finding all objects with the attribute 'LastName' and value 'Doe'.</b>
  @code
@@ -477,7 +461,7 @@
  [nanoStore saveStoreAndReturnError:nil];
  @endcode
  
- @note If you set the saveInterval value to anything other one, keep in mind that some objects may still be left unsaved after being added or modified. To make sure they're saved properly, call \link NSFNanoStore::saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:(NSError * __autoreleasing *)outError \endlink.
+ @note If you set the saveInterval value to anything other one, keep in mind that some objects may still be left unsaved after being added or modified. To make sure they're saved properly, call \link NSFNanoStore::saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:ERROR_PTR \endlink.
  
  Choosing a good saveInterval value is more art than science. While testing NanoStore using a medium-sized dictionary (iTunes' MP3 dictionary) setting saveInterval to 1000 resulted in the best performance. You may want to test with different numbers and fine-tune it for your data set.
  
@@ -495,5 +479,4 @@
  
  @section officialsourcerepo_sec Official Source Repository
  The official repository for NanoStore is hosted on GitHub: https://github.com/tciuro/NanoStore
- 
- */
+ 	*/

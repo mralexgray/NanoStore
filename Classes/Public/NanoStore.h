@@ -20,7 +20,7 @@
 #import <NanoStore/NSFNanoBag.h>
 #import <NanoStore/NSFNanoEngine.h>
 #import <NanoStore/NSFNanoGlobals.h>
-
+#import <NanoStore/NSMObject.h>
 /**
  @mainpage Welcome To NanoStore
  

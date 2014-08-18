@@ -2,61 +2,37 @@
      NSFNanoGlobals.h
      NanoStore
      
-     Copyright (c) 2013 Webbo, Inc. All rights reserved.
-     
-     Redistribution and use in source and binary forms, with or without modification, are permitted
-     provided that the following conditions are met:
-     
-     * Redistributions of source code must retain the above copyright notice, this list of conditions
-     and the following disclaimer.
-     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions
-     and the following disclaimer in the documentation and/or other materials provided with the distribution.
-     * Neither the name of Webbo nor the names of its contributors may be used to endorse or promote
-     products derived from this software without specific prior written permission.
-     
-     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-     WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-     PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
-     DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-     PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-     OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-     SUCH DAMAGE.
  */
 
 #import <Foundation/Foundation.h>
 
 /*! @file NSFNanoGlobals.h
- @brief Public available constants to be used in NanoStore.
+    @brief Public available constants to be used in NanoStore.
  */
 
-/** * If turned on, NanoStore will log debugging information to Console. */
+/*! If turned on, NanoStore will log debugging information to Console. */
 extern void NSFSetIsDebugOn (BOOL flag);
 
-/** * Determine whether NanoStore debugging services are turned on. */
+/*! Determine whether NanoStore debugging services are turned on. */
 extern BOOL NSFIsDebugOn (void);
 
-/** * The mode used by NSFNanoEngine to manipulate data in the document store.
- * If FastMode is activated, the document store is opened with all performance turned on (more risky in case of failure). Deactivating it makes it slower,
- * but safer.
- * 
- * When FastMode is activated NanoStore continues without pausing as soon as it has handed data off to the operating system.
- * If the application running NanoStore crashes, the data will be safe, but the database might become corrupted if the operating system crashes
- * or the computer loses power before that data has been written to the disk surface.
- * On the other hand, some operations are as much as 50 or more times faster with FastMode activated.
- * 
- * If FastMode is deactivated, NanoStore will pause at critical moments to make sure that data has actually been written to the disk surface
- * before continuing. This ensures that if the operating system crashes or if there is a power failure, the database will be uncorrupted after rebooting.
- * Deactivating FastMode is very safe, but it is also slower.
+/*! The mode used by NSFNanoEngine to manipulate data in the document store.
+    If FastMode is activated, the document store is opened with all performance turned on (more risky in case of failure). Deactivating it makes it slower, but safer.
+
+    When FastMode is activated NanoStore continues without pausing as soon as it has handed data off to the operating system.
+    If the application running NanoStore crashes, the data will be safe, but the database might become corrupted if the operating system crashes or the computer loses power before that data has been written to the disk surface.
+    On the other hand, some operations are as much as 50 or more times faster with FastMode activated.
+
+    If FastMode is deactivated, NanoStore will pause at critical moments to make sure that data has actually been written to the disk surface before continuing. This ensures that if the operating system crashes or if there is a power failure, the database will be uncorrupted after rebooting.
+    Deactivating FastMode is very safe, but it is also slower.
  */
 typedef NS_ENUM(NSUInteger, NSFEngineProcessingMode) {
-	/*!The default mode is slower but safer. */
-    NSFEngineProcessingDefaultMode = 1,
-	/*!The fast mode is very quick but unsafe. */
-    NSFEngineProcessingFastMode
+
+    NSFEngineProcessingDefaultMode = 1, 	/*!The default mode is slower but safer. */
+    NSFEngineProcessingFastMode         	/*!The fast mode is very quick but unsafe. */
 };
 
-/** * Datatypes used by NanoStore.
+/*! Datatypes used by NanoStore.
  @note Additional information can be found on the SQLite website: http://www.sqlite.org/datatype3.html
  */
 typedef NS_ENUM(int, NSFNanoDatatype) {
@@ -78,13 +54,13 @@ typedef NS_ENUM(int, NSFNanoDatatype) {
     NSFNanoTypeURL
 };
 
-/** * Returns the name of a NSFNanoDatatype datatype as a string. */
+/*! Returns the name of a NSFNanoDatatype datatype as a string. */
 extern  NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype);
 
-/** * Obtains a NSFNanoDatatype datatype by name. */
+/*! Obtains a NSFNanoDatatype datatype by name. */
 extern  NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype);
 
-/** * Types of backing store supported by NanoStore.
+/*! Types of backing store supported by NanoStore.
  * These values represent the storage options available when generating a NanoStore.
  @see NSFNanoStore
 */
@@ -97,28 +73,23 @@ typedef NS_ENUM(NSUInteger,NSFNanoStoreType){
     NSFPersistentStoreType
 };
 
-/** * Aggregate functions.
+/*! Aggregate functions.
  * These functions represent the options available to obtain aggregate results quickly and efficiently.
- * @note Instead of sum(), total() is invoked instead because sum() will throw an "integer overflow" exception
+	@note Instead of sum(), total() is invoked instead because sum() will throw an "integer overflow" exception
  * if all inputs are integers or NULL and an integer overflow occurs at any point during the computation. On
  * the other hand, total() never throws an integer overflow.
- @see \link NSFNanoSearch::aggregateOperation:onAttribute: -(NSNumber *)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString *)theAttribute \endlink
+ @see \link NSFNanoSearch::aggregateOperation:onAttribute: -(NSNumber*)aggregateOperation:(NSFAggregateFunctionType)theFunctionType onAttribute:(NSString*)theAttribute \endlink
  */
 
 typedef NS_ENUM(NSUInteger,NSFAggregateFunctionType){
-	/*!It invokes the avg() function. */
-    NSFAverage = 1,
-	/*!It invokes the count() function. */
-    NSFCount,
-	/*!It invokes the max() function. */
-    NSFMax,
-	/*!It invokes the min() function. */
-    NSFMin,
-	/*!It invokes the total() function. See note above for additional information. */
-    NSFTotal
+    NSFAverage = 1, 	/*!It invokes the avg() function. */
+    NSFCount,         /*!It invokes the count() function. */
+    NSFMax,          	/*!It invokes the max() function. */
+    NSFMin,           /*!It invokes the min() function. */
+    NSFTotal         	/*!It invokes the total() function. See note above for additional information. */
 };
 
-/** * Comparison options.
+/*! Comparison options.
  * These values represent the options available to some of the classes’ search and comparison methods.
  @see NSFNanoPredicate, NSFNanoSearch
  */
@@ -149,56 +120,47 @@ typedef NS_ENUM(NSUInteger, NSFMatchType) {
     NSFNotEqualTo
 };
 
-/** * Column types for the Attributes table.
+/*! Column types for the Attributes table.
  * These values represent the columns available used for searching.
  @see NSFNanoPredicate
  */
 typedef NS_ENUM(NSUInteger,NSFTableColumnType){
-	/*!The key column. */
-    NSFKeyColumn = 1,
-	/*!The attribute column. */
-    NSFAttributeColumn,
-	/*!The value column. */
-    NSFValueColumn
+
+    NSFKeyColumn = 1,     /*!The key column. */
+    NSFAttributeColumn, 	/*!The attribute column. */
+    NSFValueColumn        /*!The value column. */
 };
 
-/** * Comparison criteria operators.
+/*! Comparison criteria operators.
  * These values represent the operations available for concatenating predicates in an expression.
  @see NSFNanoExpression, NSFNanoPredicate
  */
 typedef NS_ENUM(NSUInteger, NSFOperator){
-	/*!And */
-    NSFAnd = 1,
-	/*!Or */
-    NSFOr,
+
+    NSFAnd = 1, 	/*!And */
+    NSFOr,       	/*!Or */
 };
 
-/** * Date comparison options.
- * These values represent the options available when searching and comparing dates.
+/*! Date comparison options. These values represent the options available when searching and comparing dates.
  @see NSFNanoSearch, NSFNanoPredicate
  */
 typedef NS_ENUM(NSUInteger,NSFDateMatchType){
-	/*!Before the specified date */
-    NSFBeforeDate = 1,
-	/*!On the exact date */
-    NSFOnDate,
-	/*!After the specified date */
-    NSFAfterDate
+
+    NSFBeforeDate = 1,  /*!Before the specified date */
+    NSFOnDate,          /*!On the exact date */
+    NSFAfterDate        /*!After the specified date */
 };
 
-/** * Obtaining search results options.
- * These values represent the options used by the search mechanism to return results.
- @see NSFNanoSearch
+/*! Obtaining search results options. These values represent the options used by the search mechanism to return results.
+    @see NSFNanoSearch
  */
 typedef NS_ENUM(NSUInteger,NSFReturnType){
-	/*!Returns the objects. */
-    NSFReturnObjects = 1,
-	/*!Returns the keys */
-    NSFReturnKeys,
+
+    NSFReturnObjects = 1, 	/*!Returns the objects. */
+    NSFReturnKeys         	/*!Returns the keys */
 };
 
-/** * Caching mechanism options.
- * These values represent the options used by the search mechanism to cache results.
+/*! Caching mechanism options. These values represent the options used by the search mechanism to cache results.
  @see NSFNanoEngine
  */
 typedef NS_ENUM(NSUInteger,NSFCacheMethod){
@@ -210,20 +172,18 @@ typedef NS_ENUM(NSUInteger,NSFCacheMethod){
     DoNotCacheData,
 };
 
-/** * Text encoding options.
+/*! Text encoding options.
  * The following constants are provided by SQLite as possible string encodings.
  @see NSFNanoEngine
  */
 typedef NS_ENUM(NSUInteger,NSFEncodingType){
-	/*!An 8-bit representation of Unicode characters. */
-    NSFEncodingUTF8 = 1,
-	/*!A 16-bit representation of Unicode characters. */
-    NSFEncodingUTF16,
-	/*!The encoding representation could not be determined. */
-    NSFEncodingUnknown
+
+    NSFEncodingUTF8 = 1,  	/*!An 8-bit representation of Unicode characters. */
+    NSFEncodingUTF16,      	/*!A 16-bit representation of Unicode characters. */
+    NSFEncodingUnknown    	/*!The encoding representation could not be determined. */
 };
 
-/** * Synchronous options.
+/*! Synchronous options.
  * These values represent the options used to manipulate the synchronous flag. In NSFNanoEngine it's obtained via
  * \link NSFNanoEngine::setSynchronousMode: - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode \endlink
 
@@ -246,7 +206,7 @@ typedef NS_ENUM(NSUInteger, NSFSynchronousMode){
     SynchronousModeFull,
 };
 
-/** * Temporary files location options.
+/*! Temporary files location options.
  * These values represent the options used by SQLite to create the temporary files it creates.
  @see NSFNanoEngine
  */
@@ -261,7 +221,7 @@ typedef NS_ENUM(NSUInteger,NSFTempStoreMode){
 	/*!When temp_store is MEMORY (2) temporary tables and indices are kept in as if they were pure in-memory databases memory. */
     TempStoreModeMemory };
 
-/** * Journal mode.
+/*! Journal mode.
  * These values represent the options used by SQLite to the the journal mode for databases associated with the current database connection.
  @note Note that the journal_mode for an in-memory database is either MEMORY or OFF and can not be changed to a different value. An attempt to change
  the journal_mode of an in-memory database to any setting other than MEMORY or OFF is ignored. Note also that the journal_mode cannot be changed
@@ -296,31 +256,25 @@ typedef NS_ENUM(NSUInteger, NSFJournalModeMode){
     JournalModeOFF
 };
 
-/** * Memory-backed document store descriptor.
- * This value represents the descriptor used by NanoStore to identify memory-backed document stores. In NSFNanoStore is available via
- * \link NSFNanoStore::filePath - (NSString *)filePath \endlink (assuming the document store was
- * created as a memory-backed document store). In NSFNanoEngine, it's available via its <i>path</i> property.
- @see NSFNanoStore, NSFNanoEngine
+/*! Memory-backed document store descriptor. This value represents the descriptor used by NanoStore to identify memory-backed document stores. In NSFNanoStore is available via \link NSFNanoStore::filePath - (NSString*)filePath \endlink (assuming the document store was created as a memory-backed document store). In NSFNanoEngine, it's available via its <i>path</i> property.
+  @see NSFNanoStore, NSFNanoEngine
  */
 extern NSString * const NSFMemoryDatabase;
 
-/** * Temporary store descriptor.
- * This value represents the descriptor used by NanoStore to identify temporary document stores. In NSFNanoStore is available via
- * \link NSFNanoStore::filePath - (NSString *)filePath \endlink (assuming the document store was
- * created as a temporary document store). In NSFNanoEngine, it's available via its \link NSFNanoEngine::path - (NSString *)path \endlink property.
- @see NSFNanoStore, NSFNanoEngine
+/*! Temporary store descriptor. This value represents the descriptor used by NanoStore to identify temporary document stores. In NSFNanoStore is available via \link NSFNanoStore::filePath - (NSString*)filePath \endlink (assuming the document store was created as a temporary document store). In NSFNanoEngine, it's available via its \link NSFNanoEngine::path - (NSString*)path \endlink property.
+  @see NSFNanoStore, NSFNanoEngine
  */
 extern NSString * const NSFTemporaryDatabase;
 
-/** * NanoStore's error code. This value is used by NanoStore when reporting errors. */
+/*! NanoStore's error code. This value is used by NanoStore when reporting errors. */
 extern NSInteger const NSFNanoStoreErrorKey;
 
-/** * Exception used when an unexpected parameter has been detected. */
+/*! Exception used when an unexpected parameter has been detected. */
 extern NSString * const NSFUnexpectedParameterException,
-/** * Exception used when a non-confirming NSFNanoObjectProtocol object has been detected. */
+/*! Exception used when a non-confirming NSFNanoObjectProtocol object has been detected. */
                 * const NSFNonConformingNanoObjectProtocolException,
-/** * Exception used when a NSFNanoObjectProtocol object is not behaving properly (i.e its <i>key</i> property does not return a correct value). */
+/*! Exception used when a NSFNanoObjectProtocol object is not behaving properly (i.e its <i>key</i> property does not return a correct value). */
                 * const NSFNanoObjectBehaviorException,
-/** * Exception used when a problem occurs while manipulating the document store (adding, updating, deleting, opening a transaction, commit, etc.).
- */
+/*! Exception used when a problem occurs while manipulating the document store (adding, updating, deleting, opening a transaction, commit, etc.). */
                 * const NSFNanoStoreUnableToManipulateStoreException;
+                

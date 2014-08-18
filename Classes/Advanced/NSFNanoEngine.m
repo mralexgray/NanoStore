@@ -32,7 +32,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 @property (nonatomic, copy, readwrite) NSString *path;
 @property (nonatomic) NSMutableDictionary *schema;
 @property (nonatomic) BOOL willCommitChangeSchema;
-@property (nonatomic) unsigned int busyTimeout;
+//@property (nonatomic) unsigned int busyTimeout;
 /** \endcond */
 
 @end
