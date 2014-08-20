@@ -123,6 +123,11 @@
 		7B8883AC198A77650084F770 /* NSFNanoObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8883AB198A77650084F770 /* NSFNanoObjectTests.m */; };
 		7B8883AD198A77650084F770 /* NSFNanoObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8883AB198A77650084F770 /* NSFNanoObjectTests.m */; };
 		7BE8677719A2A379001BDBBE /* NSMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8883A8198A75E60084F770 /* NSMObject.m */; };
+		7BE867BC19A2B5E2001BDBBE /* NSMObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B8883A7198A75E60084F770 /* NSMObject.h */; };
+		7BE867C319A2BDDF001BDBBE /* Nano+AtoZ.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE867C119A2BDDF001BDBBE /* Nano+AtoZ.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7BE867C419A2BDDF001BDBBE /* Nano+AtoZ.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BE867C119A2BDDF001BDBBE /* Nano+AtoZ.h */; };
+		7BE867C519A2BDDF001BDBBE /* Nano+AtoZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE867C219A2BDDF001BDBBE /* Nano+AtoZ.m */; };
+		7BE867C619A2BDDF001BDBBE /* Nano+AtoZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE867C219A2BDDF001BDBBE /* Nano+AtoZ.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,15 +138,23 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = NanoStore;
 		};
+		7BE867C819A2C1BE001BDBBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 748D3450139772B600FD5565;
+			remoteInfo = libnanostore2;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		74A7DA451399B067008F46F1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "${PROJECT_DIR}/Distribution/NanoStore2/Release/Headers";
+			dstPath = "${PROJECT_DIR}/Distribution/NanoStore";
 			dstSubfolderSpec = 0;
 			files = (
+				7BE867BC19A2B5E2001BDBBE /* NSMObject.h in CopyFiles */,
 				74A7DA461399B0E7008F46F1 /* NanoStore.h in CopyFiles */,
 				74A7DA471399B0E7008F46F1 /* NSFNanoBag.h in CopyFiles */,
 				74A7DA491399B0E7008F46F1 /* NSFNanoExpression.h in CopyFiles */,
@@ -152,6 +165,7 @@
 				74A7DA521399B0E7008F46F1 /* NSFNanoSearch.h in CopyFiles */,
 				74A7DA541399B0E7008F46F1 /* NSFNanoSortDescriptor.h in CopyFiles */,
 				74A7DA561399B0E7008F46F1 /* NSFNanoStore.h in CopyFiles */,
+				7BE867C419A2BDDF001BDBBE /* Nano+AtoZ.h in CopyFiles */,
 				74A7DA581399B0E7008F46F1 /* NSFNanoEngine.h in CopyFiles */,
 				74A7DA5A1399B0E7008F46F1 /* NSFNanoResult.h in CopyFiles */,
 				74FA5DE5155795CC00217E09 /* fopenCompatibilityFix.c in CopyFiles */,
@@ -176,7 +190,6 @@
 		744510DB128A2EA8008A39B5 /* NanoEngineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NanoEngineTests.m; path = UnitTests/NanoStore/NanoEngineTests.m; sourceTree = "<group>"; };
 		745D1E93128B9DCA00D4653D /* NanoStoreResultTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NanoStoreResultTests.m; path = UnitTests/NanoStore/NanoStoreResultTests.m; sourceTree = "<group>"; };
 		748D3451139772B600FD5565 /* libnanostore2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnanostore2.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		748D3457139772B600FD5565 /* libnanostore2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libnanostore2-Prefix.pch"; sourceTree = "<group>"; };
 		748EB009153F09A600F5C7F2 /* NanoStoreGlobalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NanoStoreGlobalsTests.m; path = UnitTests/NanoStore/NanoStoreGlobalsTests.m; sourceTree = "<group>"; };
 		74987EE812DB1B1A00E5D7CB /* OCUnitExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCUnitExtensions.h; sourceTree = "<group>"; };
 		74987EE912DB1B1A00E5D7CB /* OCUnitExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCUnitExtensions.m; sourceTree = "<group>"; };
@@ -231,18 +244,13 @@
 		7B8883A7198A75E60084F770 /* NSMObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMObject.h; path = NanoStoreModel/NanoStoreModel/Model/NSMObject.h; sourceTree = SOURCE_ROOT; };
 		7B8883A8198A75E60084F770 /* NSMObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMObject.m; path = NanoStoreModel/NanoStoreModel/Model/NSMObject.m; sourceTree = SOURCE_ROOT; };
 		7B8883AB198A77650084F770 /* NSFNanoObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSFNanoObjectTests.m; path = UnitTests/NanoStore/NSFNanoObjectTests.m; sourceTree = "<group>"; };
+		7BE867C119A2BDDF001BDBBE /* Nano+AtoZ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Nano+AtoZ.h"; sourceTree = "<group>"; };
+		7BE867C219A2BDDF001BDBBE /* Nano+AtoZ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Nano+AtoZ.m"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* NanoStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NanoStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		748D344E139772B600FD5565 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		74C1FA881538DDD60077DAD1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -288,7 +296,6 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
-				748D3455139772B600FD5565 /* libnanostore2 */,
 				32DBCF5E0370ADEE00C91783 /* NanoStore_Prefix.pch */,
 				74FA5DE3155795CC00217E09 /* fopenCompatibilityFix.c */,
 			);
@@ -325,22 +332,6 @@
 			);
 			name = TestClasses;
 			path = UnitTests/NanoStore/TestClasses;
-			sourceTree = "<group>";
-		};
-		748D3455139772B600FD5565 /* libnanostore2 */ = {
-			isa = PBXGroup;
-			children = (
-				748D3456139772B600FD5565 /* Supporting Files */,
-			);
-			path = libnanostore2;
-			sourceTree = "<group>";
-		};
-		748D3456139772B600FD5565 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				748D3457139772B600FD5565 /* libnanostore2-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		74987EE712DB1B1A00E5D7CB /* OCUnitExtensions */ = {
@@ -438,14 +429,14 @@
 			isa = PBXGroup;
 			children = (
 				74B63DE0129F25C400B3B2A7 /* NanoStore.h */,
+				7BE867C119A2BDDF001BDBBE /* Nano+AtoZ.h */,
+				7BE867C219A2BDDF001BDBBE /* Nano+AtoZ.m */,
 				74B63DE1129F25C400B3B2A7 /* NSFNanoBag.h */,
 				74B63DE2129F25C400B3B2A7 /* NSFNanoBag.m */,
 				74B63DE3129F25C400B3B2A7 /* NSFNanoExpression.h */,
 				74B63DE4129F25C400B3B2A7 /* NSFNanoExpression.m */,
 				74B63DE5129F25C400B3B2A7 /* NSFNanoGlobals.h */,
 				74B63DE6129F25C400B3B2A7 /* NSFNanoGlobals.m */,
-				7B8883A7198A75E60084F770 /* NSMObject.h */,
-				7B8883A8198A75E60084F770 /* NSMObject.m */,
 				74B63DE7129F25C400B3B2A7 /* NSFNanoObject.h */,
 				74B63DE8129F25C400B3B2A7 /* NSFNanoObject.m */,
 				74B63DE9129F25C400B3B2A7 /* NSFNanoObjectProtocol.h */,
@@ -457,6 +448,8 @@
 				74A4EF11138E3EBD00FBC46C /* NSFNanoSortDescriptor.m */,
 				74B63DEE129F25C400B3B2A7 /* NSFNanoStore.h */,
 				74B63DEF129F25C400B3B2A7 /* NSFNanoStore.m */,
+				7B8883A7198A75E60084F770 /* NSMObject.h */,
+				7B8883A8198A75E60084F770 /* NSMObject.m */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -468,13 +461,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BE867C319A2BDDF001BDBBE /* Nano+AtoZ.h in Headers */,
+				7B8883A9198A75E60084F770 /* NSMObject.h in Headers */,
 				74B63DF0129F25C400B3B2A7 /* NSFNanoEngine.h in Headers */,
 				74B63DF2129F25C400B3B2A7 /* NSFNanoResult.h in Headers */,
 				74B63DFE129F25C400B3B2A7 /* NanoStore.h in Headers */,
 				74B63DFF129F25C400B3B2A7 /* NSFNanoBag.h in Headers */,
 				74B63E01129F25C400B3B2A7 /* NSFNanoExpression.h in Headers */,
 				74B63E03129F25C400B3B2A7 /* NSFNanoGlobals.h in Headers */,
-				7B8883A9198A75E60084F770 /* NSMObject.h in Headers */,
 				74B63E05129F25C400B3B2A7 /* NSFNanoObject.h in Headers */,
 				74B63E07129F25C400B3B2A7 /* NSFNanoObjectProtocol.h in Headers */,
 				74B63E08129F25C400B3B2A7 /* NSFNanoPredicate.h in Headers */,
@@ -503,7 +497,6 @@
 			buildConfigurationList = 748D345A139772B600FD5565 /* Build configuration list for PBXNativeTarget "libnanostore2" */;
 			buildPhases = (
 				748D344D139772B600FD5565 /* Sources */,
-				748D344E139772B600FD5565 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -562,6 +555,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7BE867C919A2C1BE001BDBBE /* PBXTargetDependency */,
 			);
 			name = NanoStore;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -633,7 +627,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# #################################################\n# Distribution build script\n# \n# Builds simulator and device builds into a single binary, \n# for both debug and release.\n# #################################################\n\n# GLOBAL SETTINGS\n\nMY_BUILD_RELEASE=\"Release\"\n\nMY_LIBRARY_TARGET=\"libnanostore2\"\nMY_BUILD_DIRECTORY=${BUILD_ROOT}\nMY_BINARY_NAME=\"libnanostore2.a\"\nMY_TEMP_LIBRARY_IPHONEOS_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos\"\nMY_TEMP_LIBRARY_IPHONESIMULATOR_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator\"\nsetenv BUILD_STYLE=$MY_BUILD_RELEASE\n\n#### BUILD ######\n\n# Build for Device\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphoneos TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONEOS_DIR}\n\n# Build for Simulator\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphonesimulator TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\n\nNANOSTORE_OUTPUT_PATH=\"${PROJECT_DIR}/Distribution/NanoStore2/${MY_BUILD_RELEASE}\"\n\necho \"*************************************************\"\necho \"Distribution directory located at: \" $NANOSTORE_OUTPUT_PATH\necho \"*************************************************\"\n\n# Build the NanoStore distro directory if needed\nif [[ ! -d ${NANOSTORE_OUTPUT_PATH} ]]; then\nmkdir -p \"$NANOSTORE_OUTPUT_PATH/Library\"\nfi\n\n# Combine lib files for various platforms into one\nlipo -create \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos/${MY_BINARY_NAME}\" \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator/${MY_BINARY_NAME}\" -output \"${NANOSTORE_OUTPUT_PATH}/Library/${MY_BINARY_NAME}\"\n\n#Delete 'Release-iphoneos' and 'Release-iphonesimulator' directories\nrm -rf ${MY_TEMP_LIBRARY_IPHONEOS_DIR}\nrm -rf ${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\nrm -rf ${PROJECT_DIR}/build\n";
+			shellScript = "# #################################################\n# Distribution build script\n# \n# Builds simulator and device builds into a single binary, \n# for both debug and release.\n# #################################################\n\n# GLOBAL SETTINGS\n\nMY_BUILD_RELEASE=\"Release\"\n\nMY_LIBRARY_TARGET=\"libnanostore2\"\nMY_BUILD_DIRECTORY=${BUILD_ROOT}\nMY_BINARY_NAME=\"libnanostore2.a\"\nMY_TEMP_LIBRARY_IPHONEOS_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos\"\nMY_TEMP_LIBRARY_IPHONESIMULATOR_DIR=\"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator\"\nsetenv BUILD_STYLE=$MY_BUILD_RELEASE\n\n#### BUILD ######\n\n# Build for Device\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphoneos TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONEOS_DIR}\n\n# Build for Simulator\nxcodebuild -target \"$MY_LIBRARY_TARGET\" -configuration ${MY_BUILD_RELEASE} -sdk iphonesimulator TARGET_BUILD_DIR=${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\n\nNANOSTORE_OUTPUT_PATH=\"${PROJECT_DIR}/Distribution\"\n\n# /NanoStore2/${MY_BUILD_RELEASE}\"\n\necho \"*************************************************\"\necho \"Distribution directory located at: \" $NANOSTORE_OUTPUT_PATH\necho \"*************************************************\"\n\n# Build the NanoStore distro directory if needed\nif [[ ! -d ${NANOSTORE_OUTPUT_PATH} ]]; then\nmkdir -p \"$NANOSTORE_OUTPUT_PATH\"\n# /Library\"\nfi\n\n# Combine lib files for various platforms into one\nlipo -create \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphoneos/${MY_BINARY_NAME}\" \"${MY_BUILD_DIRECTORY}/${MY_BUILD_RELEASE}-iphonesimulator/${MY_BINARY_NAME}\" -output \"${NANOSTORE_OUTPUT_PATH}/${MY_BINARY_NAME}\"\n# /Library/${MY_BINARY_NAME}\"\n\n#Delete 'Release-iphoneos' and 'Release-iphonesimulator' directories\nrm -rf ${MY_TEMP_LIBRARY_IPHONEOS_DIR}\nrm -rf ${MY_TEMP_LIBRARY_IPHONESIMULATOR_DIR}\nrm -rf ${PROJECT_DIR}/build\n";
 		};
 		74C1FA8A1538DDD60077DAD1 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -684,6 +678,7 @@
 				7BE8677719A2A379001BDBBE /* NSMObject.m in Sources */,
 				748D34751397731100FD5565 /* NSFNanoBag.m in Sources */,
 				748D34771397731100FD5565 /* NSFNanoExpression.m in Sources */,
+				7BE867C619A2BDDF001BDBBE /* Nano+AtoZ.m in Sources */,
 				748D34791397731100FD5565 /* NSFNanoGlobals.m in Sources */,
 				748D347B1397731100FD5565 /* NSFNanoObject.m in Sources */,
 				748D347E1397731100FD5565 /* NSFNanoPredicate.m in Sources */,
@@ -756,6 +751,7 @@
 				74B63DF3129F25C400B3B2A7 /* NSFNanoResult.m in Sources */,
 				74B63E00129F25C400B3B2A7 /* NSFNanoBag.m in Sources */,
 				74B63E02129F25C400B3B2A7 /* NSFNanoExpression.m in Sources */,
+				7BE867C519A2BDDF001BDBBE /* Nano+AtoZ.m in Sources */,
 				74B63E04129F25C400B3B2A7 /* NSFNanoGlobals.m in Sources */,
 				74B63E06129F25C400B3B2A7 /* NSFNanoObject.m in Sources */,
 				74B63E09129F25C400B3B2A7 /* NSFNanoPredicate.m in Sources */,
@@ -773,6 +769,11 @@
 			isa = PBXTargetDependency;
 			target = 8DC2EF4F0486A6940098B216 /* NanoStore */;
 			targetProxy = 7B0A9350198A7FDA00A61D5B /* PBXContainerItemProxy */;
+		};
+		7BE867C919A2C1BE001BDBBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 748D3450139772B600FD5565 /* libnanostore2 */;
+			targetProxy = 7BE867C819A2C1BE001BDBBE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -917,10 +918,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/libnanostore2.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libnanostore2/libnanostore2-Prefix.pch";
+				GCC_PREFIX_HEADER = NanoStore_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -937,8 +939,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/libnanostore2.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libnanostore2/libnanostore2-Prefix.pch";
+				GCC_PREFIX_HEADER = NanoStore_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = nanostore2;

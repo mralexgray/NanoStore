@@ -7,7 +7,8 @@
   #import <Foundation/Foundation.h>
 
   #ifndef ERROR_PTR
-  #define ERROR_PTR (NSError * __autoreleasing*)outError
+//  #define ERROR_PTR (NSError * __autoreleasing*)outError
+  #define ERROR_PTR (NSError **)outError
   #endif
 
 #endif

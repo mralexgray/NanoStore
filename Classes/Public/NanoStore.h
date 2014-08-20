@@ -4,10 +4,9 @@
 
 */
 
-//#ifndef ERROR_PTR
-////#define ERROR_PTR (NSError * __autoreleasing*)outError
-//#define ERROR_PTR (NSError**)outError
-//#endif
+#ifndef ERROR_PTR
+  #define ERROR_PTR (NSError **)outError
+#endif
 
 #import <NanoStore/NSFNanoObjectProtocol.h>
 #import <NanoStore/NSFNanoObject.h>
@@ -22,6 +21,8 @@
 #import <NanoStore/NSFNanoEngine.h>
 #import <NanoStore/NSFNanoGlobals.h>
 #import <NanoStore/NSMObject.h>
+#import <NanoStore/Nano+AtoZ.h>
+
 /**
  @mainpage Welcome To NanoStore
  
