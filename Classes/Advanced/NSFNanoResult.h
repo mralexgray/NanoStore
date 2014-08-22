@@ -92,7 +92,7 @@
 	@param thePath is the location where the result will be saved to a file.
  */
 
-- (void)writeToFile:(NSString*)thePath;
+- (void) writeToFile:(NSString*)thePath;
 
 /*!	@name Miscellaneous
  */

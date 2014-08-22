@@ -11,23 +11,23 @@
 #import "NSFNanoStore_Private.h"
 
 
-@interface NanoStoreResultTests : XCTestCase
-{
+@interface NanoStoreResultTests : XCTestCase {
+
     NSDictionary *_defaultTestInfo;
 }
 @end
 
 @implementation NanoStoreResultTests
 
-- (void)setUp { [super setUp];
+- (void) setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
-- (void)tearDown
-{
+- (void) tearDown {
+
     
     NSFSetIsDebugOn (NO);
     
@@ -35,8 +35,8 @@
 }
 
 
-- (void)testResultNumberValueReturned
-{
+- (void) testResultNumberValueReturned {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     

@@ -50,7 +50,7 @@ void importDataUsingNanoStore(NSDictionary *iTunesInfo) {
     iterations++;
 
     // Drain the memory every 'saveInterval' iterations
-    // if (!iterations % saveInterval) { [pool drain]; pool = [NSAutoreleasePool new]; }
+    // if (!iterations % saveInterval) { [pool drain]; pool = NSAutoreleasePool.new; }
   }];
 
     // Don't forget that some objects could be lingering in memory. Force a save.

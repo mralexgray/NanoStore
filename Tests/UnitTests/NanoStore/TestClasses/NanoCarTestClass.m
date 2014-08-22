@@ -12,29 +12,15 @@
 
 @implementation NanoCarTestClass
 
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary *)theDictionary forKey:(NSString *)aKey store:(NSFNanoStore *)theStore
-{
-    if (self = [self init]) {
-        _name = theDictionary[kName];
-        _key = aKey;
-    }
-    
-    return self;
+- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary*)theD forKey:(NSString*)k store:(NSFNanoStore*)n {
+
+  return self = super.init ? _name = theD[kName], _key = k, self : nil;
 }
 
-- (NSDictionary *)nanoObjectDictionaryRepresentation
-{
-    return @{kName: _name};
-}
+- (NSDictionary *)nanoObjectDictionaryRepresentation { return @{kName: _name}; }
 
-- (NSString *)nanoObjectKey
-{
-    return self.key;
-}
+- (NSString *)nanoObjectKey { return self.key; }
 
-- (id)rootObject
-{
-    return self;
-}
+- (id)rootObject { return self; }
 
 @end

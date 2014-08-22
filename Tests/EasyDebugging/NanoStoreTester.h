@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Webbo, Inc. All rights reserved.
 //
 
-@interface NanoStoreTester : NSObject
-{
+@interface NanoStoreTester : NSObject {
+
     NSString        *mStorePath;
     BOOL            mRemoveStoreWhenFinished;
     NSDictionary    *mDefaultTestInfo;
 }
 
-- (void)test;
+- (void) test;
 
 @end

@@ -12,21 +12,12 @@
 
 @implementation NanoStoreSortTests
 
-- (void)setUp { [super setUp];
-    
-    NSFSetIsDebugOn (NO);
-}
+- (void) setUp { [super setUp]; NSFSetIsDebugOn (NO); }
 
-- (void)tearDown
-{
-    NSFSetIsDebugOn (NO);
-    
-    [super tearDown];
-}
+- (void) tearDown { NSFSetIsDebugOn (NO); [super tearDown]; }
 
 
-- (void)testSortWithNilAttributes
-{
+- (void) testSortWithNilAttributes {
     NSFNanoSortDescriptor *sort = nil;
     @try {
         sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:nil ascending:YES];
@@ -35,22 +26,22 @@
     }
 }
 
-- (void)testSortParametersAscending
-{
+- (void) testSortParametersAscending {
+
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Foo" ascending:YES];
     XCTAssertTrue ([[sort attribute]isEqualToString:@"Foo"], @"Expected the key to be the same.");
     XCTAssertTrue (sort.isAscending, @"Expected the sort order to be the same.");
 }
 
-- (void)testSortParametersDescending
-{
+- (void) testSortParametersDescending {
+
     NSFNanoSortDescriptor *sort = [NSFNanoSortDescriptor sortDescriptorWithAttribute:@"Bar" ascending:NO];
     XCTAssertTrue ([[sort attribute]isEqualToString:@"Bar"], @"Expected the key to be the same.");
     XCTAssertTrue (NO == sort.isAscending, @"Expected the sort order to be the same.");
 }
 
-- (void)testSortObjectsAscending
-{
+- (void) testSortObjectsAscending {
+
     // Instantiate a NanoStore and open it
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
@@ -64,7 +55,7 @@
     [nanoStore addObjectsFromArray:@[obj1, obj2, obj3, obj4, obj5] error:nil];
     
     // Prepare the sort
-    NSFNanoSortDescriptor *sortCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"City" ascending: YES];
+    NSFNanoSortDescriptor *sortCities = [NSFNanoSortDescriptor.alloc initWithAttribute:@"City" ascending: YES];
     
     // Prepare the search
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];
@@ -81,8 +72,8 @@
     [nanoStore closeWithError:nil];
 }
 
-- (void)testSortBagsAscending
-{
+- (void) testSortBagsAscending {
+
     // Instantiate a NanoStore and open it
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
@@ -95,7 +86,7 @@
     [nanoStore addObjectsFromArray:@[bagOne, bagTwo, bagThree, bagFour] error:nil];
     
     // Prepare the sort
-    NSFNanoSortDescriptor *sortBagNameDescriptor = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"name" ascending: YES];
+    NSFNanoSortDescriptor *sortBagNameDescriptor = [NSFNanoSortDescriptor.alloc initWithAttribute:@"name" ascending: YES];
     
     // Prepare the search
     NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];

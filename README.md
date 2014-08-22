@@ -376,7 +376,7 @@ If we wanted to retrieve all the existing people with <i>firstName</i> equal to 
     search.value = @"John";
      
     // Prepare and set the sort descriptor
-    NSFNanoSortDescriptor *sortByLastName = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"lastName" ascending:YES];
+    NSFNanoSortDescriptor *sortByLastName = [NSFNanoSortDescriptor.alloc initWithAttribute:@"lastName" ascending:YES];
     search.sort = [NSArray arrayWithObject:sortByLastName];
     
     // Perform the search

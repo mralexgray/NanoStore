@@ -13,4 +13,8 @@
 
 + (instancetype) searchWithStore:(NSFNanoStore*)nanoStore ofClass:(Class)k sortedBy:(id)sorters;
 
+
+@property (readonly) NSDictionary *resultDictionary;
+@property (readonly) NSArray *resultArray;
+
 @end

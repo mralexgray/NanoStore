@@ -19,15 +19,15 @@
 @end
 @implementation Car @dynamic name, x; @end
 
-@interface NSFNanoObjectTests : XCTestCase
-{
+@interface NSFNanoObjectTests : XCTestCase {
+
   NSFNanoStore *nanoStore;
   User *user; Car *car;
 }
 @end
 @implementation NSFNanoObjectTests
 
-- (void)setUp { [super setUp];
+- (void) setUp { [super setUp];
 
   nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
        user = (User*) [User model];
@@ -125,7 +125,7 @@
 }
 - (void) testKVO: {
         it(@"should notify KVO observer", ^{
-            UserObserver* observer = [[UserObserver alloc] init];
+            UserObserver* observer = [UserObserver.alloc init];
             User* user = (User*) [User model];
             [user addObserver:observer
                    forKeyPath:@"name"
@@ -142,11 +142,11 @@
 _defaultTestInfo = NSFNanoStore._defaultTestData; NSFSetIsDebugOn (NO); }
 */
 
-- (void)tearDown { [super tearDown]; [nanoStore closeWithError:nil]; }
+- (void) tearDown { [super tearDown]; [nanoStore closeWithError:nil]; }
 
 //_defaultTestInfo = nil; NSFSetIsDebugOn (NO); [super tearDown];
 
-//- (void)testCheckDebugOn  { NSFSetIsDebugOn (YES); XCTAssertTrue (NSFIsDebugOn(), @"Expected isDebugOn to be YES."); }
+//- (void) testCheckDebugOn  { NSFSetIsDebugOn (YES); XCTAssertTrue (NSFIsDebugOn(), @"Expected isDebugOn to be YES."); }
 
 
 @end

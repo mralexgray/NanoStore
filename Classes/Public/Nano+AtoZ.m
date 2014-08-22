@@ -23,4 +23,11 @@
   return search;
 }
 
+- (NSDictionary*) resultDictionary {
+
+  return [self searchObjectsWithReturnType:NSFReturnObjects error:nil];
+}
+
+- (NSArray*) resultArray { return self.resultDictionary.allValues; }
+
 @end

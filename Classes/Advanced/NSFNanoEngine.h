@@ -82,7 +82,7 @@
  */
 
 /** Checks whether the document store is open or closed.
-	@see - (void)close;
+	@see - (void) close;
  */
 
 @property (getter=isDatabaseOpen, readonly) BOOL databaseOpen;
@@ -101,7 +101,7 @@
 
 
 /** Returns the current busy timeout.
-	@see - (void)setBusyTimeout:(unsigned int)theTimeout;
+	@see - (void) setBusyTimeout:(unsigned int)theTimeout;
  */
 
 @property (nonatomic) unsigned int busyTimeout;
@@ -188,7 +188,7 @@
 
 /** Returns the synchronous mode.
 	@return The current synchronous mode.
-	@see - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
+	@see - (void) setSynchronousMode:(NSFSynchronousMode)theSynchronousMode;
  */
 
 @property  NSFSynchronousMode synchronousMode;
@@ -201,7 +201,7 @@
 
 /** Returns the temporary storage mode.
 	@return The current temporary storage mode.
-	@see - (void)setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
+	@see - (void) setTempStoreMode:(NSFTempStoreMode)theTempStoreMode;
  */
 
 @property  NSFTempStoreMode tempStoreMode;
@@ -391,7 +391,7 @@
 	@param theTable is the name of the table.
 	@param isUnique whether the index should be unique or allow duplicates.
 	@return YES upon success, NO otherwise.
-	@see - (void)dropIndex:(NSString*)indexName;
+	@see - (void) dropIndex:(NSString*)indexName;
  */
 
 - (BOOL)createIndexForColumn:(NSString*)theColumn table:(NSString*)theTable isUnique:(BOOL)isUnique;
@@ -413,7 +413,7 @@
 	@see - (BOOL)createIndexForColumn:(NSString*)theColumn table:(NSString*)theTable isUnique:(BOOL)isUnique;
  */
 
-- (void)dropIndex:(NSString*)theIndex;
+- (void) dropIndex:(NSString*)theIndex;
 
 /*!	@name Database Maintenance
  */

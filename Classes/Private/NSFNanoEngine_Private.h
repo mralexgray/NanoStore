@@ -48,11 +48,11 @@
 - (BOOL)NSFP_beginTransactionMode:(NSString*)theSQLStatement;
 - (BOOL)NSFP_createTable:(NSString*)table withColumns:(NSArray*)tableColumns datatypes:(NSArray*)tableDatatypes isTemporary:(BOOL)isTemporaryFlag;
 - (BOOL)NSFP_removeColumn:(NSString*)column fromTable:(NSString*)table;
-- (void)NSFP_rebuildDatatypeCache;
+- (void) NSFP_rebuildDatatypeCache;
 - (BOOL)NSFP_insertStringValues:(NSArray*)values forColumns:(NSArray*)columns table:(NSString*)table;
 
-- (void)NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)tags quoteTags:(BOOL)flag;
-- (void)NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)columns;
+- (void) NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)tags quoteTags:(BOOL)flag;
+- (void) NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)columns;
 - (BOOL)NSFP_sqlString:(NSMutableString*)theSQLStatement forTable:(NSString*)table withColumns:(NSArray*)columns datatypes:(NSArray*)datatypes;
 
 - (NSInteger)NSFP_ROWIDPresenceLocation:(NSArray*)tableColumns datatypes:(NSArray*)datatypes;
@@ -60,8 +60,8 @@
 - (NSString*)NSFP_prefixWithDotDelimiter:(NSString*)tableAndColumn;
 - (NSString*)NSFP_suffixWithDotDelimiter:(NSString*)tableAndColumn;
 
-- (void)NSFP_installCommitCallback;
-- (void)NSFP_uninstallCommitCallback;
+- (void) NSFP_installCommitCallback;
+- (void) NSFP_uninstallCommitCallback;
 @end
 
 /** \endcond */

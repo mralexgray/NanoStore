@@ -185,7 +185,7 @@ typedef NS_ENUM(NSUInteger,NSFEncodingType){
 
 /*! Synchronous options.
  * These values represent the options used to manipulate the synchronous flag. In NSFNanoEngine it's obtained via
- * \link NSFNanoEngine::setSynchronousMode: - (void)setSynchronousMode:(NSFSynchronousMode)theSynchronousMode \endlink
+ * \link NSFNanoEngine::setSynchronousMode: - (void) setSynchronousMode:(NSFSynchronousMode)theSynchronousMode \endlink
 
  @see NSFNanoStore, NSFNanoEngine
  */

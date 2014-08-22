@@ -35,7 +35,8 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 {
 	NSString *objectString = nil;
     
-	if ([object isKindOfClass:[NSString class]]) {
+	if ([object isKindOfClass:NSString.class
+  ]) {
 		objectString = (NSString*)object;
 	} else if ([object respondsToSelector:@selector(descriptionWithLocale:indent:)]) {
 		objectString = [(NSDictionary*)object descriptionWithLocale:locale indent:indent];
@@ -60,8 +61,8 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 	self = [super init];
     
 	if (self != nil) {
-		_dictionary = [[NSMutableDictionary alloc] initWithCapacity:capacity];
-		_array = [[NSMutableArray alloc] initWithCapacity:capacity];
+		_dictionary = [NSMutableDictionary.alloc initWithCapacity:capacity];
+		_array = [NSMutableArray.alloc initWithCapacity:capacity];
 	}
     
 	return self;
@@ -72,7 +73,7 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 	return [self mutableCopy];
 }
 
-- (void)setObject:(id)anObject forKey:(id)aKey
+- (void) setObject:(id)anObject forKey:(id)aKey
 {
 	if (!_dictionary[aKey]) {
 		[_array addObject:aKey];
@@ -81,7 +82,7 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 	_dictionary[aKey] = anObject;
 }
 
-- (void)removeObjectForKey:(id)aKey
+- (void) removeObjectForKey:(id)aKey
 {
 	[_dictionary removeObjectForKey:aKey];
 	[_array removeObject:aKey];
@@ -107,7 +108,7 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 	return [_array reverseObjectEnumerator];
 }
 
-- (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex
+- (void) insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex
 {
 	if (_dictionary[aKey]) {
 		[self removeObjectForKey:aKey];

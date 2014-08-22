@@ -157,7 +157,7 @@
 @property (readonly) NSString * filePath;
 
 /*! Checks whether the document store is closed or open.
-    @see \link close - (void)close \endlink
+    @see \link close - (void) close \endlink
  */
 
 @property (readonly) BOOL isClosed;
@@ -328,7 +328,7 @@
 	@return YES upon success, NO otherwise.
 	@note After storing several objects and depending on the save interval, some objects could be left in the cache in an unsaved state.
  * Therefore, it's always a good idea to call \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:ERROR_PTR \endlink
-	@see \link discardUnsavedChanges - (void)discardUnsavedChanges \endlink
+	@see \link discardUnsavedChanges - (void) discardUnsavedChanges \endlink
  */
 
 - (BOOL)saveStoreAndReturnError:ERROR_PTR;
@@ -337,7 +337,7 @@
 	@see \link saveStoreAndReturnError: - (BOOL)saveStoreAndReturnError:ERROR_PTR \endlink
  */
 
-- (void)discardUnsavedChanges;
+- (void) discardUnsavedChanges;
 
 /*! Compact the database file size.
 	@param outError is used if an error occurs. May be NULL.

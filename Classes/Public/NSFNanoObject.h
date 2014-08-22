@@ -232,7 +232,7 @@
 	@param anObject the value for key. Must not be nil.
 	@param aKey the key for value. Must not be nil.
 	@note Raises an NSInvalidArgumentException if <i>aKey</i> or <i>anObject</i> is nil. If you need to represent a nil value in the dictionary, use NSNull.
-	@see \link removeObjectForKey: - (void)removeObjectForKey:(NSString*)aKey \endlink
+	@see \link removeObjectForKey: - (void) removeObjectForKey:(NSString*)aKey \endlink
  */
 
 
@@ -244,7 +244,7 @@
 /*! Returns the value associated with a given key.
 	@param aKey the key for value. Must not be nil.
 	@note Raises an NSInvalidArgumentException if <i>aKey</i> or <i>anObject</i> is nil. If you need to represent a nil value in the dictionary, use NSNull.
-	@see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString*)aKey \endlink
+	@see \link setObject:forKey: - (void) setObject:(id)anObject forKey:(NSString*)aKey \endlink
  */
 
 - objectForKey:(NSString*)aKey;
@@ -252,26 +252,26 @@
 /*! Removes a given key and its associated value from the NanoObject.
 	@param aKey the key to remove. Must not be nil.
 	@note Does nothing if <i>aKey</i> does not exist.
-	@see \link setObject:forKey: - (void)setObject:(id)anObject forKey:(NSString*)aKey \endlink
+	@see \link setObject:forKey: - (void) setObject:(id)anObject forKey:(NSString*)aKey \endlink
  */
 
-- (void)removeObjectForKey:(NSString*)aKey;
+- (void) removeObjectForKey:(NSString*)aKey;
 
 /*! Empties the NanoObject of its entries.
-	@see \link removeObjectForKey: - (void)removeObjectForKey:(NSString*)aKey \endlink
-	@see \link removeObjectsForKeys: - (void)removeObjectsForKeys:(NSArray*)keyArray \endlink
+	@see \link removeObjectForKey: - (void) removeObjectForKey:(NSString*)aKey \endlink
+	@see \link removeObjectsForKeys: - (void) removeObjectsForKeys:(NSArray*)keyArray \endlink
  */
 
-- (void)removeAllObjects;
+- (void) removeAllObjects;
 
 /*! Removes from the NanoObject entries specified by elements in a given array.
 	@param keyArray An array of objects specifying the keys to remove.
 	@note If a key in <i>keyArray</i> does not exist, the entry is ignored.
-	@see \link removeAllObjects - (void)removeAllObjects \endlink
-	@see \link removeObjectForKey: - (void)removeObjectForKey:(NSString*)aKey \endlink
+	@see \link removeAllObjects - (void) removeAllObjects \endlink
+	@see \link removeObjectForKey: - (void) removeObjectForKey:(NSString*)aKey \endlink
  */
 
-- (void)removeObjectsForKeys:(NSArray*)keyArray;
+- (void) removeObjectsForKeys:(NSArray*)keyArray;
 
 /*!	@name Miscellaneous */
 

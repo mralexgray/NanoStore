@@ -29,14 +29,14 @@
 @implementation SenTestLogWithGrowl
 
 #if defined(__MACH__)
-+ (void)testSuiteDidStop:(NSNotification *)notification
-{
++ (void)testSuiteDidStop:(NSNotification *)notification {
+
     [super testSuiteDidStop:notification];
     [self notifyGrowlAboutTestRun:[notification run]];
 }
 
-+ (void)initialize
-{
++ (void)initialize {
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *registeredDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
         @"SenTestLogWithGrowl" , @"SenTestObserverClass",
@@ -48,8 +48,8 @@
     }
 }
 
-+ (void)performGrowlRegistration
-{
++ (void)performGrowlRegistration {
+
     NSMutableArray *notificationArray = [NSArray arrayWithObjects:@"OCUnit Test Passed Notification", @"OCUnit Test Failed Notification", nil];  
     
     NSDictionary *regDict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -64,8 +64,8 @@
     
 }
 
-+ (void)notifyGrowlAboutTestRun:(SenTestRun *)run
-{
++ (void)notifyGrowlAboutTestRun:(SenTestRun *)run {
+
     [self performGrowlRegistration];
     
     NSString *title = run.hasSucceeded ? @"OCUnit Test Suite Passed" : @"OCUnit Test Suite Failed";
@@ -86,10 +86,12 @@
     NSString *iconPath = nil;
     
     if ([run hasSucceeded]) {
-        iconPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"Icon-Pass" ofType:@"tiff"];
+        iconPath = [[NSBundle bundleForClass:self.class
+  ] pathForResource:@"Icon-Pass" ofType:@"tiff"];
         [notiInfo setObject:@"OCUnit Test Passed Notification" forKey:@"NotificationName"];
     } else {
-        iconPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"Icon-Fail" ofType:@"tiff"];
+        iconPath = [[NSBundle bundleForClass:self.class
+  ] pathForResource:@"Icon-Fail" ofType:@"tiff"];
         [notiInfo setObject:@"OCUnit Test Failed Notification" forKey:@"NotificationName"];
         [notiInfo setObject:[NSNumber numberWithBool:YES] forKey:@"NotificationSticky"];
     }

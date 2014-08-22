@@ -1,26 +1,19 @@
-/*
-     NSFNanoBag.h
-     NanoStore
-     
- */
 
-/*! @file NSFNanoBag.h
-    @brief A bag is a loose collection of objects stored in a document store.
- */
-
-/*!	@class NSFNanoBag
-    A bag is a loose collection of objects stored in a document store.
-    @note The objects must conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink. For your convenience, NanoStore provides you with NSFNanoObject, which is the standard way of storing and retrieving objects from/to a bag.
+/*! 
+  @file NSFNanoBag.h
+  @class NSFNanoBag
+  @brief A bag is a loose collection of objects stored in a document store.
+  @note The objects must conform to the \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink. For your convenience, NanoStore provides you with NSFNanoObject, which is the standard way of storing and retrieving objects from/to a bag.
 	@par It's more efficient to make your storage objects \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant, thus eliminating the need to convert your objects to/from objects of type NSFNanoObject.
 
 	@details <b>Example:</b>
   @code
+ 
  // Instantiate a NanoStore and open it
  NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
  [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
- 
- // Add some data to a bag
- NSFNanoBag *bag = [NSFNanoBag bag];
+
+ NSFNanoBag *bag = [NSFNanoBag bag];  // Add some data to a bag
  NSDictionary *info = ...;
  NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:info];
  NSFNanoObject *obj2 = [NSFNanoObject nanoObjectWithDictionary:info];
@@ -133,55 +126,55 @@
 /*! Removes the specified object from the bag.
 	@param theObject the object to be removed from the bag.
 	@warning The object must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
-	@see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray*)theObjects \endlink
-	@see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString*)theObjectKey \endlink
-	@see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
-	@see \link removeAllObjects - (void)removeAllObjects \endlink
+	@see \link removeObjectsInArray: - (void) removeObjectsInArray:(NSArray*)theObjects \endlink
+	@see \link removeObjectWithKey: - (void) removeObjectWithKey:(NSString*)theObjectKey \endlink
+	@see \link removeObjectsWithKeysInArray: - (void) removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
+	@see \link removeAllObjects - (void) removeAllObjects \endlink
  */
 
-- (void)removeObject:(id <NSFNanoObjectProtocol>)theObject;
+- (void) removeObject:(id <NSFNanoObjectProtocol>)theObject;
 
 /*! Empties the bag of all its elements.
-	@see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
-	@see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray*)theObjects \endlink
-	@see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString*)theObjectKey \endlink
-	@see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
+	@see \link removeObject: - (void) removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
+	@see \link removeObjectsInArray: - (void) removeObjectsInArray:(NSArray*)theObjects \endlink
+	@see \link removeObjectWithKey: - (void) removeObjectWithKey:(NSString*)theObjectKey \endlink
+	@see \link removeObjectsWithKeysInArray: - (void) removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
  */
 
-- (void)removeAllObjects;
+- (void) removeAllObjects;
 
 /*! Removes the list of objects from the bag.
 	@param theObjects the list of objects to be removed from the bag.
 	@warning The objects of the array must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
-	@see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
-	@see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString*)theObjectKey \endlink
-	@see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
-	@see \link removeAllObjects - (void)removeAllObjects \endlink
+	@see \link removeObject: - (void) removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
+	@see \link removeObjectWithKey: - (void) removeObjectWithKey:(NSString*)theObjectKey \endlink
+	@see \link removeObjectsWithKeysInArray: - (void) removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
+	@see \link removeAllObjects - (void) removeAllObjects \endlink
  */
 
-- (void)removeObjectsInArray:(NSArray*)theObjects;
+- (void) removeObjectsInArray:(NSArray*)theObjects;
 
 /*! Removes the object with a given key from the bag.
 	@param theObjectKey the key of the object to be removed from the bag.
 	@warning The object referenced by theObjectKey must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
-	@see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
-	@see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray*)theObjects \endlink
-	@see \link removeObjectsWithKeysInArray: - (void)removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
-	@see \link removeAllObjects - (void)removeAllObjects \endlink
+	@see \link removeObject: - (void) removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
+	@see \link removeObjectsInArray: - (void) removeObjectsInArray:(NSArray*)theObjects \endlink
+	@see \link removeObjectsWithKeysInArray: - (void) removeObjectsWithKeysInArray:(NSArray*)theKeys \endlink
+	@see \link removeAllObjects - (void) removeAllObjects \endlink
  */
 
-- (void)removeObjectWithKey:(NSString*)theObjectKey;
+- (void) removeObjectWithKey:(NSString*)theObjectKey;
 
 /*! Removes from the bag the objects specified by elements in a given array.
 	@param theKeys an array of objects specifying the keys to remove from the bag
 	@warning The objects referenced by theKeys must be \link NSFNanoObjectProtocol::initNanoObjectFromDictionaryRepresentation:forKey:store: NSFNanoObjectProtocol\endlink-compliant.
-	@see \link removeObject: - (void)removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
-	@see \link removeObjectsInArray: - (void)removeObjectsInArray:(NSArray*)theObjects \endlink
-	@see \link removeObjectWithKey: - (void)removeObjectWithKey:(NSString*)theObjectKey \endlink
-	@see \link removeAllObjects - (void)removeAllObjects \endlink
+	@see \link removeObject: - (void) removeObject:(id <NSFNanoObjectProtocol>)theObject \endlink
+	@see \link removeObjectsInArray: - (void) removeObjectsInArray:(NSArray*)theObjects \endlink
+	@see \link removeObjectWithKey: - (void) removeObjectWithKey:(NSString*)theObjectKey \endlink
+	@see \link removeAllObjects - (void) removeAllObjects \endlink
  */
 
-- (void)removeObjectsWithKeysInArray:(NSArray*)theKeys;
+- (void) removeObjectsWithKeysInArray:(NSArray*)theKeys;
 
 /*!	@name Saving, Reloading and Undoing */
 
@@ -216,19 +209,19 @@
 - (BOOL)undoChangesWithError:ERROR_PTR;
 /*!	@name Inflating and Deflating */
 
-/*! Inflates the bag by reconstructing the objects flattened with - (void)deflateBag;
+/*! Inflates the bag by reconstructing the objects flattened with - (void) deflateBag;
 	@note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
-	@see \link deflateBag - (void)deflateBag \endlink
+	@see \link deflateBag - (void) deflateBag \endlink
  */
 
-- (void)inflateBag;
+- (void) inflateBag;
 
 /*! Releases memory by "flattening" the objects from the bag.
 	@note Check properties savedObjects, unsavedObjects and removedObjects to find out the current state of the bag.
-	@see \link inflateBag - (void)inflateBag \endlink
+	@see \link inflateBag - (void) inflateBag \endlink
  */
 
-- (void)deflateBag;
+- (void) deflateBag;
 /*!	@name Miscellaneous */
 
 /*! Returns the number of objects currently in the bag.

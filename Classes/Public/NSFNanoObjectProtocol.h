@@ -67,11 +67,11 @@
 
   Assuming that <i>info</i> contains a key named <i>City</i>, we would specify a NSFNanoSortDescriptor which would sort the cities like so:
   @code
-    NSFNanoSortDescriptor *sortedCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"City" ascending:YES];
+    NSFNanoSortDescriptor *sortedCities = [NSFNanoSortDescriptor.alloc initWithAttribute:@"City" ascending:YES];
   @endcode
   If we had returned <i>self</i> as the root object, the sort descriptor would have to be written like so:
   @code
-    NSFNanoSortDescriptor *sortedCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"info.City" ascending:YES];
+    NSFNanoSortDescriptor *sortedCities = [NSFNanoSortDescriptor.alloc initWithAttribute:@"info.City" ascending:YES];
   @endcode
  */
 

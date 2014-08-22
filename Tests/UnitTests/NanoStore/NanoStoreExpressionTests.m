@@ -9,8 +9,8 @@
 #import "NanoStore.h"
 #import "NSFNanoStore_Private.h"
 
-@interface NanoStoreExpressionTests : XCTestCase
-{
+@interface NanoStoreExpressionTests : XCTestCase {
+
     NSDictionary *_defaultTestInfo;
 }
 
@@ -18,15 +18,15 @@
 
 @implementation NanoStoreExpressionTests
 
-- (void)setUp { [super setUp];
+- (void) setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
-- (void)tearDown
-{
+- (void) tearDown {
+
     
     NSFSetIsDebugOn (NO);
     
@@ -34,15 +34,15 @@
 }
 
 
-- (void)testPredicateOnePredicateProperty
-{
+- (void) testPredicateOnePredicateProperty {
+
     NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
     XCTAssertTrue (1 == expression.predicates.count, @"Expected to obtain one predicate.");
 }
 
-- (void)testPredicateTwoPredicatesProperty
-{
+- (void) testPredicateTwoPredicatesProperty {
+
     NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
     NSFNanoPredicate *predicateTwo = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
@@ -50,15 +50,15 @@
     XCTAssertTrue (2 == expression.predicates.count, @"Expected to obtain two predicates.");
 }
 
-- (void)testPredicateOneOperatorProperty
-{
+- (void) testPredicateOneOperatorProperty {
+
     NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
     XCTAssertTrue (1 == expression.operators.count, @"Expected to obtain one operator.");
 }
 
-- (void)testPredicateTwoOperatorsProperty
-{
+- (void) testPredicateTwoOperatorsProperty {
+
     NSFNanoPredicate *predicate = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
     NSFNanoExpression *expression = [NSFNanoExpression expressionWithPredicate:predicate];
     NSFNanoPredicate *predicateTwo = [NSFNanoPredicate predicateWithColumn:NSFKeyColumn matching:NSFEqualTo value:@"foo"];
@@ -66,8 +66,8 @@
     XCTAssertTrue (2 == expression.operators.count, @"Expected to obtain two operators.");
 }
 
-- (void)testPredicateWithNilValue
-{
+- (void) testPredicateWithNilValue {
+
     NSFNanoPredicate *predicate = nil;
     @try {
         predicate = [NSFNanoPredicate predicateWithColumn:NSFAttributeColumn matching:NSFEqualTo value:nil];
@@ -76,8 +76,8 @@
     }
 }
 
-- (void)testExpressionWithNilPredicate
-{
+- (void) testExpressionWithNilPredicate {
+
     NSFNanoExpression *expression = nil;
     @try {
         expression = [NSFNanoExpression expressionWithPredicate:nil];
@@ -86,8 +86,8 @@
     }
 }
 
-- (void)testEmptyExpressions
-{
+- (void) testEmptyExpressions {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:@{@"name": @"hello"}]] error:nil];
@@ -105,8 +105,8 @@
     [nanoStore closeWithError:nil];
 }
 
-- (void)testOnePredicateOneExpressionEqualTo
-{
+- (void) testOnePredicateOneExpressionEqualTo {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -124,8 +124,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionBeginsWith
-{
+- (void) testOnePredicateOneExpressionBeginsWith {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     BOOL success = [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -145,8 +145,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionContains
-{
+- (void) testOnePredicateOneExpressionContains {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -164,8 +164,8 @@
     XCTAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionEndsWith
-{
+- (void) testOnePredicateOneExpressionEndsWith {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -183,8 +183,8 @@
     XCTAssertTrue (([searchResults count] == 1), @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionInsensitiveEqualTo
-{
+- (void) testOnePredicateOneExpressionInsensitiveEqualTo {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -202,8 +202,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionInsensitiveBeginsWith
-{
+- (void) testOnePredicateOneExpressionInsensitiveBeginsWith {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -221,8 +221,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionInsensitiveContains
-{
+- (void) testOnePredicateOneExpressionInsensitiveContains {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -240,8 +240,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testOnePredicateOneExpressionInsensitiveEndsWith
-{
+- (void) testOnePredicateOneExpressionInsensitiveEndsWith {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -259,8 +259,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testTwoPredicatesOneExpression
-{
+- (void) testTwoPredicatesOneExpression {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -280,8 +280,8 @@
     XCTAssertTrue ([searchResults count] == 1, @"Expected to find one object.");
 }
 
-- (void)testSearchBetweenDatesSQLOne
-{
+- (void) testSearchBetweenDatesSQLOne {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];
@@ -295,8 +295,8 @@
     [nanoStore closeWithError:nil];
 }
 
-- (void)testSearchBetweenDatesSQLTwo
-{
+- (void) testSearchBetweenDatesSQLTwo {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     [nanoStore addObjectsFromArray:@[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]] error:nil];

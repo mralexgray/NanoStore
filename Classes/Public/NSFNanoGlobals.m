@@ -8,18 +8,18 @@
 
 static BOOL __NSFDebugIsOn = NO;
 
-void NSFSetIsDebugOn (BOOL flag)
-{
+void NSFSetIsDebugOn (BOOL flag) {
+
     __NSFDebugIsOn = flag;
 }
 
-BOOL NSFIsDebugOn (void)
-{
+BOOL NSFIsDebugOn (void) {
+
     return __NSFDebugIsOn;
 }
 
-NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype)
-{
+NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype) {
+
     NSString *value = nil;
     
     switch (aNanoDatatype) {
@@ -36,8 +36,8 @@ NSString * NSFStringFromNanoDataType (NSFNanoDatatype aNanoDatatype)
     return value;
 }
 
-NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
-{
+NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype) {
+
     NSFNanoDatatype value = NSFNanoTypeUnknown;
 
     if ([aNanoDatatype isEqualToString:@"BLOB"]) value = NSFNanoTypeData;
@@ -50,8 +50,8 @@ NSFNanoDatatype NSFNanoDatatypeFromString (NSString *aNanoDatatype)
     return value;
 }
 
-NSString * NSFStringFromMatchType (NSFMatchType aMatchType)
-{
+NSString * NSFStringFromMatchType (NSFMatchType aMatchType) {
+
     NSString *value = nil;
     
     switch (aMatchType) {
@@ -71,12 +71,12 @@ NSString * NSFStringFromMatchType (NSFMatchType aMatchType)
     return value;
 }
 
-void _NSFLog (NSString  *format, ...)
-{
+void _NSFLog (NSString  *format, ...) {
+
     if (__NSFDebugIsOn) {
         va_list args;
         va_start(args, format);
-        NSString *string = [[NSString alloc]initWithFormat:format arguments:args];
+        NSString *string = [NSString.alloc initWithFormat:format arguments:args];
         NSLog(@"%@", string);
         va_end(args);
     }

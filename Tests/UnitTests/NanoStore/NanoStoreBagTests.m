@@ -12,8 +12,8 @@
 #import "NSFNanoStore_Private.h"
 #import "NanoCarTestClass.h"
 
-@interface NanoStoreBagTests : XCTestCase
-{
+@interface NanoStoreBagTests : XCTestCase {
+
   NSDictionary *_defaultTestInfo;
   NSFNanoBag * bag;
 }
@@ -21,33 +21,33 @@
 
 @implementation NanoStoreBagTests
 
-- (void)setUp { [super setUp];
+- (void) setUp { [super setUp];
 
   _defaultTestInfo = NSFNanoStore._defaultTestData;
   bag = NSFNanoBag.bag;
   NSFSetIsDebugOn (NO);
 }
 
-- (void)tearDown { NSFSetIsDebugOn (NO); [super tearDown]; }
+- (void) tearDown { NSFSetIsDebugOn (NO); [super tearDown]; }
 
-- (void)testBagClassMethod { NSString * key; NSArray * returnedKeys;
+- (void) testBagClassMethod { NSString * key; NSArray * returnedKeys;
 
   XCTAssertTrue (bag.hasUnsavedChanges, @"");
   XCTAssertTrue (!!(         key = bag.key) && key.length, @"");
   XCTAssertTrue (!!(returnedKeys = bag.dictionaryRepresentation[NSF_Private_NSFNanoBag_NSFObjectKeys]) && !returnedKeys.count, @"Expected the bag to be properly initialized.");
 }
 
-- (void)testBagDescription {
+- (void) testBagDescription {
 
   XCTAssertTrue ((bag.description.length > 0), @"Expected to obtain the bag description.");
 }
 
-- (void)testBagEqualToSelf {
+- (void) testBagEqualToSelf {
 
   XCTAssertTrue (([bag isEqualToNanoBag:bag] == YES), @"Expected to test to be true.");
 }
 
-- (void)testBagForUUID {
+- (void) testBagForUUID {
 
   NSString *objectKey = bag.nanoObjectKey;
   XCTAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the bag to return a valid UUID.");
@@ -57,14 +57,14 @@
   XCTAssertTrue ((nil != objectKey) && ([objectKey length] > 0), @"Expected the bag to return a valid UUID.");
 }
 
-- (void)testBagInitNilObjects
-{
+- (void) testBagInitNilObjects {
+
   bag = nil;
   @try                    { bag = [NSFNanoBag bagWithObjects:nil]; }
   @catch (NSException *e) { XCTAssertTrue (e != nil, @"We should have caught the exception."); }
 }
 
-- (void)testBagSettingNameManually {
+- (void) testBagSettingNameManually {
 
   XCTAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
   bag.name = @"FooBar";
@@ -74,8 +74,8 @@
   XCTAssertTrue (nil == [bag name], @"Expected the name of the bag to be nil.");
 }
 
-- (void)testBagWithNameEmptyBag
-{
+- (void) testBagWithNameEmptyBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -92,8 +92,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagWithNameBagNotEmpty
-{
+- (void) testBagWithNameBagNotEmpty {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -112,8 +112,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagSearchByName
-{
+- (void) testBagSearchByName {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -126,8 +126,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagInitEmptyListOfObjects
-{
+- (void) testBagInitEmptyListOfObjects {
+
   bag = [NSFNanoBag bagWithObjects:@[]];
   BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
   NSString *key = bag.key;
@@ -136,8 +136,8 @@
   XCTAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Expected the bag to be properly initialized.");
 }
 
-- (void)testBagInitTwoConformingObjects
-{
+- (void) testBagInitTwoConformingObjects {
+
   NSArray *objects = @[ [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                         [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
 
@@ -149,8 +149,8 @@
   XCTAssertTrue (hasUnsavedChanges && (nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Expected the bag to contain two returnedKeys.");
 }
 
-- (void)testBagInitPartiallyConformingObjects
-{
+- (void) testBagInitPartiallyConformingObjects {
+
   NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                       @"foo"];
 
@@ -161,8 +161,8 @@
   }
 }
 
-- (void)testBagEmptyDictionaryRepresentation
-{
+- (void) testBagEmptyDictionaryRepresentation {
+
   NSDictionary *info = [bag dictionaryRepresentation];
   NSString *key = info[NSF_Private_NSFNanoBag_NSFKey];
   NSArray *returnedKeys = info[NSF_Private_NSFNanoBag_NSFObjectKeys];
@@ -170,8 +170,8 @@
   XCTAssertTrue ((nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 0) && (nil != info) && ([info count] == 2), @"Expected the bag to provide a properly formatted dictionary.");
 }
 
-- (void)testBagWithTwoConformingObjectsDictionaryRepresentation
-{
+- (void) testBagWithTwoConformingObjectsDictionaryRepresentation {
+
   NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                       [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
 
@@ -183,13 +183,13 @@
   XCTAssertTrue ((nil != key) && ([key length] > 0) && (nil != returnedKeys) && ([returnedKeys count] == 2) && (nil != info) && ([info count] == 2), @"Expected the bag to provide a properly formatted dictionary.");
 }
 
-- (void)testBagEmptyCount
-{
+- (void) testBagEmptyCount {
+
   XCTAssertTrue (0 == bag.count, @"Expected the bag to have zero elements.");
 }
 
-- (void)testBagCountTwo
-{
+- (void) testBagCountTwo {
+
   NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                       [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
 
@@ -197,8 +197,8 @@
   XCTAssertTrue (2 == bag.count, @"Expected the bag to have two elements.");
 }
 
-- (void)testTwoBagsWithSameName
-{
+- (void) testTwoBagsWithSameName {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -211,8 +211,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagCountTwoDeleteOne
-{
+- (void) testBagCountTwoDeleteOne {
+
   NSFNanoObject *objectOne = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
   NSArray *objects = @[objectOne,
                       [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
@@ -223,8 +223,8 @@
   XCTAssertTrue (1 == bag.count, @"Expected the bag to have one element.");
 }
 
-- (void)testBagCountAfterSaveEmpty
-{
+- (void) testBagCountAfterSaveEmpty {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -236,8 +236,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagCountAfterSaveTwoObjectsDeleteOne
-{
+- (void) testBagCountAfterSaveTwoObjectsDeleteOne {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -255,8 +255,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagCountRemoveAll
-{
+- (void) testBagCountRemoveAll {
+
   NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                       [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
 
@@ -267,7 +267,7 @@
 }
 
 
-- (void)testBagAddNilObject
+- (void) testBagAddNilObject
 {
 
   @try {
@@ -278,7 +278,7 @@
   }
 }
 
-- (void)testBagAddNonConformingObject
+- (void) testBagAddNonConformingObject
 {
 
   @try {
@@ -288,8 +288,8 @@
   }
 }
 
-- (void)testBagAddConformingObject
-{
+- (void) testBagAddConformingObject {
+
   NSError *outError = nil;
   BOOL success = [bag addObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo] error:&outError];
   BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
@@ -300,8 +300,8 @@
   XCTAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 1), @"Adding a conforming object to a bag should have succeeded.");
 }
 
-- (void)testBagAddNilObjectList
-{
+- (void) testBagAddNilObjectList {
+
   NSError *outError = nil;
   BOOL success = [bag addObjectsFromArray:nil error:&outError];
   BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
@@ -312,8 +312,8 @@
   XCTAssertTrue (hasUnsavedChanges && (NO == success) && (nil != outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding a nil object list to a bag should have failed.");
 }
 
-- (void)testBagAddWithEmptyObjectList
-{
+- (void) testBagAddWithEmptyObjectList {
+
   NSError *outError = nil;
   BOOL success = [bag addObjectsFromArray:@[] error:&outError];
   BOOL hasUnsavedChanges = bag.hasUnsavedChanges;
@@ -324,8 +324,8 @@
   XCTAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 0), @"Adding an empty object list to a bag should have failed.");
 }
 
-- (void)testBagAddTwoConformingObjects
-{
+- (void) testBagAddTwoConformingObjects {
+
   NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                       [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo]];
 
@@ -339,10 +339,10 @@
   XCTAssertTrue (hasUnsavedChanges && success && (nil == outError) && (nil != returnedKeys) && ([returnedKeys count] == 2), @"Adding a conforming object list to a bag should have succeded.");
 }
 
-- (void) testBagAddTwoNSObjectsConformingToProtocol
-{
-  id car1 = [[NanoCarTestClass alloc] initNanoObjectFromDictionaryRepresentation:@{@"kName" : @"XJ-7"} forKey:[NSFNanoEngine stringWithUUID] store:nil];
-  id car2 = [[NanoCarTestClass alloc] initNanoObjectFromDictionaryRepresentation:@{@"kName" : @"Jupiter 8"} forKey:[NSFNanoEngine stringWithUUID] store:nil];
+- (void) testBagAddTwoNSObjectsConformingToProtocol {
+
+  id car1 = [NanoCarTestClass.alloc initNanoObjectFromDictionaryRepresentation:@{@"kName" : @"XJ-7"} forKey:NSFNanoEngine.stringWithUUID store:nil];
+  id car2 = [NanoCarTestClass.alloc initNanoObjectFromDictionaryRepresentation:@{@"kName" : @"Jupiter 8"} forKey:NSFNanoEngine.stringWithUUID store:nil];
 
   NSArray *objects = @[car1, car2];
 
@@ -360,8 +360,8 @@
 }
 
 
-- (void)testBagAddPartiallyConformingObjects
-{
+- (void) testBagAddPartiallyConformingObjects {
+
   NSArray *objects = @[[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo],
                       @"foo"];
 
@@ -374,7 +374,7 @@
 }
 
 
-- (void)testBagRemoveNilObject
+- (void) testBagRemoveNilObject
 {
 
   [bag addObject:[NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo] error:nil];
@@ -386,7 +386,7 @@
   }
 }
 
-- (void)testBagRemoveNonConformingObject
+- (void) testBagRemoveNonConformingObject
 {
 
   NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
@@ -399,7 +399,7 @@
   }
 }
 
-- (void)testBagRemoveOneConformingObject
+- (void) testBagRemoveOneConformingObject
 {
 
   NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
@@ -415,7 +415,7 @@
   XCTAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
 }
 
-- (void)restBagRemoveWithEmptyListOfObjects
+- (void) restBagRemoveWithEmptyListOfObjects
 {
 
   NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
@@ -431,7 +431,7 @@
   XCTAssertTrue (hasUnsavedChanges && (nil != returnedKeys) && ([returnedKeys count] == 1) && ([returnedKey isEqualToString:obj2.key]), @"Removing a conforming object from a bag should have succeded.");
 }
 
-- (void)testBagRemoveTwoConformingObjects
+- (void) testBagRemoveTwoConformingObjects
 {
 
   NSFNanoObject *obj1 = [NSFNanoObject nanoObjectWithDictionary:_defaultTestInfo];
@@ -448,8 +448,8 @@
 }
 
 
-- (void)testBagSaveEmptyBag
-{
+- (void) testBagSaveEmptyBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -461,8 +461,8 @@
   XCTAssertTrue ([bags count] == 1, @"Saving an empty bag should have succeded.");
 }
 
-- (void)testBagSaveBagWithThreeObjectsAssociatedToStore
-{
+- (void) testBagSaveBagWithThreeObjectsAssociatedToStore {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -480,8 +480,8 @@
   XCTAssertTrue ([[[bags lastObject]savedObjects]count] == 3, @"Saving a bag should have succeded.");
 }
 
-- (void)testBagSaveBagWithThreeObjectsNotAssociatedToStore
-{
+- (void) testBagSaveBagWithThreeObjectsNotAssociatedToStore {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -499,8 +499,8 @@
   XCTAssertTrue ([[[bags lastObject]savedObjects]count] == 3, @"Saving a bag should have succeded.");
 }
 
-- (void)testBagSaveBagRemovingObjects
-{
+- (void) testBagSaveBagRemovingObjects {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -528,8 +528,8 @@
   XCTAssertTrue (([[savedBag savedObjects]count] == 1) && ([[savedBag unsavedObjects]count] == 0) && ([[savedBag removedObjects]count] == 0), @"Removing objects from a bag should have succeded.");
 }
 
-- (void)testBagSaveBagEditingObjects
-{
+- (void) testBagSaveBagEditingObjects {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -563,8 +563,8 @@
   XCTAssertTrue (([[[savedBag savedObjects][editedKey]info]count] == originalCount + 1), @"Editing objects from a bag should have succeded.");
 }
 
-- (void)testBagDeleteBag
-{
+- (void) testBagDeleteBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -590,8 +590,8 @@
   XCTAssertTrue (([savedBags count] == 1) && [removedBags count] == 0, @"Removing a bag should have succeded.");
 }
 
-- (void)testBagReloadBag
-{
+- (void) testBagReloadBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -640,8 +640,8 @@
   [nanoStore closeWithError:nil];
 }
 
-- (void)testBagUndoUnsavedBag
-{
+- (void) testBagUndoUnsavedBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -658,8 +658,8 @@
   XCTAssertTrue (([[bag savedObjects]count] == 0) && ([[bag unsavedObjects]count] == 0) && ([[bag removedObjects]count] == 0), @"Undoing the changes of an unsaved bag should have succeded.");
 }
 
-- (void)testBagUndoSavedBag
-{
+- (void) testBagUndoSavedBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -686,8 +686,8 @@
   XCTAssertTrue (([[savedBag savedObjects]count] == 3) && ([[savedBag unsavedObjects]count] == 0) && ([[savedBag removedObjects]count] == 0), @"Undoing the changes of a saved bag should have succeded.");
 }
 
-- (void)testBagSearchBagsWithKeys
-{
+- (void) testBagSearchBagsWithKeys {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
 
   NSError *outError = nil;
@@ -712,8 +712,8 @@
   XCTAssertTrue ([savedBags count] == 2, @"Expected to find bags by their key.");
 }
 
-- (void)testBagSearchBagsContainingObjectsWithKey
-{
+- (void) testBagSearchBagsContainingObjectsWithKey {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
 
   NSError *outError = nil;
@@ -733,8 +733,8 @@
   XCTAssertTrue (([bags count] == 1) && ([[[bags lastObject]key]isEqualToString:[bag key]]), @"Searching a bag containing a specific key should have succeded.");
 }
 
-- (void)testBagCopyBag
-{
+- (void) testBagCopyBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -749,8 +749,8 @@
   XCTAssertTrue (([bag isEqualToNanoBag:copiedBag]), @"Equality test should have succeeded.");
 }
 
-- (void)testBagIsEqualToNanoBag
-{
+- (void) testBagIsEqualToNanoBag {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -778,8 +778,8 @@
 }
 
 
-- (void)testBagDeflate
-{
+- (void) testBagDeflate {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -797,7 +797,7 @@
   NSDictionary *savedObjects = resultBag.savedObjects;
   BOOL deflated = YES;
   for (NSString *objectKey in savedObjects) {
-    if ([NSNull null] != savedObjects[objectKey]) {
+    if (NSNull.null != savedObjects[objectKey]) {
       deflated = NO;
       break;
     }
@@ -808,8 +808,8 @@
   XCTAssertTrue (deflated, @"Expected the bag to be deflated.");
 }
 
-- (void)testBagInflate
-{
+- (void) testBagInflate {
+
   NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
   [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
 
@@ -828,7 +828,7 @@
   NSDictionary *savedObjects = resultBag.savedObjects;
   BOOL inflated = YES;
   for (NSString *objectKey in savedObjects) {
-    if ([NSNull null] == savedObjects[objectKey]) {
+    if (NSNull.null == savedObjects[objectKey]) {
       inflated = NO;
       break;
     }

@@ -12,13 +12,13 @@
 
 @interface NanoStoreTester (Private)
 - (NSDictionary *)defaultTestData;
-- (void)removeStoreDatabase;
+- (void) removeStoreDatabase;
 @end
 
 @implementation NanoStoreTester
 
-- (id)init
-{
+- (id)init {
+
     if ((self = [super init])) {
         
         mRemoveStoreWhenFinished = NO;
@@ -32,16 +32,16 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void) dealloc {
+
     [mStorePath release];
     [mDefaultTestInfo release];
     [super dealloc];
 }
 
 
-- (void)test
-{
+- (void) test {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     
@@ -69,8 +69,8 @@
 }
 
 
-- (NSDictionary *)defaultTestData
-{
+- (NSDictionary *)defaultTestData {
+
     NSArray *dishesInfo = [NSArray arrayWithObject:@"Cassoulet"];
     NSDictionary *citiesInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                 @"Bouillabaisse", @"Marseille",
@@ -90,8 +90,8 @@
     return info;
 }
 
-- (void)removeStoreDatabase
-{
+- (void) removeStoreDatabase {
+
     if (mRemoveStoreWhenFinished)
         [[NSFileManager defaultManager]removeItemAtPath:mStorePath error:nil];
 }

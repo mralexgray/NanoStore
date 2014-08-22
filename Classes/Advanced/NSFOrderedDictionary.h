@@ -26,7 +26,7 @@
 
 @interface NSFOrderedDictionary : NSMutableDictionary
 
-- (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex;
+- (void) insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex;
 - (id)keyAtIndex:(NSUInteger)anIndex;
 @property (readonly, strong) NSEnumerator *reverseKeyEnumerator;
 

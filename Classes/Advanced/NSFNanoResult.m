@@ -21,8 +21,8 @@
 
 /** \cond */
 
-- (id)init
-{
+- (id)init {
+
     if ((self = [super init])) {
         [self _reset];
     }
@@ -30,14 +30,14 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void) dealloc {
+
     [self _reset];
 }
 /** \endcond */
 
-- (NSString*)description
-{
+- (NSString*)description {
+
     NSUInteger numberOfColumns = [[_results allKeys]count];
     
     NSMutableString *description = [NSMutableString string];
@@ -120,11 +120,11 @@
     return description;
 }
 
-- (NSFOrderedDictionary*)dictionaryDescription
-{
+- (NSFOrderedDictionary*)dictionaryDescription {
+
     NSUInteger numberOfColumns = [[_results allKeys]count];
 
-    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+    NSFOrderedDictionary *values = NSFOrderedDictionary.new;
     
     values[@"Result address"] = [NSString stringWithFormat:@"%p", self];
     values[@"Number of columns"] = @(numberOfColumns);
@@ -148,8 +148,8 @@
     if (0 != numberOfColumns) {
         NSUInteger i;
         NSArray *columns = [self columns];
-        NSMutableString *contentString = [NSMutableString new];
-        NSMutableArray *printedContent = [NSMutableArray new];
+        NSMutableString *contentString = NSMutableString.new;
+        NSMutableArray *printedContent = NSMutableArray.new;
         
         // Print the names of the columns
         [contentString appendString:[NSString stringWithFormat:@"%-15@ | ", @"Row #          "]];
@@ -215,8 +215,8 @@
     return values;
 }
 
-- (NSString*)JSONDescription
-{
+- (NSString*)JSONDescription {
+
     NSFOrderedDictionary *values = [self dictionaryDescription];
     
     NSError *outError = nil;
@@ -230,18 +230,18 @@
 
 #pragma mark -
 
-- (NSArray*)columns
-{
+- (NSArray*)columns {
+
     return [_results allKeys];
 }
 
-- (NSString*)valueAtIndex:(NSUInteger)index forColumn:(NSString*)column
-{
+- (NSString*)valueAtIndex:(NSUInteger)index forColumn:(NSString*)column {
+
     return _results[column][index];
 }
 
-- (NSArray*)valuesForColumn:(NSString*)column
-{
+- (NSArray*)valuesForColumn:(NSString*)column {
+
     NSArray *values = _results[column];
     
     if (nil == values)
@@ -250,8 +250,8 @@
     return values;
 }
 
-- (NSString*)firstValue
-{
+- (NSString*)firstValue {
+
     NSArray *columns = [_results allKeys];
     if (([columns count] > 0) && (_numberOfRows > 0)) {
         return _results[columns[0]][0];
@@ -260,8 +260,8 @@
     return nil;
 }
 
-- (void)writeToFile:(NSString*)path;
-{
+- (void) writeToFile:(NSString*)path; {
+
     [_results writeToFile:[path stringByExpandingTildeInPath] atomically:YES];
 }
 
@@ -269,26 +269,28 @@
 #pragma mark -
 
 /** \cond */
-+ (NSFNanoResult*)_resultWithDictionary:(NSDictionary*)theResults
-{
++ (NSFNanoResult*)_resultWithDictionary:(NSDictionary*)theResults {
+
     return [[self alloc]_initWithDictionary:theResults];
 }
 
-+ (NSFNanoResult*)_resultWithError:(NSError*)theError
-{
++ (NSFNanoResult*)_resultWithError:(NSError*)theError {
+
     return [[self alloc]_initWithError:theError];
 }
 
-- (id)_initWithDictionary:(NSDictionary*)theResults
-{
+- (id)_initWithDictionary:(NSDictionary*)theResults {
+
     if (nil == theResults)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theResults is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theResults is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([theResults respondsToSelector:@selector(objectForKey:)] == NO)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theResults is not of type NSDictionary.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theResults is not of type NSDictionary.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
@@ -299,16 +301,18 @@
     return self;
 }
 
-- (id)_initWithError:(NSError*)theError
-{
+- (id)_initWithError:(NSError*)theError {
+
     if (nil == theError)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theError is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theError is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([theError respondsToSelector:@selector(localizedDescription)] == NO)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theError is not of type NSError.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theError is not of type NSError.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
@@ -319,15 +323,15 @@
     return self;
 }
 
-- (void)_reset
-{
+- (void)_reset {
+
     _numberOfRows = -1;
     _results = nil;
     _error = nil;
 }
 
-- (void)_calculateNumberOfRows
-{
+- (void)_calculateNumberOfRows {
+
     // We cache the value once, for performance reasons
     if (-1 == _numberOfRows) {
         NSArray *allKeys = [_results allKeys];

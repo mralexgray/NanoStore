@@ -19,16 +19,17 @@
 
 @implementation NSFNanoSortDescriptor
 
-+ (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
-{
-    return [[self alloc]initWithAttribute:theAttribute ascending:ascending];
++ (NSFNanoSortDescriptor *)sortDescriptorWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending {
+
+    return [self.alloc initWithAttribute:theAttribute ascending:ascending];
 }
 
-- (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending
-{
+- (id)initWithAttribute:(NSString *)theAttribute ascending:(BOOL)ascending {
+
     if (theAttribute.length == 0)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theAttribute is invalid.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theAttribute is invalid.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [super init])) {
@@ -45,14 +46,14 @@
 /** \endcond */
 
 
-- (NSString *)description
-{
+- (NSString *)description {
+
     return [self JSONDescription];
 }
 
-- (NSFOrderedDictionary *)dictionaryDescription
-{
-    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+- (NSFOrderedDictionary *)dictionaryDescription {
+
+    NSFOrderedDictionary *values = NSFOrderedDictionary.new;
     
     values[@"Sort descriptor address"] = [NSString stringWithFormat:@"%p", self];
     values[@"Attribute"] = _attribute;
@@ -61,8 +62,8 @@
     return values;
 }
 
-- (NSString *)JSONDescription
-{
+- (NSString *)JSONDescription {
+
     NSFOrderedDictionary *values = [self dictionaryDescription];
     
     NSError *outError = nil;

@@ -13,8 +13,8 @@
 #import "NSFOrderedDictionary.h"
 #import "NSFNanoObject_Private.h"
 
-@implementation NSFNanoBag
-{
+@implementation NSFNanoBag {
+
     /** \cond */
     NSMutableDictionary *_savedObjects;
     NSMutableDictionary *_unsavedObjects;
@@ -22,31 +22,32 @@
     /** \endcond */
 }
 
-+ (NSFNanoBag*)bag
-{
-    return [[self alloc]initBagWithName:nil andObjects:@[]];
++ (NSFNanoBag*)bag {
+
+    return [self.alloc initBagWithName:nil andObjects:@[]];
 }
 
-+ (NSFNanoBag*)bagWithObjects:(NSArray*)someObjects
-{
-    return [[self alloc]initBagWithName:nil andObjects:someObjects];
++ (NSFNanoBag*)bagWithObjects:(NSArray*)someObjects {
+
+    return [self.alloc initBagWithName:nil andObjects:someObjects];
 }
 
-+ bagWithName:(NSString*)theName
-{
-    return [[self alloc]initBagWithName:theName andObjects:@[]];
++ bagWithName:(NSString*)theName {
+
+    return [self.alloc initBagWithName:theName andObjects:@[]];
 }
 
-+ bagWithName:(NSString*)theName andObjects:(NSArray*)someObjects
-{
-    return [[self alloc]initBagWithName:theName andObjects:someObjects];
++ bagWithName:(NSString*)theName andObjects:(NSArray*)someObjects {
+
+    return [self.alloc initBagWithName:theName andObjects:someObjects];
 }
 
-- (id)initBagWithName:(NSString*)theName andObjects:(NSArray*)someObjects
-{
+- (id)initBagWithName:(NSString*)theName andObjects:(NSArray*)someObjects {
+
     if (nil == someObjects) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: 'someObjects' cannot be nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: 'someObjects' cannot be nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
@@ -62,56 +63,57 @@
 
 /** \cond */
 
-- (id)init
-{
+- (id)init {
+
     if ((self = [super init])) {
         _store = nil;
-        _key = [NSFNanoEngine stringWithUUID];
+        _key = NSFNanoEngine.stringWithUUID;
         _name = nil;
-        _savedObjects = [NSMutableDictionary new];
-        _unsavedObjects = [NSMutableDictionary new];
-        _removedObjects = [NSMutableDictionary new];
+        _savedObjects = NSMutableDictionary.new;
+        _unsavedObjects = NSMutableDictionary.new;
+        _removedObjects = NSMutableDictionary.new;
         _hasUnsavedChanges = NO;
     }
     
     return self;
 }
 
-- (id)copyWithZone:(NSZone*)zone
-{
-    NSFNanoBag *copy = [[[self class]allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:[NSFNanoEngine stringWithUUID] store:_store];
+- (id)copyWithZone:(NSZone*)zone {
+
+    NSFNanoBag *copy = [[self.class
+  allocWithZone:zone]initNanoObjectFromDictionaryRepresentation:[self dictionaryRepresentation] forKey:NSFNanoEngine.stringWithUUID store:_store];
     return copy;
 }
 
 
-- (id)rootObject
-{
+- (id)rootObject {
+
     return self;
 }
 
 #pragma mark -
 
-- (void)setName:(NSString*)aName
-{
+- (void) setName:(NSString*)aName {
+
     _name = aName;
     _hasUnsavedChanges = YES;
 }
 
 /** \endcond */
 
-- (NSUInteger)count
-{
+- (NSUInteger)count {
+
     return _savedObjects.count + _unsavedObjects.count;
 }
 
-- (NSString*)description
-{
+- (NSString*)description {
+
     return [self JSONDescription];
 }
 
-- (NSDictionary*)dictionaryDescription
-{
-    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+- (NSDictionary*)dictionaryDescription {
+
+    NSFOrderedDictionary *values = NSFOrderedDictionary.new;
     
     values[@"NanoBag address"] = [NSString stringWithFormat:@"%p", self];
     values[@"Key"] = _key;
@@ -125,8 +127,8 @@
     return values;
 }
 
-- (NSString*)JSONDescription
-{
+- (NSString*)JSONDescription {
+
     NSDictionary *values = [self dictionaryDescription];
     
     NSError *outError = nil;
@@ -135,10 +137,10 @@
     return description;
 }
 
-- (NSDictionary*)dictionaryRepresentation
-{
+- (NSDictionary*)dictionaryRepresentation {
+
     // Iterate the objects collecting the object keys
-    NSMutableArray *objectKeys = [NSMutableArray new];
+    NSMutableArray *objectKeys = NSMutableArray.new;
     for (NSString *objectKey in _savedObjects) {
         [objectKeys addObject:objectKey];
     }
@@ -157,8 +159,8 @@
     return info;
 }
 
-- (BOOL)isEqualToNanoBag:(NSFNanoBag*)otherNanoBag
-{
+- (BOOL)isEqualToNanoBag:(NSFNanoBag*)otherNanoBag {
+
     if (self == otherNanoBag) {
         return YES;
     }
@@ -188,11 +190,12 @@
 
 #pragma mark -
 
-- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:ERROR_PTR
-{
+- (BOOL)addObject:(id <NSFNanoObjectProtocol>)object error:ERROR_PTR {
+
     if (NO == [(id)object conformsToProtocol:@protocol(NSFNanoObjectProtocol)]) {
         [[NSException exceptionWithName:NSFNonConformingNanoObjectProtocolException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the object does not conform to NSFNanoObjectProtocol.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the object does not conform to NSFNanoObjectProtocol.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];            
     }
     
@@ -207,9 +210,11 @@
     } else {
         NSString *message = nil;
         if (nil == objectKey)
-            message = [NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", [self class], NSStringFromSelector(_cmd)];
+            message = [NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", self.class
+  , NSStringFromSelector(_cmd)];
         else
-            message = [NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's dictionary is nil.", [self class], NSStringFromSelector(_cmd)];  
+            message = [NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's dictionary is nil.", self.class
+  , NSStringFromSelector(_cmd)];  
         
         [[NSException exceptionWithName:NSFNanoObjectBehaviorException reason:message userInfo:nil]raise];  
     }
@@ -217,13 +222,14 @@
     return YES;
 }
 
-- (BOOL)addObjectsFromArray:(NSArray*)someObjects error:ERROR_PTR
-{
+- (BOOL)addObjectsFromArray:(NSArray*)someObjects error:ERROR_PTR {
+
     if (nil == someObjects) {
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: the object cannot be added because the list provided is nil.", [self class], NSStringFromSelector(_cmd)]}];
+                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: the object cannot be added because the list provided is nil.", self.class
+  , NSStringFromSelector(_cmd)]}];
         }
         return NO;
     }
@@ -239,20 +245,21 @@
     return success;
 }
 
-- (void)removeObject:(id <NSFNanoObjectProtocol>)object
-{
+- (void) removeObject:(id <NSFNanoObjectProtocol>)object {
+
     if (NO == [(id)object conformsToProtocol:@protocol(NSFNanoObjectProtocol)]) {
         [[NSException exceptionWithName:NSFNonConformingNanoObjectProtocolException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the object does not conform to NSFNanoObjectProtocol.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the object does not conform to NSFNanoObjectProtocol.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];    
     }
     
     [self removeObjectWithKey:[(id)object nanoObjectKey]];
 }
 
-- (void)removeAllObjects
-{
-    NSMutableDictionary *objects = [[NSMutableDictionary alloc]initWithCapacity:(_savedObjects.count + _removedObjects.count)];
+- (void) removeAllObjects {
+
+    NSMutableDictionary *objects = [NSMutableDictionary.alloc initWithCapacity:(_savedObjects.count + _removedObjects.count)];
     
     // Save the object and its key
     for (id object in _savedObjects) {
@@ -268,18 +275,19 @@
     _hasUnsavedChanges = YES;
 }
 
-- (void)removeObjectsInArray:(NSArray*)someObjects
-{
+- (void) removeObjectsInArray:(NSArray*)someObjects {
+
     for (id object in someObjects) {
         [self removeObject:object];
     }
 }
 
-- (void)removeObjectWithKey:(NSString*)objectKey
-{
+- (void) removeObjectWithKey:(NSString*)objectKey {
+
     if (nil == objectKey) {
         [[NSException exceptionWithName:NSFNanoObjectBehaviorException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: unexpected NSFNanoObject behavior. Reason: the object's key is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise]; 
     }
     
@@ -303,15 +311,15 @@
     }
 }
 
-- (void)removeObjectsWithKeysInArray:(NSArray*)someKeys
-{
+- (void) removeObjectsWithKeysInArray:(NSArray*)someKeys {
+
     for (NSString *objectKey in someKeys) {
         [self removeObjectWithKey:objectKey];
     }
 }
 
-- (BOOL)saveAndReturnError:ERROR_PTR
-{
+- (BOOL)saveAndReturnError:ERROR_PTR {
+
     if (NO == self.hasUnsavedChanges) {
         return YES;
     }
@@ -320,7 +328,8 @@
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: unable to save the bag. Reason: the store has not been set.", [self class], NSStringFromSelector(_cmd)]}];
+                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: unable to save the bag. Reason: the store has not been set.", self.class
+  , NSStringFromSelector(_cmd)]}];
         }
         return NO;
     }
@@ -330,24 +339,24 @@
 
 #pragma mark -
 
-- (void)deflateBag
-{
-    NSArray *savedObjectsCopy = [[NSArray alloc]initWithArray:[_savedObjects allKeys]];
+- (void) deflateBag {
+
+    NSArray *savedObjectsCopy = [NSArray.alloc initWithArray:[_savedObjects allKeys]];
     
     for (id saveObjectKey in savedObjectsCopy) {
-        _savedObjects[saveObjectKey] = [NSNull null];
+        _savedObjects[saveObjectKey] = NSNull.null;
     }
     
 }
 
-- (void)inflateBag
-{
+- (void) inflateBag {
+
     NSArray *objectKeys = [_savedObjects allKeys];
     [self _inflateObjectsWithKeys:objectKeys];
 }
 
-- (BOOL)reloadBagWithError:ERROR_PTR
-{
+- (BOOL)reloadBagWithError:ERROR_PTR {
+
     // If the bag is not associated to a document store, there is no need to continue
     if (nil == _store) {
         return YES;
@@ -366,7 +375,8 @@
         if (nil != outError) {
             *outError = [NSError errorWithDomain:NSFDomainKey
                                             code:NSFNanoStoreErrorKey
-                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: the bag could not be refreshed.", [self class], NSStringFromSelector(_cmd)]}];
+                                        userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: the bag could not be refreshed.", self.class
+  , NSStringFromSelector(_cmd)]}];
         }
         return NO;
     }
@@ -374,8 +384,8 @@
     return YES;
 }
 
-- (BOOL)undoChangesWithError:ERROR_PTR
-{
+- (BOOL)undoChangesWithError:ERROR_PTR {
+
     [_savedObjects removeAllObjects];
     [_unsavedObjects removeAllObjects];
     [_removedObjects removeAllObjects];
@@ -391,15 +401,15 @@
 
 /** \cond */
 
-- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary*)dictionary forKey:(NSString*)aKey store:(NSFNanoStore*)aStore
-{
+- (id)initNanoObjectFromDictionaryRepresentation:(NSDictionary*)dictionary forKey:(NSString*)aKey store:(NSFNanoStore*)aStore {
+
     if ((self = [self init])) {
         _name = dictionary[NSF_Private_NSFNanoBag_Name];
         _store = aStore;
         _key = aKey;
-        _savedObjects = [NSMutableDictionary new];
-        _unsavedObjects = [NSMutableDictionary new];
-        _removedObjects = [NSMutableDictionary new];
+        _savedObjects = NSMutableDictionary.new;
+        _unsavedObjects = NSMutableDictionary.new;
+        _removedObjects = NSMutableDictionary.new;
         
         NSArray *objectKeys = dictionary[NSF_Private_NSFNanoBag_NSFObjectKeys];
         
@@ -411,23 +421,23 @@
     return self;
 }
 
-- (NSDictionary*)nanoObjectDictionaryRepresentation
-{
+- (NSDictionary*)nanoObjectDictionaryRepresentation {
+
     return [self dictionaryRepresentation];
 }
 
-- (NSString*)nanoObjectKey
-{
+- (NSString*)nanoObjectKey {
+
     return _key;
 }
 
-- (void)_setStore:(NSFNanoStore*)aStore
-{
+- (void)_setStore:(NSFNanoStore*)aStore {
+
     _store = aStore;
 }
 
-- (BOOL)_saveInStore:(NSFNanoStore*)someStore error:ERROR_PTR
-{
+- (BOOL)_saveInStore:(NSFNanoStore*)someStore error:ERROR_PTR {
+
     // Save the unsaved objects first...
     NSArray *contentsToBeSaved = [_unsavedObjects allValues];
     if ([contentsToBeSaved count] > 0) {
@@ -454,8 +464,8 @@
     return success;
 }
 
-- (void)_inflateObjectsWithKeys:(NSArray*)someKeys
-{
+- (void)_inflateObjectsWithKeys:(NSArray*)someKeys {
+
     if ([someKeys count] != 0) {
         NSFNanoSearch *search = [NSFNanoSearch searchWithStore:_store];
         NSString *quotedString = [NSFNanoSearch _quoteStrings:someKeys joiningWithDelimiter:@","];

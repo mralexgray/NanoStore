@@ -9,8 +9,8 @@
 #import "NanoStore.h"
 #import "NSFNanoStore_Private.h"
 
-@interface NanoEngineTests : XCTestCase
-{
+@interface NanoEngineTests : XCTestCase {
+
     NSDictionary *_defaultTestInfo;
 }
 
@@ -18,15 +18,15 @@
 
 @implementation NanoEngineTests
 
-- (void)setUp { [super setUp];
+- (void) setUp { [super setUp];
     
     _defaultTestInfo = [NSFNanoStore _defaultTestData];
     
     NSFSetIsDebugOn (NO);
 }
 
-- (void)tearDown
-{
+- (void) tearDown {
+
     
     NSFSetIsDebugOn (NO);
     
@@ -34,8 +34,8 @@
 }
 
 
-- (void)testMaxROWUID
-{
+- (void) testMaxROWUID {
+
     NSFNanoStore *nanoStore = [NSFNanoStore createAndOpenStoreWithType:NSFMemoryStoreType path:nil error:nil];
     [nanoStore removeAllObjectsFromStoreAndReturnError:nil];
     

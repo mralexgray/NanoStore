@@ -7,31 +7,32 @@
 #import "NanoStore_Private.h"
 #import "NSFOrderedDictionary.h"
 
-@implementation NSFNanoExpression
-{
+@implementation NSFNanoExpression {
+
     /** \cond */
     NSMutableArray *_predicates;
     NSMutableArray *_operators;
     /** \endcond */
 }
 
-+ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate*)aPredicate
-{
-    return [[self alloc]initWithPredicate:aPredicate];
++ (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate*)aPredicate {
+
+    return [self.alloc initWithPredicate:aPredicate];
 }
 
-- (id)initWithPredicate:(NSFNanoPredicate*)aPredicate
-{
+- (id)initWithPredicate:(NSFNanoPredicate*)aPredicate {
+
     if (nil == aPredicate) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
     if ((self = [super init])) {
-        _predicates = [NSMutableArray new];
+        _predicates = NSMutableArray.new;
         [_predicates addObject:aPredicate];
-        _operators = [NSMutableArray new];
+        _operators = NSMutableArray.new;
         [_operators addObject:@(NSFAnd)];
     }
     
@@ -44,42 +45,43 @@
 /** \endcond */
 
 
-- (void)addPredicate:(NSFNanoPredicate*)aPredicate withOperator:(NSFOperator)someOperator
-{
+- (void) addPredicate:(NSFNanoPredicate*)aPredicate withOperator:(NSFOperator)someOperator {
+
     if (nil == aPredicate)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: the predicate is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     [_predicates addObject:aPredicate];
     [_operators addObject:[NSNumber numberWithInt:someOperator]];
 }
 
-- (NSString*)description
-{
+- (NSString*)description {
+
     NSArray *values = [self arrayDescription];
     
     return [values componentsJoinedByString:@""];
 }
 
-- (NSArray*)arrayDescription
-{
+- (NSArray*)arrayDescription {
+
     NSUInteger i, count = [_predicates count];
-    NSMutableArray *values = [NSMutableArray new];
+    NSMutableArray *values = NSMutableArray.new;
     
     // We always have one predicate, so make sure add it
     [values addObject:[_predicates[0]description]];
     
     for (i = 1; i < count; i++) {
-        NSString *compound = [[NSString alloc]initWithFormat:@" %@ %@", ([_operators[i]intValue] == NSFAnd) ? @"AND" : @"OR", [_predicates[i]description]];
+        NSString *compound = [NSString.alloc initWithFormat:@" %@ %@", ([_operators[i]intValue] == NSFAnd) ? @"AND" : @"OR", [_predicates[i]description]];
         [values addObject:compound];
     }
     
     return values;
 }
 
-- (NSString*)JSONDescription
-{
+- (NSString*)JSONDescription {
+
     NSArray *values = [self arrayDescription];
     
     NSError *outError = nil;

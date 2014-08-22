@@ -17,18 +17,18 @@
 
 @implementation NanoStoreGlobalsTests
 
-- (void)setUp { [super setUp]; _defaultTestInfo = NSFNanoStore._defaultTestData; NSFSetIsDebugOn (NO); }
+- (void) setUp { [super setUp]; _defaultTestInfo = NSFNanoStore._defaultTestData; NSFSetIsDebugOn (NO); }
 
-- (void)tearDown { _defaultTestInfo = nil; NSFSetIsDebugOn (NO); [super tearDown]; }
+- (void) tearDown { _defaultTestInfo = nil; NSFSetIsDebugOn (NO); [super tearDown]; }
 
 #pragma mark -
 
-- (void)testCheckDebugOn  { NSFSetIsDebugOn (YES); XCTAssertTrue (NSFIsDebugOn(), @"Expected isDebugOn to be YES."); }
+- (void) testCheckDebugOn  { NSFSetIsDebugOn (YES); XCTAssertTrue (NSFIsDebugOn(), @"Expected isDebugOn to be YES."); }
 
-- (void)testCheckDebugOff { NSFSetIsDebugOn (NO);  XCTAssertTrue (!NSFIsDebugOn(), @"Expected isDebugOn to be NO."); }
+- (void) testCheckDebugOff { NSFSetIsDebugOn (NO);  XCTAssertTrue (!NSFIsDebugOn(), @"Expected isDebugOn to be NO."); }
 
-- (void)testStringFromNanoDataType
-{
+- (void) testStringFromNanoDataType {
+
     XCTAssertTrue([NSFStringFromNanoDataType(NSFNanoTypeUnknown) isEqualToString:@"UNKNOWN"], @"Expected to receive UNKNOWN.");
     XCTAssertTrue([NSFStringFromNanoDataType(NSFNanoTypeData) isEqualToString:@"BLOB"], @"Expected to receive BLOB.");
     XCTAssertTrue([NSFStringFromNanoDataType(NSFNanoTypeString) isEqualToString:@"TEXT"], @"Expected to receive TEXT.");
@@ -37,8 +37,8 @@
     XCTAssertTrue([NSFStringFromNanoDataType(NSFNanoTypeRowUID) isEqualToString:@"INTEGER"], @"Expected to receive INTEGER.");
 }
 
-- (void)testNanoDataTypeFromString
-{
+- (void) testNanoDataTypeFromString {
+
     XCTAssertTrue(NSFNanoTypeUnknown == NSFNanoDatatypeFromString(@"UNKNOWN"), @"Expected to receive NSFNanoTypeUnknown.");
     XCTAssertTrue(NSFNanoTypeData == NSFNanoDatatypeFromString(@"BLOB"), @"Expected to receive NSFNanoTypeData.");
     XCTAssertTrue(NSFNanoTypeString || NSFNanoTypeDate == NSFNanoDatatypeFromString(@"TEXT"), @"Expected to receive NSFNanoTypeString or NSFNanoTypeDate.");
@@ -46,8 +46,8 @@
     XCTAssertTrue(NSFNanoTypeRowUID == NSFNanoDatatypeFromString(@"INTEGER"), @"Expected to receive NSFNanoTypeRowUID.");                                        
 }
 
-- (void)testStringFromMatchType
-{
+- (void) testStringFromMatchType {
+
     XCTAssertTrue([NSFStringFromMatchType(NSFEqualTo) isEqualToString:@"Equal to"], @"Expected to receive UNKNOWN.");
     XCTAssertTrue([NSFStringFromMatchType(NSFBeginsWith) isEqualToString:@"Begins with"], @"Expected to receive Begins with.");
     XCTAssertTrue([NSFStringFromMatchType(NSFContains) isEqualToString:@"Contains"], @"Expected to receive Contains.");
@@ -60,14 +60,14 @@
     XCTAssertTrue([NSFStringFromMatchType(NSFLessThan) isEqualToString:@"Less than"], @"Expected to receive Less than.");
 }
 
-- (void)testNSFLog
-{
+- (void) testNSFLog {
+
     NSFSetIsDebugOn (YES);
     _NSFLog(@"Testing testNSFLog's coverage.");
 }
 
-- (void)testAllClassDescriptions
-{
+- (void) testAllClassDescriptions {
+
     NSString *description = nil;
     
     NSFNanoEngine *engine = [NSFNanoEngine databaseWithPath:@":memory:"];
@@ -93,11 +93,11 @@
     description = [result JSONDescription];
     XCTAssertTrue([description length] > 0, @"Expected NSFNanoResult's JSONDescription value to be valid.");
     
-    NSFNanoSortDescriptor *sortDescriptor = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"foo" ascending:YES];
+    NSFNanoSortDescriptor *sortDescriptor = [NSFNanoSortDescriptor.alloc initWithAttribute:@"foo" ascending:YES];
     description = [sortDescriptor JSONDescription];
     XCTAssertTrue([description length] > 0, @"Expected NSFNanoSortDescriptor's JSONDescription value to be valid.");
     
-    NSFNanoPredicate *predicate = [[NSFNanoPredicate alloc]initWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"foo"];
+    NSFNanoPredicate *predicate = [NSFNanoPredicate.alloc initWithColumn:NSFAttributeColumn matching:NSFEqualTo value:@"foo"];
     description = [predicate JSONDescription];
     XCTAssertTrue([description length] > 0, @"Expected NSFNanoPredicate's JSONDescription value to be valid.");
     

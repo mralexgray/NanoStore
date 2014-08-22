@@ -79,7 +79,7 @@
 	@throws NSFUnexpectedParameterException is thrown if the predicate is nil.
  */
 
-- (void)addPredicate:(NSFNanoPredicate*)thePredicate withOperator:(NSFOperator)theOperator;
+- (void) addPredicate:(NSFNanoPredicate*)thePredicate withOperator:(NSFOperator)theOperator;
 
 /*!	@name Miscellaneous
  */

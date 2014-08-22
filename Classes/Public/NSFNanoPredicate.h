@@ -43,7 +43,7 @@
  *
 	@see \link NSFNanoExpression::expressionWithPredicate: + (NSFNanoExpression*)expressionWithPredicate:(NSFNanoPredicate*)thePredicate \endlink
 	@see \link NSFNanoExpression::initWithPredicate: - (id)initWithPredicate:(NSFNanoPredicate*)thePredicate \endlink
-	@see \link NSFNanoExpression::addPredicate:withOperator: - (void)addPredicate:(NSFNanoPredicate*)thePredicate withOperator:(NSFOperator)theOperator \endlink
+	@see \link NSFNanoExpression::addPredicate:withOperator: - (void) addPredicate:(NSFNanoPredicate*)thePredicate withOperator:(NSFOperator)theOperator \endlink
  */
 
 #import <Foundation/Foundation.h>
@@ -65,7 +65,7 @@
 /*! Creates and returns a predicate.
 	@param theType is the column type. Can be \link Globals::NSFKeyColumn NSFKeyColumn \endlink, \link Globals::NSFAttributeColumn NSFAttributeColumn \endlink or \link Globals::NSFValueColumn NSFValueColumn \endlink.
 	@param theMatch is the match operator.
-	@param theValue can be an NSString or [NSNull null]
+	@param theValue can be an NSString or NSNull.null
 	@return A predicate which can be used in an NSFNanoExpression.
 	@see \link initWithColumn:matching:value: - (id)initWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString*)theValue \endlink
  */
@@ -75,7 +75,7 @@
 /*! Initializes a newly allocated predicate.
 	@param theType is the column type. Can be \link Globals::NSFKeyColumn NSFKeyColumn \endlink, \link Globals::NSFAttributeColumn NSFAttributeColumn \endlink or \link Globals::NSFValueColumn NSFValueColumn \endlink.
 	@param theMatch is the match operator.
-	@param theValue can be an NSString or [NSNull null]
+	@param theValue can be an NSString or NSNull.null
 	@return A predicate which can be used in an NSFNanoExpression.
 	@see \link predicateWithColumn:matching:value: + (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)theType matching:(NSFMatchType)theMatch value:(NSString*)theValue \endlink
  */

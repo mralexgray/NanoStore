@@ -27,7 +27,7 @@
  [nanoStore addObjectsFromArray:[NSArray arrayWithObjects:obj1, obj2, obj3, obj4, obj5, nil] error:nil];
  
  // Prepare the sort descriptor
- NSFNanoSortDescriptor *sortCities = [[NSFNanoSortDescriptor alloc]initWithAttribute:@"City" ascending:YES];
+ NSFNanoSortDescriptor *sortCities = [NSFNanoSortDescriptor.alloc initWithAttribute:@"City" ascending:YES];
  
  // Prepare the search
  NSFNanoSearch *search = [NSFNanoSearch searchWithStore:nanoStore];

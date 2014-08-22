@@ -49,17 +49,19 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 {
  if (nil == thePath)
      [[NSException exceptionWithName:NSFUnexpectedParameterException
-                              reason:[NSString stringWithFormat:@"*** -[%@ %@]: thePath is nil.", [self class], NSStringFromSelector(_cmd)]
+                              reason:[NSString stringWithFormat:@"*** -[%@ %@]: thePath is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                             userInfo:nil]raise];
     
-    return [[self alloc]initWithPath:thePath];
+    return [self.alloc initWithPath:thePath];
 }
 
-- (id)initWithPath:(NSString*)thePath
-{
+- (id)initWithPath:(NSString*)thePath {
+
     if (nil == thePath)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: thePath is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: thePath is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ((self = [self init])) {
@@ -71,13 +73,13 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 /** \cond */
 
-+ (void)initialize
-{
++ (void)initialize {
+
     __NSFP_SQLCommandsReturningData = @[@"SELECT", @"PRAGMA", @"EXPLAIN"];
 }
 
-- (id)init
-{
+- (id)init {
+
     if ((self = [super init])) {
         _path = nil;
         _schema = nil;
@@ -85,21 +87,21 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return self;
 }
 
-- (void)dealloc
-{
+- (void) dealloc {
+
     [self close];
 }
 
 /** \endcond */
 
-- (NSString*)description
-{
+- (NSString*)description {
+
     return [self JSONDescription];
 }
 
-- (NSFOrderedDictionary*)dictionaryDescription
-{
-    NSFOrderedDictionary *values = [NSFOrderedDictionary new];
+- (NSFOrderedDictionary*)dictionaryDescription {
+
+    NSFOrderedDictionary *values = NSFOrderedDictionary.new;
     
     values[@"SQLite address"] = [NSString stringWithFormat:@"%p", self.sqlite];
     values[@"Database path"] = _path;
@@ -108,8 +110,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return values;
 }
 
-- (NSString*)JSONDescription
-{
+- (NSString*)JSONDescription {
+
     NSFOrderedDictionary *values = [self dictionaryDescription];
     
     NSError *outError = nil;
@@ -122,8 +124,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 #pragma mark// Opening & Closing Methods
 #pragma mark// ==================================
 
-- (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode
-{
+- (BOOL)openWithCacheMethod:(NSFCacheMethod)theCacheMethod useFastMode:(BOOL)useFastMode {
+
     int status = sqlite3_open_v2( [_path UTF8String], &_sqlite,
                                  SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, NULL);
     
@@ -181,8 +183,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 }
 
 
-- (BOOL)close
-{
+- (BOOL)close {
+
     if (NO == self.sqlite) {
         return NO;
     }
@@ -216,15 +218,15 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return (SQLITE_OK == status);
 }
 
-- (BOOL)isDatabaseOpen
-{
+- (BOOL)isDatabaseOpen {
+
     return (NULL != self.sqlite);
 }
 
 #pragma mark Transaction Methods
 
-- (BOOL)beginTransaction
-{
+- (BOOL)beginTransaction {
+
     if ([self isTransactionActive])
         return NO;
     
@@ -233,8 +235,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [self beginDeferredTransaction];
 }
 
-- (BOOL)beginDeferredTransaction
-{
+- (BOOL)beginDeferredTransaction {
+
     if ([self isTransactionActive])
         return NO;
     
@@ -243,8 +245,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [self NSFP_beginTransactionMode:@"BEGIN DEFERRED TRANSACTION;"];
 }
 
-- (BOOL)commitTransaction
-{
+- (BOOL)commitTransaction {
+
     if (NO == [self isTransactionActive]) {
         _willCommitChangeSchema = NO;
         return NO;
@@ -263,8 +265,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return success;
 }
 
-- (BOOL)rollbackTransaction
-{
+- (BOOL)rollbackTransaction {
+
     if ([self isTransactionActive] == NO) {
         _willCommitChangeSchema = NO;
         return NO;
@@ -277,8 +279,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return success;
 }
 
-- (BOOL)isTransactionActive
-{
+- (BOOL)isTransactionActive {
+
     sqlite3* myDB = self.sqlite;
     
     int status = sqlite3_get_autocommit(myDB);
@@ -298,16 +300,16 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return uuid;
 } 
 
-- (BOOL)compact
-{
+- (BOOL)compact {
+
     if (NO == [self isTransactionActive])
         return (nil == [[self executeSQL:@"VACUUM;"]error]);
     
     return NO;
 }
 
-- (BOOL)integrityCheck
-{
+- (BOOL)integrityCheck {
+
     if (NO == [self isTransactionActive]) {
         NSFNanoResult* result = [self executeSQL:@"PRAGMA integrity_check"];
         
@@ -318,20 +320,20 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return NO;
 }
 
-+ (NSString*)nanoStoreEngineVersion
-{
++ (NSString*)nanoStoreEngineVersion {
+
     return NSFVersionKey;
 }
 
-+ (NSString*)sqliteVersion
-{
++ (NSString*)sqliteVersion {
+
     return @(sqlite3_libversion());
 }
 
-+ (NSSet*)sharedNanoStoreEngineDatatypes
-{
++ (NSSet*)sharedNanoStoreEngineDatatypes {
+
     if (nil == __NSFPSharedNanoStoreEngineDatatypes)
-        __NSFPSharedNanoStoreEngineDatatypes = [[NSSet alloc]initWithObjects:NSFStringFromNanoDataType(NSFNanoTypeRowUID),
+        __NSFPSharedNanoStoreEngineDatatypes = [NSSet.alloc initWithObjects:NSFStringFromNanoDataType(NSFNanoTypeRowUID),
                                                 NSFStringFromNanoDataType(NSFNanoTypeString),
                                                 NSFStringFromNanoDataType(NSFNanoTypeData),
                                                 NSFStringFromNanoDataType(NSFNanoTypeDate),
@@ -345,38 +347,42 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 #pragma mark// Table and Introspection Methods
 #pragma mark// ==================================
 
-- (BOOL)createTable:(NSString*)table withColumns:(NSArray*)columns datatypes:(NSArray*)datatypes
-{
+- (BOOL)createTable:(NSString*)table withColumns:(NSArray*)columns datatypes:(NSArray*)datatypes {
+
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == columns)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: columns is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: columns is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == datatypes)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatypes is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatypes is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     return [self NSFP_createTable:table withColumns:columns datatypes:datatypes isTemporary:NO];
 }
 
-- (BOOL)dropTable:(NSString*)table
-{
+- (BOOL)dropTable:(NSString*)table {
+
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     BOOL transactionSetHere = NO;
     if ([self isTransactionActive] == NO)
         transactionSetHere = [self beginTransaction];
     
-    NSString *theSQLStatement = [[NSString alloc]initWithFormat:@"DROP TABLE %@;", table];
+    NSString *theSQLStatement = [NSString.alloc initWithFormat:@"DROP TABLE %@;", table];
     BOOL everythingIsFine = (nil == [[self executeSQL:theSQLStatement]error]);
     
     if (transactionSetHere) {
@@ -392,48 +398,51 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return everythingIsFine;
 }
 
-- (BOOL)createIndexForColumn:(NSString*)column table:(NSString*)table isUnique:(BOOL)flag
-{
+- (BOOL)createIndexForColumn:(NSString*)column table:(NSString*)table isUnique:(BOOL)flag {
+
     if (nil == column)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: column is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: column is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSString  *theSQLStatement = nil;
     
     if (flag)
-        theSQLStatement = [[NSString alloc]initWithFormat:@"CREATE UNIQUE INDEX %@_%@_IDX ON %@ (%@);", table, column, table, column];
+        theSQLStatement = [NSString.alloc initWithFormat:@"CREATE UNIQUE INDEX %@_%@_IDX ON %@ (%@);", table, column, table, column];
     else
-        theSQLStatement = [[NSString alloc]initWithFormat:@"CREATE INDEX %@_%@_IDX ON %@ (%@);", table, column, table, column];
+        theSQLStatement = [NSString.alloc initWithFormat:@"CREATE INDEX %@_%@_IDX ON %@ (%@);", table, column, table, column];
     
     BOOL indexWasCreated = (nil == [[self executeSQL:theSQLStatement]error]);
     
     return indexWasCreated;
 }
 
-- (void)dropIndex:(NSString*)indexName
-{
+- (void) dropIndex:(NSString*)indexName {
+
     if (nil == indexName)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: indexName is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: indexName is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
-    NSString  *theSQLStatement = [[NSString alloc]initWithFormat:@"DROP INDEX %@;", indexName];
+    NSString  *theSQLStatement = [NSString.alloc initWithFormat:@"DROP INDEX %@;", indexName];
     
     [self executeSQL:theSQLStatement];
 }
 
-- (NSArray*)tables
-{
+- (NSArray*)tables {
+
     return [self NSFP_flattenAllTables];
 }
 
-- (NSDictionary*)allTables
-{
+- (NSDictionary*)allTables {
+
     NSMutableDictionary *allTables = [NSMutableDictionary dictionary];
     
     NSFNanoResult *databasesResult = [self executeSQL:@"PRAGMA database_list"];
@@ -453,11 +462,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return allTables;
 }
 
-- (NSArray*)columnsForTable:(NSString*)table
-{
+- (NSArray*)columnsForTable:(NSString*)table {
+
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
 
     NSString *theSQLStatement = nil;
@@ -476,11 +486,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [result valuesForColumn:@"name"];
 }
 
-- (NSArray*)datatypesForTable:(NSString*)table
-{
+- (NSArray*)datatypesForTable:(NSString*)table {
+
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSString *theSQLStatement = nil;
@@ -499,18 +510,19 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [result valuesForColumn:@"type"];
 }
 
-- (NSArray*)indexes
-{
+- (NSArray*)indexes {
+
     NSFNanoResult* result = [self executeSQL:@"SELECT name FROM sqlite_master WHERE type='index' ORDER BY name"];
     
     return [result valuesForColumn:@"name"];
 }
 
-- (NSArray*)indexedColumnsForTable:(NSString*)table
-{
+- (NSArray*)indexedColumnsForTable:(NSString*)table {
+
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSFNanoResult* result = [self executeSQL:[NSString stringWithFormat:@"SELECT sqlite_master.name FROM sqlite_master WHERE type = 'index' AND sqlite_master.tbl_name = '%@';", table]];
@@ -522,22 +534,24 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [result valuesForColumn:@"name"];
 }
 
-- (NSArray*)temporaryTables
-{
+- (NSArray*)temporaryTables {
+
     NSFNanoResult* result = [self executeSQL:@"SELECT * FROM sqlite_temp_master"]; 
     return [[NSSet setWithArray:[result valuesForColumn:@"tbl_name"]]allObjects];
 }
 
-- (NSFNanoResult*)executeSQL:(NSString*)theSQLStatement
-{
+- (NSFNanoResult*)executeSQL:(NSString*)theSQLStatement {
+
     if (nil == theSQLStatement)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([theSQLStatement length] == 0)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is empty.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is empty.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     // Check whether we will need to return a dictionary with results
@@ -575,26 +589,26 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
                     if (NULL == columnUTF8) {
                         continue;
                     }
-                    NSString *column = [[NSString alloc]initWithUTF8String:columnUTF8];
+                    NSString *column = [NSString.alloc initWithUTF8String:columnUTF8];
 
                     // Sanity check: some queries return NULL, which would cause a crash below.
                     if ([column isEqualToString:NSFKeyedArchive]) {
                         //KeyedArchive is a blob
-                        value = [[NSData alloc] initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
+                        value = [NSData.alloc initWithBytes:sqlite3_column_blob(theSQLiteStatement, columnIndex) length: sqlite3_column_bytes(theSQLiteStatement, 1)];
                     }else
                     {
                         char *valueUTF8 = (char*)sqlite3_column_text (theSQLiteStatement, columnIndex);
                         if (NULL != valueUTF8) {
-                            value = [[NSString alloc]initWithUTF8String:valueUTF8];
+                            value = [NSString.alloc initWithUTF8String:valueUTF8];
                         } else {
-                            value = [[NSNull null]description];
+                            value = NSNull.null.description;
                         }
                     }
 
                     // Obtain the array to collect the values. If the array doesn't exist, create it.
                     NSMutableArray *values = info[column];
                     if (nil == values) {
-                        values = [NSMutableArray new];
+                        values = NSMutableArray.new;
                         info[column] = values;
                     }
                     
@@ -633,7 +647,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         NSString *msg = (NULL != errorMessage) ? @(errorMessage) : [NSString stringWithFormat:@"SQLite error ID: %d", status];
         result = [NSFNanoResult _resultWithError:[NSError errorWithDomain:NSFDomainKey
                                                                     code:NSFNanoStoreErrorKey
-                                                                userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: %@", [self class], NSStringFromSelector(_cmd), msg]}]];
+                                                                userInfo:@{NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:@"*** -[%@ %@]: %@", self.class
+  , NSStringFromSelector(_cmd), msg]}]];
     } else {
         result = [NSFNanoResult _resultWithDictionary:info];
     }
@@ -646,15 +661,16 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return result;
 }
 
-- (long long)maxRowUIDForTable:(NSString*)table
-{
+- (long long)maxRowUIDForTable:(NSString*)table {
+
     if (nil == table) {
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     }
     
-    NSString *sql = [[NSString alloc]initWithFormat:@"SELECT max(ROWID) FROM %@", table];
+    NSString *sql = [NSString.alloc initWithFormat:@"SELECT max(ROWID) FROM %@", table];
     
     NSFNanoResult *result = [self executeSQL:sql];
     
@@ -666,8 +682,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 #pragma mark// SQLite Tunning Methods
 #pragma mark// ==================================
 
-- (void)setBusyTimeout:(unsigned int)theTimeout
-{
+- (void) setBusyTimeout:(unsigned int)theTimeout {
+
     // If the timeout is out-of-range, default the value
     if ((theTimeout < 100) || (theTimeout > 5 * 1000)) {
         theTimeout = 250;
@@ -678,8 +694,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     sqlite3_busy_timeout(self.sqlite, _busyTimeout);
 }
 
-+ (NSInteger)systemPageSize
-{
++ (NSInteger)systemPageSize {
+
     static NSUInteger __sSystemPageSize = NSNotFound;
     
     if (NSNotFound == __sSystemPageSize) {
@@ -689,8 +705,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return __sSystemPageSize;
 }
 
-+ (NSUInteger)recommendedCacheSize
-{
++ (NSUInteger)recommendedCacheSize {
+
     static NSUInteger __sRecommendedCacheSize = NSNotFound;
     
     if (NSNotFound == __sRecommendedCacheSize) {
@@ -707,8 +723,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return __sRecommendedCacheSize;
 }
 
-- (BOOL)setCacheSize:(NSUInteger)numberOfPages
-{
+- (BOOL)setCacheSize:(NSUInteger)numberOfPages {
+
     if (numberOfPages < 1000)
         numberOfPages = 1000;
     
@@ -717,29 +733,29 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return (cacheSize == numberOfPages);
 }
 
-- (NSUInteger)cacheSize
-{
+- (NSUInteger)cacheSize {
+
     NSFNanoResult *result = [self executeSQL:@"PRAGMA cache_size;"];
     NSString *value = [result firstValue];
     return [value integerValue];
 }
 
-- (BOOL)setPageSize:(NSUInteger)numberOfBytes
-{
+- (BOOL)setPageSize:(NSUInteger)numberOfBytes {
+
     [self executeSQL:[NSString stringWithFormat:@"PRAGMA page_size = %lu", (unsigned long)numberOfBytes]];
     NSUInteger pageSize = [self pageSize];
     return (pageSize == numberOfBytes);
 }
 
-- (NSUInteger)pageSize
-{
+- (NSUInteger)pageSize {
+
     NSFNanoResult *result = [self executeSQL:@"PRAGMA page_size;"];
     NSString *value = [result firstValue];
     return [value integerValue];
 }
 
-- (BOOL)setEncodingType:(NSFEncodingType)theEncodingType
-{
+- (BOOL)setEncodingType:(NSFEncodingType)theEncodingType {
+
     BOOL success = NO;
     
     if (NSFEncodingUTF8 == theEncodingType) {
@@ -755,15 +771,15 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return success;
 }
 
-- (NSFEncodingType)encoding
-{
+- (NSFEncodingType)encoding {
+
     NSFNanoResult *result = [self executeSQL:@"pragma encoding;"];
     NSString *value = [result firstValue];
     return [NSFNanoEngine NSStringToNSFEncodingType:value];
 }
 
-+ (NSFEncodingType)NSStringToNSFEncodingType:(NSString*)value
-{
++ (NSFEncodingType)NSStringToNSFEncodingType:(NSString*)value {
+
     NSFEncodingType convertedValue = NSFEncodingUnknown;
     
     if ([value isEqualToString:@"UTF-8"]) {
@@ -775,8 +791,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return convertedValue;
 }
 
-+ (NSString*)NSFEncodingTypeToNSString:(NSFEncodingType)value
-{
++ (NSString*)NSFEncodingTypeToNSString:(NSFEncodingType)value {
+
     NSString *convertedValue = nil;
     
     if (NSFEncodingUTF8 == value) {
@@ -788,13 +804,13 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return convertedValue;
 }
 
-- (NSFSynchronousMode)synchronousMode
-{
+- (NSFSynchronousMode)synchronousMode {
+
     NSFNanoResult* result = [self executeSQL:@"PRAGMA synchronous"];
     return [[[result valuesForColumn:@"synchronous"]lastObject]intValue];
 }
 
-- (void)setSynchronousMode:(NSFSynchronousMode)mode
+- (void) setSynchronousMode:(NSFSynchronousMode)mode
 {	
     switch (mode) {
         case SynchronousModeOff:
@@ -809,14 +825,14 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
 }
 
-- (NSFTempStoreMode)tempStoreMode
-{
+- (NSFTempStoreMode)tempStoreMode {
+
     NSFNanoResult* result = [self executeSQL:@"PRAGMA temp_store"];
     
     return [[[result valuesForColumn:@"temp_store"]lastObject]intValue];
 }
 
-- (void)setTempStoreMode:(NSFTempStoreMode)mode
+- (void) setTempStoreMode:(NSFTempStoreMode)mode
 {	
     switch (mode) {
         case TempStoreModeFile:
@@ -831,8 +847,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
 }
 
-- (NSFJournalModeMode)journalModeAndReturnError:ERROR_PTR
-{
+- (NSFJournalModeMode)journalModeAndReturnError:ERROR_PTR {
+
     NSFNanoResult *result = [self executeSQL:@"PRAGMA journal_mode; "];
     if (nil != [result error]) {
         if (nil != outError) {
@@ -850,8 +866,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     else return JournalModeOFF;
 }
 
-- (BOOL)setJournalMode:(NSFJournalModeMode)theMode
-{
+- (BOOL)setJournalMode:(NSFJournalModeMode)theMode {
+
     if ([self isTransactionActive]) {
         return NO;
     }
@@ -890,11 +906,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 #pragma mark// Binary Data Methods
 #pragma mark// ==================================
 
-+ (NSString*)encodeDataToBase64:(NSData*)data
-{
++ (NSString*)encodeDataToBase64:(NSData*)data {
+
     if (nil == data)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: data is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: data is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSInteger decodedDataSize = [data length];
@@ -965,11 +982,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return myBase64Data;
 }
 
-+ (NSData*)decodeDataFromBase64:(NSString*)encodedData
-{
++ (NSData*)decodeDataFromBase64:(NSString*)encodedData {
+
     if (nil == encodedData)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: encodedData is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: encodedData is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     const char* source = [encodedData UTF8String];
@@ -1019,16 +1037,16 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
 
 /** \cond */
 
-+ (NSArray*)NSFP_sharedROWIDKeywords
-{
++ (NSArray*)NSFP_sharedROWIDKeywords {
+
     if (nil == __NSFPSharedROWIDKeywords)
         __NSFPSharedROWIDKeywords = @[@"ROWID", @"OID", @"_ROWID_"];
     
     return __NSFPSharedROWIDKeywords;
 }
 
-- (NSString*)NSFP_cacheMethodToString
-{
+- (NSString*)NSFP_cacheMethodToString {
+
     switch (_cacheMethod) {
         case CacheAllData:
             return @"Cache all data";
@@ -1044,16 +1062,17 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return @"<unknown cache method";
 }
 
-+ (int)NSFP_stripBitsFromExtendedResultCode:(int)extendedResult
-{
++ (int)NSFP_stripBitsFromExtendedResultCode:(int)extendedResult {
+
     return (extendedResult & 0x00FF);
 }
 
-+ (NSDictionary*)_plistToDictionary:(NSString*)aPlist
-{
++ (NSDictionary*)_plistToDictionary:(NSString*)aPlist {
+
     if (nil == aPlist)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: aPlist is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: aPlist is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([aPlist length] == 0)
@@ -1070,7 +1089,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     NSDictionary *dict = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:nil error:&e];// format:format errorDescription:&errorString];
     
     if (!dict) {
-        NSLog(@"*** -[%@ %@]: [NSPropertyListSerialization propertyListFromData] failure. %@", [self class], NSStringFromSelector(_cmd), e);// errorString);
+        NSLog(@"*** -[%@ %@]: [NSPropertyListSerialization propertyListFromData] failure. %@", self.class
+  , NSStringFromSelector(_cmd), e);// errorString);
         NSLog(@"     Plist data: %@", aPlist);
         return nil;
     }
@@ -1078,16 +1098,18 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return dict;
 }
 
-+ (void)NSFP_decodeQuantum:(unsigned char*)dest andSource:(const char*)src
-{
++ (void)NSFP_decodeQuantum:(unsigned char*)dest andSource:(const char*)src {
+
     if (nil == dest)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: dest is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: dest is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == src)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: src is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: src is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSUInteger x = 0;
@@ -1114,9 +1136,9 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     dest[0] = (unsigned char)(x & 255);
 }
 
-- (NSArray*)NSFP_flattenAllTables
-{
-    NSMutableSet *flattenedTables = [[NSMutableSet alloc]init];
+- (NSArray*)NSFP_flattenAllTables {
+
+    NSMutableSet *flattenedTables = [NSMutableSet.alloc init];
     NSDictionary *allTables = [self allTables];
     NSEnumerator *enumerator = [allTables keyEnumerator];
     NSString  *database;
@@ -1141,11 +1163,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return immutableValues;
 }
 
-- (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString*)aSQLQuery
-{
+- (NSInteger)NSFP_prepareSQLite3Statement:(sqlite3_stmt **)aStatement theSQLStatement:(NSString*)aSQLQuery {
+
     if (nil == aSQLQuery)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: aSQLQuery is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: aSQLQuery is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     // Prepare SQLite's VM. It's placed here so we can speed up stores...
@@ -1168,11 +1191,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return status;
 }
 
-- (BOOL)NSFP_beginTransactionMode:(NSString*)theSQLStatement
-{
+- (BOOL)NSFP_beginTransactionMode:(NSString*)theSQLStatement {
+
     if (nil == theSQLStatement)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([self isTransactionActive] == NO) {
@@ -1223,26 +1247,30 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return NO;
 }
 
-- (BOOL)NSFP_createTable:(NSString*)table withColumns:(NSArray*)tableColumns datatypes:(NSArray*)tableDatatypes isTemporary:(BOOL)isTemporaryFlag
-{
+- (BOOL)NSFP_createTable:(NSString*)table withColumns:(NSArray*)tableColumns datatypes:(NSArray*)tableDatatypes isTemporary:(BOOL)isTemporaryFlag {
+
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == tableColumns)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableColumns is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableColumns is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == tableDatatypes)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableDatatypes is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableDatatypes is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if ([tableColumns count] != [tableDatatypes count])
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: number of columns and datatypes mismatch.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: number of columns and datatypes mismatch.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSSet *allowedDatatypes = [NSFNanoEngine sharedNanoStoreEngineDatatypes];
@@ -1252,10 +1280,10 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         return NO;
     
     // Make sure we have specified ROWID in the group of columns
-    NSMutableArray *revisedColumns = [[NSMutableArray alloc]initWithArray:tableColumns];
-    NSMutableArray *revisedDatatypes = [[NSMutableArray alloc]initWithArray:tableDatatypes];
+    NSMutableArray *revisedColumns = [NSMutableArray.alloc initWithArray:tableColumns];
+    NSMutableArray *revisedDatatypes = [NSMutableArray.alloc initWithArray:tableDatatypes];
     NSInteger ROWIDIndex = [self NSFP_ROWIDPresenceLocation:tableColumns datatypes:tableDatatypes];
-    NSString *ROWIDDatatype = [[NSString alloc]initWithFormat:@"%@ PRIMARY KEY", NSFStringFromNanoDataType(NSFNanoTypeRowUID)];
+    NSString *ROWIDDatatype = [NSString.alloc initWithFormat:@"%@ PRIMARY KEY", NSFStringFromNanoDataType(NSFNanoTypeRowUID)];
     
     if (NSNotFound != ROWIDIndex) {
         // Even though the ROWID has been specified by the user, we make sure the datatype is correct
@@ -1275,9 +1303,9 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     
     NSMutableString* theSQLStatement;
     if (isTemporaryFlag)
-        theSQLStatement = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"CREATE TEMPORARY TABLE %@(", table]];
+        theSQLStatement = [NSMutableString.alloc initWithString:[NSString stringWithFormat:@"CREATE TEMPORARY TABLE %@(", table]];
     else
-        theSQLStatement = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"CREATE TABLE %@(", table]];
+        theSQLStatement = [NSMutableString.alloc initWithString:[NSString stringWithFormat:@"CREATE TABLE %@(", table]];
     
     NSMutableArray *tableCreationDatatypes = [NSMutableArray arrayWithArray:revisedDatatypes];
     
@@ -1302,19 +1330,21 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return everythingIsFine;
 }
 
-- (BOOL)NSFP_removeColumn:(NSString*)column fromTable:(NSString*)table
-{
+- (BOOL)NSFP_removeColumn:(NSString*)column fromTable:(NSString*)table {
+
     // Obtain all current columns and datatypes for table
     NSArray *tableInfoDatatypes = [self datatypesForTable:table];
     
     if (nil == column)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: column is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: column is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSArray *tableInfoColumns = [self columnsForTable:table];
@@ -1325,8 +1355,8 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         return NO;
     
     // Add the new column and data type to the list
-    NSMutableArray *tableColumns = [[NSMutableArray alloc]initWithArray:tableInfoColumns];
-    NSMutableArray *tableDatatypes = [[NSMutableArray alloc]initWithArray:tableInfoDatatypes];
+    NSMutableArray *tableColumns = [NSMutableArray.alloc initWithArray:tableInfoColumns];
+    NSMutableArray *tableDatatypes = [NSMutableArray.alloc initWithArray:tableInfoDatatypes];
     [tableColumns removeObjectAtIndex:index];
     [tableDatatypes removeObjectAtIndex:index];
     
@@ -1389,11 +1419,11 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return (0 == numberOfIssues);
 }
 
-- (void)NSFP_rebuildDatatypeCache
-{
+- (void) NSFP_rebuildDatatypeCache {
+
     // Cleanup
     _schema = nil;
-    _schema = [[NSMutableDictionary alloc]init];
+    _schema = [NSMutableDictionary.alloc init];
     
     NSArray *tables = [self NSFP_flattenAllTables];
     if ([tables count] == 0)
@@ -1407,7 +1437,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         }
         
         // Build the dictionary
-        NSMutableDictionary *tableDictionary = [[NSMutableDictionary alloc]init];
+        NSMutableDictionary *tableDictionary = [NSMutableDictionary.alloc init];
         NSInteger j, columnCount = [columns count];
         
         for (j = 0; j < columnCount; j++) {
@@ -1418,28 +1448,31 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
 }
 
-- (BOOL)NSFP_insertStringValues:(NSArray*)values forColumns:(NSArray*)columns table:(NSString*)table
-{
+- (BOOL)NSFP_insertStringValues:(NSArray*)values forColumns:(NSArray*)columns table:(NSString*)table {
+
     if (nil == values)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: values is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: values is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == columns)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: columns is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: columns is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     // Make sure we have specified ROWID in the group of columns
     NSMutableArray *revisedColumns = (NSMutableArray*)columns;
     
     // Escape all values except the one with type NSFNanoTypeRowUID
-    NSMutableArray *escapedValues = [[NSMutableArray alloc]init];
+    NSMutableArray *escapedValues = [NSMutableArray.alloc init];
     NSInteger i, count = [revisedColumns count];
     
     for (i = 0; i < count; i++) {
@@ -1447,14 +1480,14 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
         NSString  *value = values[i];
         NSString  *escapedValue = nil;
         if ([column isEqualToString:@"ROWID"]) {
-            escapedValue = [[NSString alloc]initWithFormat:@"%@", value];
+            escapedValue = [NSString.alloc initWithFormat:@"%@", value];
         } else {
-            escapedValue = [[NSString alloc]initWithFormat:@"'%@'", value];
+            escapedValue = [NSString.alloc initWithFormat:@"'%@'", value];
         }
         [escapedValues addObject:escapedValue];
     }
     
-    NSMutableString* theSQLStatement = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"INSERT INTO %@(", table]];
+    NSMutableString* theSQLStatement = [NSMutableString.alloc initWithString:[NSString stringWithFormat:@"INSERT INTO %@(", table]];
     
     [self NSFP_sqlString:theSQLStatement appendingTags:revisedColumns];
     [theSQLStatement appendString:@") VALUES("];
@@ -1465,16 +1498,18 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return insertWasOK;
 }
 
-- (void)NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)tags quoteTags:(BOOL)flag
-{
+- (void) NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)tags quoteTags:(BOOL)flag {
+
     if (nil == theSQLStatement)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == tags)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tags is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tags is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSInteger i, count = [tags count];
@@ -1482,7 +1517,7 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     if (flag) {
         for (i = 0; i < count; i++) {
             NSString  *tagName = tags[i];
-            NSString  *escapedValue = [[NSString alloc]initWithFormat:@"'%@'", tagName];
+            NSString  *escapedValue = [NSString.alloc initWithFormat:@"'%@'", tagName];
             
             [theSQLStatement appendString:escapedValue];
             
@@ -1494,41 +1529,47 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     }
 }
 
-- (void)NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)tags
-{
+- (void) NSFP_sqlString:(NSMutableString*)theSQLStatement appendingTags:(NSArray*)tags {
+
     if (nil == theSQLStatement)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == tags)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tags is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tags is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     [self NSFP_sqlString:theSQLStatement appendingTags:tags quoteTags:NO];
 }
 
-- (BOOL)NSFP_sqlString:(NSMutableString*)theSQLStatement forTable:(NSString*)table withColumns:(NSArray*)columns datatypes:(NSArray*)datatypes
-{
+- (BOOL)NSFP_sqlString:(NSMutableString*)theSQLStatement forTable:(NSString*)table withColumns:(NSArray*)columns datatypes:(NSArray*)datatypes {
+
     if (nil == theSQLStatement)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: theSQLStatement is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == table)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: table is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == columns)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: columns is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: columns is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == datatypes)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatypes is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatypes is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     BOOL constructionSucceeded = YES;
@@ -1544,9 +1585,9 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
             NSString  *columnAndDatatype = nil;
             
             if ([datatype isEqualToString:@""])
-                columnAndDatatype = [[NSString alloc]initWithFormat:@"%@", column];
+                columnAndDatatype = [NSString.alloc initWithFormat:@"%@", column];
             else
-                columnAndDatatype = [[NSString alloc]initWithFormat:@"%@ %@", column, datatype];
+                columnAndDatatype = [NSString.alloc initWithFormat:@"%@ %@", column, datatype];
             
             [theSQLStatement appendString:columnAndDatatype];
             
@@ -1560,16 +1601,18 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return constructionSucceeded;
 }
 
-- (NSInteger)NSFP_ROWIDPresenceLocation:(NSArray*)tableColumns datatypes:(NSArray*)datatypes
-{
+- (NSInteger)NSFP_ROWIDPresenceLocation:(NSArray*)tableColumns datatypes:(NSArray*)datatypes {
+
     if (nil == tableColumns)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableColumns is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableColumns is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     if (nil == datatypes)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatypes is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: datatypes is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     // First check if we have a datatype of type NSFNanoTypeRowUID
@@ -1604,11 +1647,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return ROWIDIndex;
 }
 
-- (NSString*)NSFP_prefixWithDotDelimiter:(NSString*)tableAndColumn
-{
+- (NSString*)NSFP_prefixWithDotDelimiter:(NSString*)tableAndColumn {
+
     if (nil == tableAndColumn)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableAndColumn is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableAndColumn is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSRange range = [tableAndColumn rangeOfString:@"." options:NSBackwardsSearch];
@@ -1618,11 +1662,12 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [tableAndColumn substringToIndex:range.location];
 }
 
-- (NSString*)NSFP_suffixWithDotDelimiter:(NSString*)tableAndColumn
-{
+- (NSString*)NSFP_suffixWithDotDelimiter:(NSString*)tableAndColumn {
+
     if (nil == tableAndColumn)
         [[NSException exceptionWithName:NSFUnexpectedParameterException
-                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableAndColumn is nil.", [self class], NSStringFromSelector(_cmd)]
+                                 reason:[NSString stringWithFormat:@"*** -[%@ %@]: tableAndColumn is nil.", self.class
+  , NSStringFromSelector(_cmd)]
                                userInfo:nil]raise];
     
     NSRange range = [tableAndColumn rangeOfString:@"." options:NSBackwardsSearch];
@@ -1635,18 +1680,18 @@ static NSSet    *__NSFPSharedNanoStoreEngineDatatypes = nil;
     return [tableAndColumn substringWithRange:range];
 }
 
-- (void)NSFP_installCommitCallback
-{
+- (void) NSFP_installCommitCallback {
+
     sqlite3_commit_hook( self.sqlite, NSFP_commitCallback, (__bridge void*)(self));
 }
 
-- (void)NSFP_uninstallCommitCallback
-{
+- (void) NSFP_uninstallCommitCallback {
+
     sqlite3_commit_hook( self.sqlite, NULL, NULL);
 }
 
-int NSFP_commitCallback(void* nsfdb)
-{
+int NSFP_commitCallback(void* nsfdb) {
+
     return SQLITE_OK;
 }
 

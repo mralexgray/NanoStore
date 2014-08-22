@@ -20,19 +20,21 @@
 
 @implementation NSFNanoPredicate
 
-// ----------------------------------------------
-// Initialization / Cleanup
-// ----------------------------------------------
+#pragma mark - Initialization / Cleanup
 
-+ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
-{
-    return [[self alloc]initWithColumn:type matching:matching value:aValue];
++ (NSFNanoPredicate*)predicateWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue {
+
+    return [self.alloc initWithColumn:type matching:matching value:aValue];
 }
 
-- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue
-{
-    NSAssert(nil != aValue, @"*** -[%@ %@]: value is nil.", [self class], NSStringFromSelector(_cmd));
-    NSAssert([aValue isKindOfClass:[NSString class]] || [aValue isKindOfClass:[NSNull class]], @"*** -[%@ %@]: value must be of type NSString or NSNull.", [self class], NSStringFromSelector(_cmd));
+- (id)initWithColumn:(NSFTableColumnType)type matching:(NSFMatchType)matching value:(id)aValue {
+
+    NSAssert(nil != aValue, @"*** -[%@ %@]: value is nil.", self.class
+  , NSStringFromSelector(_cmd));
+    NSAssert([aValue isKindOfClass:NSString.class
+  ] || [aValue isKindOfClass:NSNull.class
+  ], @"*** -[%@ %@]: value must be of type NSString or NSNull.", self.class
+  , NSStringFromSelector(_cmd));
 
     if ((self = [super init])) {
         _column = type;
@@ -43,14 +45,14 @@
     return self;
 }
 
-- (NSString*)description
-{
+- (NSString*)description {
+
     return [[self arrayDescription]lastObject];
 }
 
-- (NSArray*)arrayDescription
-{
-    NSMutableArray *values = [NSMutableArray new];
+- (NSArray*)arrayDescription {
+
+    NSMutableArray *values = NSMutableArray.new;
     
     NSString *columnValue = nil;
     NSMutableString *mutatedString = nil;
@@ -69,7 +71,8 @@
     }
     
     // Make sure we escape quotes if present and the value is a string
-    if ([_value isKindOfClass:[NSString class]]) {
+    if ([_value isKindOfClass:NSString.class
+  ]) {
         _value = [_value stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
     } else {
         _value = NSFStringFromNanoDataType(NSFNanoTypeNULL);
@@ -121,8 +124,8 @@
     return values;
 }
 
-- (NSString*)JSONDescription
-{
+- (NSString*)JSONDescription {
+
     NSArray *values = [self arrayDescription];
     
     NSError *outError = nil;
